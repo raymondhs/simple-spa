@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\lib">
+      <UniqueIdentifier>{38a11a6f-6b57-4a31-80b6-d286b0df295f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\PKB">
+      <UniqueIdentifier>{2ef85927-ed31-4024-8ad8-900305107240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\PQL">
+      <UniqueIdentifier>{343d6d50-80ff-4e24-a3f1-8c6e50c3fcd2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TestAST.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSPAMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestVar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\AST.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\VarTable.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\ModifiesTable.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\ProcTable.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\StmtTable.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\TNode.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\UsesTable.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="TestProc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestModifies.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestUses.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\PKBParser.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PQL\PQLParser.cpp">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PQL\QNode.cpp">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PQL\QueryTree.cpp">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PQL\RelTable.cpp">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PQL\SynTable.cpp">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="TestQueryEvaluator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PQL\QueryEvaluator.cpp">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\ConstantTable.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TestAST.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestVar.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\AST.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\ModifiesTable.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\ProcTable.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\StmtTable.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\TNode.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\UsesTable.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\VarTable.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\Constants.h">
+      <Filter>Source Files\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="TestProc.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestModifies.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestUses.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\PKBParser.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\SynTable.h">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\PQLParser.h">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\QNode.h">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\QueryTree.h">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\RelTable.h">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\ParseException.h">
+      <Filter>Source Files\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="TestQueryEvaluator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\QueryEvaluator.h">
+      <Filter>Source Files\lib\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\ConstantTable.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

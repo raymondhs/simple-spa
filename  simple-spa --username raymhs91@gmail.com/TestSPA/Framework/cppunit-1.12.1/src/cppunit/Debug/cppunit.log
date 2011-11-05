@@ -1,0 +1,124 @@
+﻿Build started 10/18/2011 1:27:54 PM.
+     1>Project "C:\Users\Public\Documents\NUS S5\CS3201\cppunit-1.12.1.VS2010\cppunit-1.12.1\src\cppunit\cppunit.vcxproj" on node 2 (rebuild target(s)).
+     1>InitializeBuildStatus:
+         Creating ".\Debug\cppunit.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\include /Zi /nologo /W3 /WX- /Od /Oy- /D _DEBUG /D _LIB /D WIN32 /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /Gy- /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo".\Debug\\" /Fd".\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt BriefTestProgressListener.cpp TestResultCollector.cpp TestSuccessListener.cpp TextTestProgressListener.cpp TextTestResult.cpp TextTestRunner.cpp CompilerOutputter.cpp TextOutputter.cpp XmlOutputter.cpp XmlOutputterHook.cpp AdditionalMessage.cpp Asserter.cpp Exception.cpp Message.cpp SourceLine.cpp SynchronizedObject.cpp Test.cpp TestAssert.cpp TestCase.cpp TestComposite.cpp TestFailure.cpp TestLeaf.cpp TestPath.cpp TestResult.cpp TestRunner.cpp TestSuite.cpp TestFactoryRegistry.cpp TestNamer.cpp TestSuiteBuilderContext.cpp TypeInfoHelper.cpp RepeatedTest.cpp TestCaseDecorator.cpp TestDecorator.cpp TestSetUp.cpp BeOsDynamicLibraryManager.cpp DynamicLibraryManager.cpp DynamicLibraryManagerException.cpp PlugInManager.cpp PlugInParameters.cpp ShlDynamicLibraryManager.cpp TestPlugInDefaultImpl.cpp UnixDynamicLibraryManager.cpp Win32DynamicLibraryManager.cpp StringTools.cpp XmlDocument.cpp XmlElement.cpp DefaultProtector.cpp Protector.cpp ProtectorChain.cpp
+         ProtectorChain.cpp
+         Protector.cpp
+         DefaultProtector.cpp
+         XmlElement.cpp
+         XmlDocument.cpp
+         StringTools.cpp
+         Win32DynamicLibraryManager.cpp
+         UnixDynamicLibraryManager.cpp
+         TestPlugInDefaultImpl.cpp
+         ShlDynamicLibraryManager.cpp
+         PlugInParameters.cpp
+         PlugInManager.cpp
+         DynamicLibraryManagerException.cpp
+         DynamicLibraryManager.cpp
+         BeOsDynamicLibraryManager.cpp
+         TestSetUp.cpp
+         TestDecorator.cpp
+         TestCaseDecorator.cpp
+         RepeatedTest.cpp
+         TypeInfoHelper.cpp
+         Generating Code...
+         Compiling...
+         TestSuiteBuilderContext.cpp
+         TestNamer.cpp
+         TestFactoryRegistry.cpp
+         TestSuite.cpp
+         TestRunner.cpp
+         TestResult.cpp
+         TestPath.cpp
+         TestLeaf.cpp
+         TestFailure.cpp
+         TestComposite.cpp
+         TestCase.cpp
+         TestAssert.cpp
+         Test.cpp
+         SynchronizedObject.cpp
+         SourceLine.cpp
+         Message.cpp
+         Exception.cpp
+         Asserter.cpp
+         AdditionalMessage.cpp
+         XmlOutputterHook.cpp
+         Generating Code...
+         Compiling...
+         XmlOutputter.cpp
+         TextOutputter.cpp
+         CompilerOutputter.cpp
+         TextTestRunner.cpp
+         TextTestResult.cpp
+         TextTestProgressListener.cpp
+         TestSuccessListener.cpp
+         TestResultCollector.cpp
+         BriefTestProgressListener.cpp
+         Generating Code...
+       Lib:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"Debug\cppunit.lib" /NOLOGO .\Debug\BriefTestProgressListener.obj
+         .\Debug\TestResultCollector.obj
+         .\Debug\TestSuccessListener.obj
+         .\Debug\TextTestProgressListener.obj
+         .\Debug\TextTestResult.obj
+         .\Debug\TextTestRunner.obj
+         .\Debug\CompilerOutputter.obj
+         .\Debug\TextOutputter.obj
+         .\Debug\XmlOutputter.obj
+         .\Debug\XmlOutputterHook.obj
+         .\Debug\AdditionalMessage.obj
+         .\Debug\Asserter.obj
+         .\Debug\Exception.obj
+         .\Debug\Message.obj
+         .\Debug\SourceLine.obj
+         .\Debug\SynchronizedObject.obj
+         .\Debug\Test.obj
+         .\Debug\TestAssert.obj
+         .\Debug\TestCase.obj
+         .\Debug\TestComposite.obj
+         .\Debug\TestFailure.obj
+         .\Debug\TestLeaf.obj
+         .\Debug\TestPath.obj
+         .\Debug\TestResult.obj
+         .\Debug\TestRunner.obj
+         .\Debug\TestSuite.obj
+         .\Debug\TestFactoryRegistry.obj
+         .\Debug\TestNamer.obj
+         .\Debug\TestSuiteBuilderContext.obj
+         .\Debug\TypeInfoHelper.obj
+         .\Debug\RepeatedTest.obj
+         .\Debug\TestCaseDecorator.obj
+         .\Debug\TestDecorator.obj
+         .\Debug\TestSetUp.obj
+         .\Debug\BeOsDynamicLibraryManager.obj
+         .\Debug\DynamicLibraryManager.obj
+         .\Debug\DynamicLibraryManagerException.obj
+         .\Debug\PlugInManager.obj
+         .\Debug\PlugInParameters.obj
+         .\Debug\ShlDynamicLibraryManager.obj
+         .\Debug\TestPlugInDefaultImpl.obj
+         .\Debug\UnixDynamicLibraryManager.obj
+         .\Debug\Win32DynamicLibraryManager.obj
+         .\Debug\StringTools.obj
+         .\Debug\XmlDocument.obj
+         .\Debug\XmlElement.obj
+         .\Debug\DefaultProtector.obj
+         .\Debug\Protector.obj
+         .\Debug\ProtectorChain.obj
+         cppunit.vcxproj -> C:\Users\Public\Documents\NUS S5\CS3201\cppunit-1.12.1.VS2010\cppunit-1.12.1\src\cppunit\.\Debug\cppunit.lib
+       PostBuildEvent:
+         Description: Copying target to lib/
+         copy "C:\Users\Public\Documents\NUS S5\CS3201\cppunit-1.12.1.VS2010\cppunit-1.12.1\src\cppunit\.\Debug\cppunit.lib" ..\..\lib\cppunit.lib
+         :VCEnd
+                 1 file(s) copied.
+       FinalizeBuildStatus:
+         Deleting file ".\Debug\cppunit.unsuccessfulbuild".
+         Touching ".\Debug\cppunit.lastbuildstate".
+     1>Done Building Project "C:\Users\Public\Documents\NUS S5\CS3201\cppunit-1.12.1.VS2010\cppunit-1.12.1\src\cppunit\cppunit.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:49.98
