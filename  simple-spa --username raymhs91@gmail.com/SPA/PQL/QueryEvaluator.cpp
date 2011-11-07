@@ -32,6 +32,7 @@ static vector< vector<int> > cartesianProduct(vector< vector<int> > table1, vect
 static vector<int> allEntitiesWithType(int type);
 
 static void initTable();
+static void addAttribute(int synIdx);
 static void clearTable();
 static bool isEmptyResult();
 
@@ -78,29 +79,36 @@ void initVars(QNode* leftArg, QNode* rightArg) {
 
 vector< vector<int> > cartesianProduct(vector< vector<int> > table1, vector< vector<int> > table2) {
 	vector< vector<int> > result;
-
-	result.assign(table1.size()+table2.size(),vector<int>());
 	
+	result.assign(table1.size()+table2.size(),vector<int>());
+	for(unsigned k = 0; k < table1.size(); k++) { // for each attribute
+		if(result[k].size() == 0) {
+			result[k].push_back(table1[k][0]);
+		}
+	}
+	int currSz = table1.size();
+	for(unsigned k = 0; k < table2.size(); k++) {
+		if(result[currSz].size() == 0) {
+			result[currSz].push_back(table2[k][0]);
+		}
+	}
+
 	for(unsigned i = 1; i < table1[0].size(); i++) { // for each row in table 1
 		for(unsigned j = 1; j < table2[0].size(); j++) { // for each row in table 2
 			for(unsigned k = 0; k < table1.size(); k++) { // for each attribute
-				if(result[k].size() == 0) {
-					result[k].push_back(table1[k][0]);
-				}
 				result[k].push_back(table1[k][i]);
 			}
-			int currSz = table1.size();
+			currSz = table1.size();
 			for(unsigned k = 0; k < table2.size(); k++) {
-				if(result[currSz].size() == 0) {
-					result[currSz].push_back(table2[k][0]);
-				}
 				result[currSz].push_back(table2[k][j]);
 				currSz ++;
 			}
 		}
 	}
+	
 	return result;
 }
+
 vector<int> allEntitiesWithType(int type) {
 	vector<int> result;
 	switch(type) {
@@ -125,7 +133,14 @@ vector<int> allEntitiesWithType(int type) {
 void initTable() {
 	table.clear();
 	mapper.clear();
+
 	QNode* sel = qt->getResult()->getLeftChild();
+	int selIdx = sel->getIntVal();
+	
+	if(mapper.count(selIdx) == 0) {
+		addAttribute(selIdx);
+	}
+	/*QNode* sel = qt->getResult()->getLeftChild();
 	QNode* suchthat = qt->getSuchThat()->getLeftChild();
 	QNode* pattern = qt->getPattern()->getLeftChild();
 
@@ -171,7 +186,27 @@ void initTable() {
 			result = cartesianProduct(result,newCol);
 		}
 	}
-	table = result;
+	table = result;*/
+}
+
+void addAttribute(int synIdx) {
+	int entType = syn->getSyn(synIdx).second;
+	vector<int> allEnt = allEntitiesWithType(entType);
+
+	vector< vector<int> > newCol;
+	newCol.push_back(vector<int>());
+	newCol[0].push_back(synIdx);
+	for(unsigned i = 0; i < allEnt.size(); i++) {
+		newCol[0].push_back(allEnt[i]);
+	}
+
+	if(table.size() == 0) {
+		table = newCol;
+	} else {
+		table = cartesianProduct(table,newCol);
+	}
+
+	mapper.insert(pair<int,int>(synIdx,mapper.size()));
 }
 
 void clearTable() {
@@ -193,6 +228,20 @@ void deleteRow(int row) {
 void evaluateSuchThat() {
 	QNode* such = qt->getSuchThat()->getLeftChild(); // ONLY 1 SUCH THAT
 	while(such != NULL){
+		QNode* leftArg = such->getLeftChild();
+		QNode* rightArg = such->getRightChild();
+		if(leftArg->getType() == QSYN) {
+			if(mapper.count(leftArg->getIntVal()) == 0) {
+				addAttribute(leftArg->getIntVal());
+			}
+		}
+
+		if(rightArg->getType() == QSYN) {
+			if(mapper.count(rightArg->getIntVal()) == 0) {
+				addAttribute(rightArg->getIntVal());
+			}
+		}
+
 		switch(such->getType()) {
 			case QPARENT:
 				handleParent(such); break;
@@ -215,16 +264,20 @@ void evaluateSuchThat() {
 
 void evaluatePattern() {
 	QNode* patt = qt->getPattern()->getLeftChild(); // ONLY 1 PATTERN
-	
+			
 	while(patt != NULL) {
 		QNode *copy = new QNode();
 		copy->setLeftChild(patt);
 
+		if(mapper.count(patt->getIntVal()) == 0) {
+			addAttribute(patt->getIntVal());
+		}
+		
 		if(patt->getRightChild()->getType() == QANY) {
 			copy->setRightChild(patt->getLeftChild());
 			return handleModifies(copy);
 		}
-	
+
 		copy->setRightChild(patt->getLeftChild());
 		handleModifies(copy);
 
@@ -479,7 +532,7 @@ void handleModifies(QNode* query) {
 		}
 	} else if(leftType == QSYN) {
 		if(rightType == QSTRING) {
-			int aIdx = mapper[synIdxLeft];
+			int aIdx = mapper[synIdxLeft];			
 			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 				if(!(m->isModifiesStmt(table[aIdx][i],varIdx))) deleteRow(i);
 			}
