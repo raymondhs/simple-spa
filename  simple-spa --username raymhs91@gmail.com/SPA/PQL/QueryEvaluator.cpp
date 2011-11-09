@@ -13,6 +13,8 @@
 #include "../PKB/ConstantTable.h"
 #include "PQLParser.h"
 
+//#include "../../AbstractWrapper.h"
+
 using namespace std;
 
 typedef unsigned ui;
@@ -228,6 +230,11 @@ void deleteRow(int row) {
 void evaluateSuchThat() {
 	QNode* such = qt->getSuchThat()->getLeftChild(); // ONLY 1 SUCH THAT
 	while(such != NULL){
+		/*if (AbstractWrapper::GlobalStop) {
+			// do cleanup 
+			PQLParser::cleanUp();
+			return;
+		}*/
 		QNode* leftArg = such->getLeftChild();
 		QNode* rightArg = such->getRightChild();
 		if(leftArg->getType() == QSYN) {
@@ -266,6 +273,11 @@ void evaluatePattern() {
 	QNode* patt = qt->getPattern()->getLeftChild(); // ONLY 1 PATTERN
 			
 	while(patt != NULL) {
+		/*if (AbstractWrapper::GlobalStop) {
+			// do cleanup 
+			PQLParser::cleanUp();
+			return;
+		}*/
 		QNode *copy = new QNode();
 		copy->setLeftChild(patt);
 
