@@ -30,8 +30,10 @@ static TNode* stmt();
 static TNode* varible();
 static TNode* whileStmt();
 static TNode* assign();
-static TNode* plusVarName();
+//static TNode* plusVarName();
 static TNode* expr(STMT_NO stmtIdx);
+static TNode* term(STMT_NO stmtIdx);
+static TNode* factor(STMT_NO stmtIdx);
 static void cleanUp();
 
 typedef enum tokentype {
@@ -233,7 +235,7 @@ TNode* assign(){
 	leftVar->setRightSibling(exp);
 	return assign;
 }
-
+/*
 TNode* plusVarName(TNode *term, STMT_NO stmtIdx){
 			TNode *plus, *var;
 			match(TPLUS);
@@ -244,11 +246,24 @@ TNode* plusVarName(TNode *term, STMT_NO stmtIdx){
 			term->setRightSibling(var);
 			return plus;
 }
-
+*/
 TNode* expr(STMT_NO stmtIdx){
-	TNode *expr;
+	TNode* curr = term(stmtIdx), *expr = curr;
+	
+	while(next_token == TPLUS || next_token == TMIN) {
+		if(next_token == TPLUS) {
+			expr = new TNode(PLUS);
+		} else {
+			expr = new TNode(MINUS);
+		}
+		next_token = getToken();
+		TNode* t = term(stmtIdx);
+		expr->setFirstChild(curr);
+		t->setRightSibling(t);
+		curr = expr;
+	}
 
-	if(next_token==TINTEGER){
+	/*if(next_token==TINTEGER){
 		string temp;
 		temp.assign(text);
 		match(TINTEGER);
@@ -261,8 +276,45 @@ TNode* expr(STMT_NO stmtIdx){
 	}
 	while(next_token!=TSEMICOLON) {
 		expr=plusVarName(expr,stmtIdx);
-	}
+	}*/
 	return expr;
+}
+
+TNode* term(STMT_NO stmtIdx) {
+	TNode* curr = factor(stmtIdx), *term = curr;
+
+	while(next_token == TTIMES) {
+		term = new TNode(TIMES);
+		next_token = getToken();
+		TNode* fac = factor(stmtIdx);
+		term->setFirstChild(curr);
+		curr->setRightSibling(fac);
+		curr = term;
+	}
+
+	return term;
+}
+
+TNode* factor(STMT_NO stmtIdx) {
+	TNode* fac;
+	if(next_token == TINTEGER) {
+		fac = new TNode(CONST,atoi(text.c_str()));
+		ConstantTable::getConstantTable()->addConstant(fac);
+		next_token = getToken();
+	} else if(next_token == TNAME){
+		VAR_IDX varIdx = VarTable::getVarTable()->insertVar(text);
+		UsesTable::getUsesTable()->insertStmt(stmtIdx, varIdx);
+		fac = new TNode (VAR,varIdx);
+		next_token = getToken();;
+	} else if(next_token == TLPARENT) {
+		next_token = getToken();
+		fac = expr(stmtIdx);
+		match(TRPARENT);
+	} else {
+		PKBParser::cleanUp();
+		throw ParseException("Error in parsing SIMPLE source code.");
+	}
+	return fac;
 }
 
 void PKBParser::cleanUp() {
