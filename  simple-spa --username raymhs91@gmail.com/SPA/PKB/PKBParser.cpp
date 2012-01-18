@@ -22,6 +22,7 @@ static int next_token;
 static bool issymbol(char c);
 static int getToken();
 static void match(int token);
+static TNode* currProc;
 
 void print(TNode* t);
 
@@ -124,7 +125,7 @@ TNode* program(){
 	TNode* program = new TNode (PROGRAM);
 	TNode* firstProc = procedure();
 	program->setFirstChild(firstProc);
-	TNode* currProc=firstProc;
+	currProc=firstProc;
 	TNode* nextProc;
 	while(next_token!=TEOF){
 		nextProc=procedure();
@@ -183,6 +184,11 @@ TNode* variable(){
 	return var;
 }
 
+TNode* ifStmt(){
+	//TODO
+	return NULL;
+}
+
 TNode* whileStmt(){
 	TNode *whileNode, *var, *stmtList;
 	match(TWHILE);
@@ -191,6 +197,7 @@ TNode* whileStmt(){
 	whileNode->setAttrib(stmtIdx);
 	var=variable();
 	UsesTable::getUsesTable()->insertStmt(stmtIdx, var->getAttrib());
+	UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), var->getAttrib());
 	whileNode->setFirstChild(var);
 	match(TLBRACE);
 	stmtList=stmtLst();
@@ -206,6 +213,7 @@ TNode* whileStmt(){
 		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
 		 {
 			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
 		 }
 		 
 		//set uses for container
@@ -215,6 +223,7 @@ TNode* whileStmt(){
         for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
         {
 			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
+			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
 		}
 		
 		child=child->getRightSibling();
@@ -232,6 +241,7 @@ TNode* assign(){
 	assign->setAttrib(stmtIdx);
 	leftVar=variable();
 	ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, leftVar->getAttrib());
+	ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), leftVar->getAttrib());
 	assign->setFirstChild(leftVar);
 	match(TEQUAL);
 	exp= expr(stmtIdx);
@@ -307,6 +317,7 @@ TNode* factor(STMT_NO stmtIdx) {
 	} else if(next_token == TNAME){
 		VAR_IDX varIdx = VarTable::getVarTable()->insertVar(text);
 		UsesTable::getUsesTable()->insertStmt(stmtIdx, varIdx);
+		UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), varIdx);
 		fac = new TNode (VAR,varIdx);
 		next_token = getToken();;
 	} else if(next_token == TLPARENT) {
