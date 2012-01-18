@@ -87,7 +87,7 @@ vector<int> matchPattern(QNode* target) {
 	string target_str;
 	preorder(target,target_str);
 
-	for(unsigned i = 0; i < table->getSize(); i++) {
+	for(int i = 0; i < table->getSize(); i++) {
 		TNode* stmtNode = table->getStmtNode(i+1);
 		if(stmtNode->getType() == ASSIGN) {
 			string tmp;
@@ -97,4 +97,5 @@ vector<int> matchPattern(QNode* target) {
 			}
 		}
 	}
+	return ans;
 }
