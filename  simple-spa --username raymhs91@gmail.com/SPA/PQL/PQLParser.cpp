@@ -346,11 +346,12 @@ QNode* exprSpec() {
 	} else if(next_token == TUNDERSCORE) {
 		match(TUNDERSCORE);
 		if(next_token == TRPARENT) {
-			match(TRPARENT);
 			exp = new QNode(QANY);
 		} else {
+			match(TDQUOTE);
 			exp = new QNode(QANY);
 			exp->setRightSibling(expr());
+			match(TDQUOTE);
 			match(TUNDERSCORE);
 		}
 	}
@@ -505,7 +506,6 @@ QNode* selectClause() {
 	while(text != "Select") {
 		declaration();
 	}
-
 	match(TSELECT);
 
 	int synIdx = SynTable::getSynTable()->getSynIdx(text);
@@ -531,7 +531,7 @@ QNode* selectClause() {
 			PQLParser::cleanUp();
 			throw ParseException("Syntax error: Invalid query.");
 		}
-	}	
+	}
 	return NULL;
 }
 

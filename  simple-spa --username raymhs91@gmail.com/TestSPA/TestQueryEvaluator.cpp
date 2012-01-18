@@ -45,7 +45,6 @@ void TestQueryEvaluator::testFollows() {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception& e) {
 		cout << e.what() << endl;
-
 	}
 
 	CPPUNIT_ASSERT(ans == result);
@@ -324,7 +323,7 @@ void TestQueryEvaluator::testFollows() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
+	
 	/* Test 17 */
 
 	query = declaration + "Select s1 such that Follows(1, s1) pattern a1(_,_)";
