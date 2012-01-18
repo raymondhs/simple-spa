@@ -3924,7 +3924,6 @@ void TestQueryEvaluator::testPattern() {
 	result.push_back("9");
 	result.push_back("11");
 
-
 	try {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception&e) {
@@ -4001,7 +4000,6 @@ void TestQueryEvaluator::testPattern() {
 	result.push_back("4");
 	result.push_back("11");
 
-
 	try {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception&e) {
@@ -4010,7 +4008,6 @@ void TestQueryEvaluator::testPattern() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
 
 	/* Test 6*/
 
@@ -4027,7 +4024,6 @@ void TestQueryEvaluator::testPattern() {
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
 	/* Test 7*/
 
 	query = declaration + "Select a1 pattern a2(_,_\"p\"_)";
@@ -4042,7 +4038,6 @@ void TestQueryEvaluator::testPattern() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
 
 	/* Test 8*/
 
@@ -4066,8 +4061,6 @@ void TestQueryEvaluator::testPattern() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
-
 
 	cout << "SUCCESS! testPattern :j" <<endl;
 }

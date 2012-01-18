@@ -279,12 +279,43 @@ void evaluatePattern() {
 			return;
 		}*/
 		QNode *copy = new QNode();
+		QNode *left = patt->getLeftChild();
+		QNode *right = patt->getRightChild();
+		QNode *var = NULL;
+
+		if(right->getType() == QANY) {
+			if(right->getRightSibling() != NULL) {
+				var = right->getRightSibling();
+			}
+		}
+
 		copy->setLeftChild(patt);
 
 		if(mapper.count(patt->getIntVal()) == 0) {
 			addAttribute(patt->getIntVal());
 		}
+			
+		copy->setRightChild(left);
+		handleModifies(copy);
+
+		if(right->getType() == QANY) {
+			if(right->getRightSibling() == NULL) {
+				return;
+			}
+		}
+
+		QNode *arg;
+		if(var != NULL) {
+			arg = new QNode(QSTRING);
+			if(var->getIntVal() != -1)
+				arg->setStrVal(VarTable::getVarTable()->getVarName(var->getIntVal()));
+			copy->setRightChild(arg);
+		} else {
+			copy->setRightChild(right);
+		}
+		handleUses(copy);
 		
+		/*
 		if(patt->getRightChild()->getType() == QANY) {
 			if(patt->getRightChild()->getLeftChild() == NULL) {
 				copy->setRightChild(patt->getLeftChild());
@@ -297,6 +328,7 @@ void evaluatePattern() {
 
 		copy->setRightChild(patt->getRightChild());
 		handleUses(copy);
+		*/
 
 		copy->setLeftChild(NULL);
 		copy->setRightChild(NULL);

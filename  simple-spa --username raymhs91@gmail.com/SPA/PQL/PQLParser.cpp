@@ -340,7 +340,7 @@ QNode* exprSpec() {
 		//exp = new QNode(QSTRING);
 		//exp->setStrVal(text);
 		//match(TNAME);
-		exp = expr();		
+		exp = expr();
 		match(TDQUOTE);
 		//match(TUNDERSCORE);
 	} else if(next_token == TUNDERSCORE) {
