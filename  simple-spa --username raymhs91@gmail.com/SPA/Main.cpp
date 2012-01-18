@@ -9,6 +9,7 @@ using namespace std;
 
 void printResult(vector<string> result);
 void printExit();
+void printAssign();
 
 int main() {
 	string fileName = "../TestSPA/testcases/testQuery.txt";
@@ -31,6 +32,8 @@ int main() {
 			cout << e.what() << endl << endl;
 		}
 	}
+
+	printAssign();
 
 	string q; vector<string> result;
 	cout << ">> Enter PQL queries ('0' to exit)" << endl;
@@ -66,4 +69,8 @@ void printResult(vector<string> result) {
 
 void printExit() {
 	cout << "GOOD BYE!" << endl;
+}
+
+void printAssign(){
+	PKBParser::getAssign();
 }

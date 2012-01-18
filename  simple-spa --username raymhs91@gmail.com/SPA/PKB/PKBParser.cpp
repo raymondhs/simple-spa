@@ -23,6 +23,8 @@ static bool issymbol(char c);
 static int getToken();
 static void match(int token);
 
+void print(TNode* t);
+
 static TNode* program();
 static TNode* procedure();
 static TNode* stmtLst();
@@ -57,11 +59,12 @@ int getToken() {
 	char c=0;
 	while(1) {
 		try{
-		c = input.get();
+			c = input.get();
 
 		}catch (ifstream::failure e) {
-	return TEOF;
-	}
+			return TEOF;
+		}
+
 		switch(state) {
 			case 0:
 				if(isalpha(c)) { text+=c;  state = 1; }
@@ -312,7 +315,7 @@ TNode* factor(STMT_NO stmtIdx) {
 		match(TRPARENT);
 	} else {
 		PKBParser::cleanUp();
-		throw ParseException("Error in parsing SIMPLE source code.");
+		throw ParseException("(PKB Parser) Error in parsing SIMPLE source code.");
 	}
 	return fac;
 }
@@ -342,3 +345,64 @@ void PKBParser::parse(string fileName){
 	}
 }
 
+void PKBParser::getAssign() {
+	StmtTable* stmtT = StmtTable::getStmtTable();
+	vector<int> ass = stmtT->getAllAssign();
+
+	TNode* t;
+	for (unsigned i=0; i < ass.size(); i++) {
+		cout << ass[i] << endl;
+		t = stmtT->getStmtNode(ass[i]);
+		print(t);
+	}
+}
+
+void print(TNode* t){
+	
+	TNode* lc;
+	TNode* rc;
+
+	if (t == NULL) return;
+	
+	switch (t->getType()) {
+		case 0: 
+			cout << "NODE" << " "; break;
+		case 1:
+			cout << "PROGRAM" << " "; break;
+		case 2:
+			cout << "PROCEDURE" << " ";	break;
+		case 3:
+			cout << "STMTLST" << " "; break;
+		case 4:
+			cout << "STMT" << " "; break;
+		case 5:
+			cout << "ASSIGN" << " "; break;
+		case 6:
+			cout << "WHILE" << " "; break;
+		case 7:
+			cout << "IF" << " "; break;
+		case 8:
+			cout << "'CONST " << t->getAttrib() << "' "; break;
+		case 9:
+			cout << "EXPR" << " "; break;
+		case 10:
+			cout << "PLUS" << " "; break;
+		case 11:
+			cout << "MINUS" << " "; break;
+		case 12:
+			cout << "TIMES" << " "; break;
+		case 13:
+			cout << "'VAR " << t->getAttrib() << "' "; break;
+	}
+
+	if (t->getFirstChild() != NULL){
+		lc = t->getFirstChild();
+		rc = lc->getRightSibling();
+
+		print(lc);
+		print(rc);
+
+		cout << endl;
+	}
+
+}
