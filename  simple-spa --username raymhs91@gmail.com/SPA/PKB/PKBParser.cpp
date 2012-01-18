@@ -259,7 +259,7 @@ TNode* expr(STMT_NO stmtIdx){
 		next_token = getToken();
 		TNode* t = term(stmtIdx);
 		expr->setFirstChild(curr);
-		t->setRightSibling(t);
+		curr->setRightSibling(t);
 		curr = expr;
 	}
 

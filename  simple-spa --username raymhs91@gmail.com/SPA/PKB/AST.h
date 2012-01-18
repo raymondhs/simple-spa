@@ -5,7 +5,9 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include "../PKB/TNode.h"
+#include "../PQL/QNode.h"
 
 class AST {
 private:

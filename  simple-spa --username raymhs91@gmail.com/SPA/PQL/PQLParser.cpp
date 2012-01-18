@@ -2,6 +2,7 @@
 #include <iostream>
 #include "PQLParser.h"
 #include "../ParseException.h"
+#include "../PKB/VarTable.h"
 #include "SynTable.h"
 #include "RelTable.h"
 #include "QueryTree.h"
@@ -20,7 +21,12 @@ static void match(int token);
 static QNode* stmtRef();
 static QNode* entRef();
 static QNode* relRef();
+
+static QNode* term();
+static QNode* factor();
+static QNode* expr();
 static QNode* exprSpec();
+
 static int entity();
 static void declaration();
 static QNode* suchthatClause();
@@ -271,20 +277,84 @@ QNode* relRef() {
 	return rel;
 }
 
+QNode* expr() {
+	QNode* curr = term(), *exp = curr;
+	
+	while(next_token == TPLUS || next_token == TMIN) {
+		if(next_token == TPLUS) {
+			exp = new QNode(QPLUS);
+		} else {
+			exp = new QNode(QMINUS);
+		}
+		next_token = getToken();
+		QNode* t = term();
+		exp->setLeftChild(curr);
+		curr->setRightSibling(t);
+		curr = exp;
+	}
+	return exp;
+}
+
+QNode* term() {
+	QNode* curr = factor(), *term = curr;
+
+	while(next_token == TTIMES) {
+		term = new QNode(QTIMES);
+		next_token = getToken();
+		QNode* fac = factor();
+		term->setLeftChild(curr);
+		curr->setRightSibling(fac);
+		curr = term;
+	}
+
+	return term;
+}
+
+QNode* factor() {
+	QNode* fac;
+	if(next_token == TINTEGER) {
+		fac = new QNode(QCONST);
+		fac->setIntVal(atoi(text.c_str()));
+		next_token = getToken();
+	} else if(next_token == TNAME){
+		fac = new QNode(QVAR);
+		fac->setIntVal(VarTable::getVarTable()->getVarIndex(text));
+		next_token = getToken();
+	} else if(next_token == TLPARENT) {
+		next_token = getToken();
+		fac = expr();
+		match(TRPARENT);
+	} else {
+		PQLParser::cleanUp();
+		throw ParseException("Error: Invalid SIMPLE expression.");
+	}
+	return fac;
+}
+
+
 QNode* exprSpec() {
-	QNode *expr;
-	match(TUNDERSCORE);
+	QNode *exp;
+	//match(TUNDERSCORE);
 	if(next_token == TDQUOTE) {
 		match(TDQUOTE);
-		expr = new QNode(QSTRING);
-		expr->setStrVal(text);
-		match(TNAME);
+		//exp = new QNode(QSTRING);
+		//exp->setStrVal(text);
+		//match(TNAME);
+		exp = expr();		
 		match(TDQUOTE);
+		//match(TUNDERSCORE);
+	} else if(next_token == TUNDERSCORE) {
 		match(TUNDERSCORE);
-	} else {
-		expr = new QNode(QANY);
+		if(next_token == TRPARENT) {
+			match(TRPARENT);
+			exp = new QNode(QANY);
+		} else {
+			exp = new QNode(QANY);
+			exp->setRightSibling(expr());
+			match(TUNDERSCORE);
+		}
 	}
-	return expr;
+	return exp;
 }
 
 int entity() {

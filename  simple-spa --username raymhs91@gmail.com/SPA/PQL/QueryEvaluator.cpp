@@ -286,8 +286,10 @@ void evaluatePattern() {
 		}
 		
 		if(patt->getRightChild()->getType() == QANY) {
-			copy->setRightChild(patt->getLeftChild());
-			return handleModifies(copy);
+			if(patt->getRightChild()->getLeftChild() == NULL) {
+				copy->setRightChild(patt->getLeftChild());
+				return handleModifies(copy);
+			}
 		}
 
 		copy->setRightChild(patt->getLeftChild());
