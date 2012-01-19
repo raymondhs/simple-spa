@@ -31,6 +31,7 @@ static TNode* procedure();
 static TNode* stmtLst();
 static TNode* stmt();
 static TNode* varible();
+static TNode* ifStmt();
 static TNode* whileStmt();
 static TNode* assign();
 //static TNode* plusVarName();
@@ -125,12 +126,10 @@ TNode* program(){
 	TNode* program = new TNode (PROGRAM);
 	TNode* firstProc = procedure();
 	program->setFirstChild(firstProc);
-	currProc=firstProc;
-	TNode* nextProc;
+	TNode* prevProc;
 	while(next_token!=TEOF){
-		nextProc=procedure();
-		currProc->setRightSibling(nextProc);
-		currProc=nextProc;
+		prevProc = currProc;
+		prevProc->setRightSibling(procedure());
 	}
 	return program;
 }
@@ -143,6 +142,8 @@ TNode* procedure(){
 	match (TNAME);
 	int procIdx = ProcTable::getProcTable()->insertProc(temp);
 	proc=new TNode (PROCEDURE,procIdx);
+	//assign proc
+	currProc=proc;
 	match (TLBRACE);
 	proc->setFirstChild(stmtLst());
 	match(TRBRACE);
@@ -170,6 +171,8 @@ TNode* stmt(){
 	else if(next_token==TNAME){
 		stmt=assign();
 		match(TSEMICOLON);
+	} else if (next_token==TIF) {
+		stmt=ifStmt();
 	}
 	else throw ParseException("Error in parsing SIMPLE source code.");
 	return stmt;
@@ -185,10 +188,113 @@ TNode* variable(){
 }
 
 TNode* ifStmt(){
-	//TODO
-	return NULL;
-}
+	TNode *ifNode, *var, *stmtListThen, *stmtListElse;
+	match(TIF);
+	ifNode = new TNode(IF);
+	STMT_NO stmtIdx=StmtTable::getStmtTable()->insertStmt(ifNode);
+	ifNode->setAttrib(stmtIdx);
+	var=variable();
+	UsesTable::getUsesTable()->insertStmt(stmtIdx, var->getAttrib());
+	UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), var->getAttrib());
+	ifNode->setFirstChild(var);
+	match(TTHEN);
+	match(TLBRACE);
 
+	stmtListThen=stmtLst();
+	TNode *child=stmtListThen->getFirstChild();
+	
+	while(child!=NULL){
+		//set parent
+		child->setParent(ifNode);
+		STMT_NO childIdx=child->getAttrib();
+		//set modifies for container
+		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
+		set<int>::iterator iterMod;
+		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
+		 {
+			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
+		 }
+		 
+		//set uses for container
+		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
+		set<int>::iterator iterUses;
+		
+        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
+        {
+			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
+			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
+		}
+		
+		child=child->getRightSibling();
+	}
+	var->setRightSibling(stmtListThen);
+	match(TRBRACE);
+	match(TELSE);
+	match(TLBRACE);
+
+	stmtListElse=stmtLst();
+	child=stmtListElse->getFirstChild();
+	
+	while(child!=NULL){
+		//set parent
+		child->setParent(ifNode);
+		STMT_NO childIdx=child->getAttrib();
+		//set modifies for container
+		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
+		set<int>::iterator iterMod;
+		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
+		 {
+			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
+		 }
+		 
+		//set uses for container
+		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
+		set<int>::iterator iterUses;
+		
+        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
+        {
+			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
+			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
+		}
+		
+		child=child->getRightSibling();
+	}
+	stmtListThen->setRightSibling(stmtListElse);
+	match(TRBRACE);
+
+	return ifNode;
+}
+/* trying to refactor
+void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx) {
+	while(child!=NULL){
+		//set parent
+		child->setParent(parent);
+		STMT_NO childIdx=child->getAttrib();
+		//set modifies for container
+		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
+		set<int>::iterator iterMod;
+		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
+		 {
+			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
+		 }
+		 
+		//set uses for container
+		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
+		set<int>::iterator iterUses;
+		
+        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
+        {
+			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
+			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
+		}
+		
+		child=child->getRightSibling();
+	}
+}
+*/
 TNode* whileStmt(){
 	TNode *whileNode, *var, *stmtList;
 	match(TWHILE);
@@ -202,7 +308,7 @@ TNode* whileStmt(){
 	match(TLBRACE);
 	stmtList=stmtLst();
 	TNode *child=stmtList->getFirstChild();
-	
+
 	while(child!=NULL){
 		//set parent
 		child->setParent(whileNode);
