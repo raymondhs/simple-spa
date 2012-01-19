@@ -24,6 +24,7 @@ static int getToken();
 static void match(int token);
 static TNode* currProc;
 
+void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx);
 void print(TNode* t);
 
 static TNode* program();
@@ -203,6 +204,8 @@ TNode* ifStmt(){
 	stmtListThen=stmtLst();
 	TNode *child=stmtListThen->getFirstChild();
 	
+	setTables(ifNode, child, stmtIdx);
+	/*
 	while(child!=NULL){
 		//set parent
 		child->setParent(ifNode);
@@ -228,6 +231,7 @@ TNode* ifStmt(){
 		
 		child=child->getRightSibling();
 	}
+	*/
 	var->setRightSibling(stmtListThen);
 	match(TRBRACE);
 	match(TELSE);
@@ -236,6 +240,8 @@ TNode* ifStmt(){
 	stmtListElse=stmtLst();
 	child=stmtListElse->getFirstChild();
 	
+	setTables(ifNode, child, stmtIdx);
+	/*
 	while(child!=NULL){
 		//set parent
 		child->setParent(ifNode);
@@ -260,41 +266,13 @@ TNode* ifStmt(){
 		}
 		
 		child=child->getRightSibling();
-	}
+	}*/
 	stmtListThen->setRightSibling(stmtListElse);
 	match(TRBRACE);
 
 	return ifNode;
 }
-/* trying to refactor
-void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx) {
-	while(child!=NULL){
-		//set parent
-		child->setParent(parent);
-		STMT_NO childIdx=child->getAttrib();
-		//set modifies for container
-		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
-		set<int>::iterator iterMod;
-		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
-		 {
-			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
-			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
-		 }
-		 
-		//set uses for container
-		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
-		set<int>::iterator iterUses;
-		
-        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
-        {
-			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
-			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
-		}
-		
-		child=child->getRightSibling();
-	}
-}
-*/
+
 TNode* whileStmt(){
 	TNode *whileNode, *var, *stmtList;
 	match(TWHILE);
@@ -309,6 +287,8 @@ TNode* whileStmt(){
 	stmtList=stmtLst();
 	TNode *child=stmtList->getFirstChild();
 
+	setTables(whileNode, child, stmtIdx);
+	/*
 	while(child!=NULL){
 		//set parent
 		child->setParent(whileNode);
@@ -333,7 +313,7 @@ TNode* whileStmt(){
 		}
 		
 		child=child->getRightSibling();
-	}
+	}*/
 	var->setRightSibling(stmtList);
 	match(TRBRACE);
 
@@ -471,6 +451,34 @@ void PKBParser::getAssign() {
 		cout << ass[i] << endl;
 		t = stmtT->getStmtNode(ass[i]);
 		print(t);
+	}
+}
+
+void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx) {
+	while(child!=NULL){
+		//set parent
+		child->setParent(parent);
+		STMT_NO childIdx=child->getAttrib();
+		//set modifies for container
+		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
+		set<int>::iterator iterMod;
+		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
+		 {
+			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
+		 }
+		 
+		//set uses for container
+		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
+		set<int>::iterator iterUses;
+		
+        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
+        {
+			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
+			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
+		}
+		
+		child=child->getRightSibling();
 	}
 }
 
