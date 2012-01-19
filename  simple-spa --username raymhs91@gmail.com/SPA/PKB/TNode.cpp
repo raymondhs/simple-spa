@@ -55,7 +55,7 @@ void TNode::setFirstChild(TNode* firstChild) {
 void TNode::setRightSibling(TNode* rightSibling) {
 	this->rightSibling = rightSibling;
 	if(rightSibling != NULL) rightSibling->leftSibling=this;
-	if((this->type)==WHILE||(this->type)==ASSIGN){
+	if((this->type)==WHILE||(this->type)==ASSIGN||(this->type)==IF){
 		this->setFollower(rightSibling);
 		if(rightSibling != NULL) rightSibling->setFollowed(this);
 	}
