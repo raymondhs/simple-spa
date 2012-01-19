@@ -1,0 +1,42 @@
+procedure Second {
+
+while i {
+  x = 2 + x +y +z;
+  i = 1 + i; 
+   while p {
+	q=r+s+t;
+	t=u+v;
+
+	}
+}
+x = 0;
+  i = 5;
+  z = z + x + i;
+  y = 2 + z;
+}
+
+procedure Third {
+
+while i {
+  x = 2 + x +y +z;
+  i = 1 + i; 
+   while p {
+	if x then {
+		if x then {
+		q=r+s+t;
+		t=u+v;}
+	else {
+		q=r+s+t;
+		}
+		q=r+s+t;
+		t=u+v;}
+	else {
+		q=r+s+t;
+		}
+	}
+}
+x = 0;
+  i = 5;
+  z = z + x + i;
+  y = 2 + z;
+}
