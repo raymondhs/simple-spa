@@ -29,7 +29,9 @@ static QNode* exprSpec();
 
 static int entity();
 static void declaration();
-static QNode* suchthatClause();
+static QNode* suchThatCond();
+static QNode* pattern();
+static QNode* patternCond();
 static QNode* selectClause();
 
 typedef enum tokentype {
@@ -464,7 +466,7 @@ QNode* suchthatCond() {
 	return node;
 }
 
-QNode* patternClause() {
+QNode* pattern() {
 	QNode *node, *left, *right;
 
 	next_token = getToken();
@@ -489,10 +491,10 @@ QNode* patternClause() {
 }
 
 QNode* patternCond() {
-	QNode* node = patternClause(), *current = node;
+	QNode* node = pattern(), *current = node;
 	while(text == "and") {
 		next_token = getToken();
-		current->setRightSibling(patternClause());
+		current->setRightSibling(pattern());
 		current = current->getRightSibling();
 	}
 	return node;
