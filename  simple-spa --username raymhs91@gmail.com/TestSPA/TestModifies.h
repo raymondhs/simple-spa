@@ -19,6 +19,7 @@ CPPUNIT_TEST( testGetVarModifiedByProc );
 CPPUNIT_TEST( testIsModifiesStmt );
 CPPUNIT_TEST( testIsModifiesStmtUsingParser );
 CPPUNIT_TEST( testIsModifiesStmtUsingParser2 );
+CPPUNIT_TEST( testIsModifiesStmtUsingParser3 );
 CPPUNIT_TEST( testIsModifiesProc );
 CPPUNIT_TEST_SUITE_END();
 
@@ -44,6 +45,7 @@ void testGetVarModifiedByProc();
 void testIsModifiesStmt();
 void testIsModifiesStmtUsingParser();
 void testIsModifiesStmtUsingParser2();
+void testIsModifiesStmtUsingParser3();
 void testIsModifiesProc();
 
 };

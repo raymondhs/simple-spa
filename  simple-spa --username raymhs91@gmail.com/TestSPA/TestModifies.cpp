@@ -272,3 +272,82 @@ void TestModifies::testIsModifiesStmtUsingParser2(){
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(8,varMod-> getVarIndex("t"))==false);
 	cout <<"SUCCESS! OK! :)"<<endl;
 }
+
+void TestModifies::testIsModifiesStmtUsingParser3(){
+	cout << "testModifies:testIsModifiesStmtUsingParser3 =  ";
+	PKBParser::parse( "testcases/testPKB3.txt" );
+	/*
+	procedure Second {
+
+	while i {			//1
+	  x = 2 + x +y +z;	//2
+	  i = 1 + i;		//3
+	   while p {		//4
+		q=r+s+t;		//5
+		t=u+v;			//6
+		}				
+	}
+	x = 0;				//7
+	  i = 5;			//8
+	  z = z + x + i;	//9
+	  y = 2 + z;		//10
+	}
+
+	procedure Third {
+
+	while i {			//11
+	  x = 2 + x +y +z;	//12
+	  i = 1 + i;		//13
+	   while p {		//14
+		if x then {		//15
+			if x then {	//16
+				a=b+c+d;//17
+				e=f+g;}	//18
+			else {		
+				q=r+s+t;//19
+			}			
+			q=r+s+t;	//20
+			t=u+v;}		//21
+		else {			
+			q=r+s+t;	//22
+			}
+		}
+	}
+	x = 0;				//23
+	  i = 5;			//24
+	  z = z + x + i;	//25
+	  y = 2 + z;		//26
+	}
+	*/
+	CPPUNIT_ASSERT (modifies->isModifiesProc(0,varMod-> getVarIndex("x"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(0,varMod-> getVarIndex("i"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(0,varMod-> getVarIndex("q"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(0,varMod-> getVarIndex("t"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(0,varMod-> getVarIndex("z"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(0,varMod-> getVarIndex("y"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(0,varMod-> getVarIndex("a"))==false);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(0,varMod-> getVarIndex("e"))==false);
+
+	CPPUNIT_ASSERT (modifies->isModifiesProc(1,varMod-> getVarIndex("x"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(1,varMod-> getVarIndex("i"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(1,varMod-> getVarIndex("a"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(1,varMod-> getVarIndex("e"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(1,varMod-> getVarIndex("q"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(1,varMod-> getVarIndex("t"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(1,varMod-> getVarIndex("z"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesProc(1,varMod-> getVarIndex("y"))==true);
+
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(11,varMod-> getVarIndex("q"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(11,varMod-> getVarIndex("x"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(11,varMod-> getVarIndex("i"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(11,varMod-> getVarIndex("a"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(11,varMod-> getVarIndex("e"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(11,varMod-> getVarIndex("t"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(11,varMod-> getVarIndex("z"))==false);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(11,varMod-> getVarIndex("y"))==false);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(15,varMod-> getVarIndex("a"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(15,varMod-> getVarIndex("e"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(15,varMod-> getVarIndex("q"))==true);
+	CPPUNIT_ASSERT (modifies->isModifiesStmt(16,varMod-> getVarIndex("q"))==true);
+	cout <<"SUCCESS! OK! :)"<<endl;
+}

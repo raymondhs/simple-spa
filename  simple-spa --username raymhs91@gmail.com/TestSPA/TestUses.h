@@ -15,6 +15,7 @@ class TestUses : public CPPUNIT_NS::TestFixture
 CPPUNIT_TEST_SUITE( TestUses );
 CPPUNIT_TEST( testIsUsesStmtUsingParser );
 CPPUNIT_TEST( testIsUsesStmtUsingParser2 );
+CPPUNIT_TEST( testIsUsesStmtUsingParser3 );
 CPPUNIT_TEST( testGetStmtUsesVar );
 CPPUNIT_TEST( testGetProcUsesVar );
 CPPUNIT_TEST( testGetVarUsedByStmt );
@@ -46,6 +47,7 @@ void testGetVarUsedByProc();
 void testIsUsesStmt();
 void testIsUsesStmtUsingParser();
 void testIsUsesStmtUsingParser2();
+void testIsUsesStmtUsingParser3();
 void testIsUsesProc();
 
 };

@@ -291,3 +291,103 @@ void TestUses::testIsUsesStmtUsingParser2(){
 	CPPUNIT_ASSERT(uses->isUsesStmt(1,var-> getVarIndex("q"))==false);
 	cout <<"SUCCESS! OK! :)"<<endl;
 }
+
+void TestUses::testIsUsesStmtUsingParser3(){
+	cout << "testUses:testIsUsesStmtUsingParser3 =  ";
+	PKBParser::parse( "testcases/testPKB3.txt" );
+	/*
+	procedure Second {
+
+	while i {			//1
+	  x = 2 + x +y +z;	//2
+	  i = 1 + i;		//3
+	   while p {		//4
+		q=r+s+t;		//5
+		t=u+v;			//6
+		}				
+	}
+	x = 0;				//7
+	  i = 5;			//8
+	  z = z + x + i;	//9
+	  y = 2 + z;		//10
+	}
+
+	procedure Third {
+
+	while i {			//11
+	  x = 2 + x +y +z;	//12
+	  i = 1 + i;		//13
+	   while p {		//14
+		if x then {		//15
+			if x then {	//16
+				a=b+c+d;//17
+				e=f+g;}	//18
+			else {		
+				q=r+s+t;//19
+			}			
+			q=r+s+t;	//20
+			t=u+v;}		//21
+		else {			
+			q=r+s+t;	//22
+			}
+		}
+	}
+	x = 0;				//23
+	  i = 5;			//24
+	  z = z + x + i;	//25
+	  y = 2 + z;		//26
+	}
+	*/
+	CPPUNIT_ASSERT(uses->isUsesStmt(11,var-> getVarIndex("x"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(11,var-> getVarIndex("y"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(11,var-> getVarIndex("z"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(11,var-> getVarIndex("r"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(11,var-> getVarIndex("u"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(15,var-> getVarIndex("v"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(15,var-> getVarIndex("s"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(15,var-> getVarIndex("d"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(15,var-> getVarIndex("g"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(15,var-> getVarIndex("f"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(16,var-> getVarIndex("b"))==true);
+	CPPUNIT_ASSERT(uses->isUsesStmt(16,var-> getVarIndex("t"))==true);
+
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("x"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("y"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("z"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("i"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("p"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("r"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("s"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("t"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("u"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("v"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("b"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("c"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("d"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("f"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("g"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("q"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("a"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(0,var-> getVarIndex("e"))==false);
+
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("x"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("y"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("z"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("i"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("p"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("r"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("s"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("t"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("u"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("v"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("b"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("c"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("d"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("f"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("g"))==true);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("q"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("a"))==false);
+	CPPUNIT_ASSERT(uses->isUsesProc(1,var-> getVarIndex("e"))==false);
+	
+	cout <<"SUCCESS! OK! :)"<<endl;
+}
