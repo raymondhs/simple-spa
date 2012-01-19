@@ -456,6 +456,7 @@ void print() {
 }
 */
 
+
 QNode* suchthatCond() {
 	QNode* node = relRef(), *current = node;
 	while(text == "and"){
