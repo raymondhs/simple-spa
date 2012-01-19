@@ -32,6 +32,18 @@ void QueryTree::addPattern(QNode* pattern) {
 	}
 }
 
+void QueryTree::addWith(QNode* with) {
+	if(this->with->getLeftChild() == NULL) {
+		this->with->setLeftChild(with);
+	} else {
+		QNode* current = this->with->getLeftChild();
+		while(current->getRightSibling() != NULL) {
+			current = current->getRightSibling();
+		}
+		current->setRightSibling(with);
+	}
+}
+
 void QueryTree::setResult(QNode* result){
 	this->result = result;
 }

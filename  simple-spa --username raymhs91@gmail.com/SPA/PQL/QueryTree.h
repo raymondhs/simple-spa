@@ -38,6 +38,13 @@ public:
 	void addPattern(QNode* pattern);
 
 	/**
+	 * Adds a new "with" condition to query tree
+	 *
+	 * @param with Reference to "with" condition
+	 */
+	void addWith(QNode* with);
+
+	/**
 	 * Sets the "Select" sub-root
 	 *
 	 * @param result "Select" sub-root to be set
