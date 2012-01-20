@@ -24,6 +24,9 @@ static QNode* relRef();
 
 static QNode* ref();
 static QNode* attrRef();
+static QNode* attrCond();
+static QNode* attrCompare();
+void attrName(int type);
 static QNode* term();
 static QNode* factor();
 static QNode* expr();
@@ -34,9 +37,6 @@ static void declaration();
 static QNode* suchThatCond();
 static QNode* pattern();
 static QNode* patternCond();
-static QNode* attrCond();
-static QNode* attrCompare();
-void attrName(int type);
 static QNode* selectClause();
 
 typedef enum tokentype {
@@ -318,13 +318,12 @@ QNode* ref(){
 		match(TDQUOTE);
 	}
 	else if(next_token == TNAME){
-		attrRef();
+		ref = attrRef();
 	}
 	return ref;
 }
 
 QNode* attrRef(){
-	cout<<"before new QNode"<<endl;
 	QNode* attr = new QNode();
 	int synIdx = SynTable::getSynTable()->getSynIdx(text);
 	if(synIdx == -1) {
@@ -336,40 +335,89 @@ QNode* attrRef(){
 	match(TDOT);
 	attrName(type);
 	attr->setType(QSYN);
+	attr->setIntVal(synIdx);
 	return attr;
 }
+
+QNode* attrCond() {
+	QNode* node = attrCompare(), *current = node;
+	while(text == "and") {
+		next_token = getToken();
+		current->setRightSibling(attrCompare());
+		current = current->getRightSibling();
+	}
+	return node;
+}
+
+QNode* attrCompare(){
+	QNode *node, *left, *right;
+	next_token = getToken();
+	left = attrRef();
+	match(TEQUAL);
+	right = ref();
+
+	int synIdx1 = left->getIntVal(), synIdx2 = right->getIntVal();
+	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
+	int typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
+
+	if (typeLeft==QVAR || typeLeft==QCALL || typeLeft==QPROC){
+		if (typeRight==QCONST || typeRight == QSTMT){
+			PQLParser::cleanUp();
+			throw ParseException("Error: Cannot compare string with an integer.");
+		}
+	}
+	else if (typeLeft==QCONST || typeLeft==QSTMT){
+		if (typeRight==QVAR || typeRight == QCALL || typeRight == QPROC){
+			PQLParser::cleanUp();
+			throw ParseException("Error: Cannot compare string with an integer.");
+		}
+	}
+
+	node = new QNode(QWITH);
+	node->setLeftChild(left);
+	node->setRightChild(right);
+
+	return node;
+}
+
 void attrName(int type){
+	bool isValid = true;
 	if (type == QVAR){
 		if(text=="varName"){
 			next_token=getToken();
 			return;
-		}
+		} else isValid = false;
 	}
 	else if (type == QPROC){
 		if(text=="procName"){
 			next_token=getToken();
 			return;
-		}
+		} else isValid = false;
 	}
 	else if (type == QCALL){
 		if(text=="procName"){
 			next_token=getToken();
 			return;
-		}
+		} else isValid = false;
 	}
 	else if (type == QCONST){
 		if(text=="value"){
 			next_token=getToken();
 			return;
-		}
+		} else isValid = false;
 	}
 	else if (type == QSTMT){
+		cout << text << endl;
 		if(text=="stmt#"){
 			next_token=getToken();
 			return;
-		}
+		} else isValid = false;
 	}
 	else{
+		isValid = false;
+	}
+
+	if(!isValid) {
 		PQLParser::cleanUp();
 		throw ParseException("Syntax error: Invalid query.");
 	}
@@ -579,29 +627,6 @@ QNode* patternCond() {
 		current->setRightSibling(pattern());
 		current = current->getRightSibling();
 	}
-	return node;
-}
-
-QNode* attrCond() {
-	QNode* node = attrCompare(), *current = node;
-	while(text == "and") {
-		next_token = getToken();
-		current->setRightSibling(attrCompare());
-		current = current->getRightSibling();
-	}
-	return node;
-}
-
-QNode* attrCompare(){
-	QNode *node, *left, *right;
-	next_token = getToken();
-	left = attrRef();
-	match(TEQUAL);
-	right = ref();
-	node = new QNode(QWITH);
-	node->setLeftChild(left);
-	node->setRightChild(right);
-
 	return node;
 }
 
