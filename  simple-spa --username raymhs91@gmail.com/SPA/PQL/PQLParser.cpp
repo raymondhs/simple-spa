@@ -356,9 +356,16 @@ QNode* attrCompare(){
 	match(TEQUAL);
 	right = ref();
 
-	int synIdx1 = left->getIntVal(), synIdx2 = right->getIntVal();
+	int synIdx1 = left->getIntVal();
+	int synIdx2 = right->getType();
+	int typeRight;
+	if(synIdx2 == QSYN){
+		synIdx2 = right->getIntVal();
+		typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
+	} else
+		typeRight = right->getType();
+	
 	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
-	int typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
 
 	if (typeLeft==QVAR || typeLeft==QCALL || typeLeft==QPROC){
 		if (typeRight==QCONST || typeRight == QSTMT){
@@ -367,7 +374,7 @@ QNode* attrCompare(){
 		}
 	}
 	else if (typeLeft==QCONST || typeLeft==QSTMT){
-		if (typeRight==QVAR || typeRight == QCALL || typeRight == QPROC){
+		if (typeRight==QVAR || typeRight == QCALL || typeRight == QPROC || typeRight == QSTRING){
 			PQLParser::cleanUp();
 			throw ParseException("Error: Cannot compare string with an integer.");
 		}
