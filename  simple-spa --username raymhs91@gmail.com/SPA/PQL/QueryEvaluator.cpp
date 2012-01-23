@@ -8,6 +8,7 @@
 #include "../PKB/UsesTable.h"
 #include "../PKB/AST.h"
 #include "../PKB/VarTable.h"
+#include "../PKB/ProcTable.h"
 #include "../PKB/StmtTable.h"
 #include "SynTable.h"
 #include "../PKB/ConstantTable.h"
@@ -230,8 +231,8 @@ void deleteRow(int row) {
 void evaluateWith(){
 	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
 	while(with != NULL){
-		QNode* leftArg = such->getLeftChild();
-		QNode* rightArg = such->getRightChild();
+		QNode* leftArg = with->getLeftChild();
+		QNode* rightArg = with->getRightChild();
 		if(leftArg->getType() == QSYN) {
 			if(mapper.count(leftArg->getIntVal()) == 0) {
 				addAttribute(leftArg->getIntVal());
@@ -243,8 +244,72 @@ void evaluateWith(){
 				addAttribute(rightArg->getIntVal());
 			}
 		}
+		int synIdx1 = leftArg->getIntVal();
+		int synIdx2 = rightArg->getType();
+		int typeRight;
+		if(synIdx2 == QSYN){
+			synIdx2 = rightArg->getIntVal();
+			typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
+		} else
+			typeRight = rightArg->getType();
+	
+		int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
+
 		/*TODO
 		*/
+		if(typeLeft==QVAR){
+			if(typeRight==QSTRING){
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					string name=VarTable::getVarTable()->getVarName(table[aIdx][i]);
+					if(name!=rightArg->getStrVal()) deleteRow(i);
+				}
+			} else if(typeRight==QVAR){
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
+				}
+			} else if(typeRight==QPROC){
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					string name1=VarTable::getVarTable()->getVarName(table[aIdx1][i]);
+					string name2=ProcTable::getProcTable()->getProcName(table[aIdx2][i]);				
+					if(name1!=name2) deleteRow(i);
+				}
+			}
+		} else if(typeLeft==QPROC){
+			if(typeRight==QSTRING){
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					string name=ProcTable::getProcTable()->getProcName(table[aIdx][i]);
+					if(name!=rightArg->getStrVal()) deleteRow(i);
+				}
+			} else if(typeRight==QVAR){
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					string name1=ProcTable::getProcTable()->getProcName(table[aIdx1][i]);
+					string name2=VarTable::getVarTable()->getVarName(table[aIdx2][i]);
+					if(name1!=name2) deleteRow(i);
+				}
+			} else if(typeRight==QPROC){
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
+				}
+			}
+		} else if(typeLeft==QSTMT){
+			if(typeRight==QCONST){
+				int aIdx1 = mapper[synIdxLeft];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(table[aIdx1][i]!=rightArg->getIntVal()) deleteRow(i);
+				}
+			} else if(typeRight==QSTMT){
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
+				}
+			} 
+		}
 		with = with->getRightSibling();
 	}
 }
@@ -682,6 +747,8 @@ vector<string> QueryEvaluator::evaluate() {
 	evaluateSuchThat();
 	
 	evaluatePattern();
+
+	evaluateWith();
 
 	QNode* sel = qt->getResult()->getLeftChild();
 	int selIdx = sel->getIntVal();
