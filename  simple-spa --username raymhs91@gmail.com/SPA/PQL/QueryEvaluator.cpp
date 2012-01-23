@@ -227,6 +227,28 @@ void deleteRow(int row) {
 	}
 }
 
+void evaluateWith(){
+	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
+	while(with != NULL){
+		QNode* leftArg = such->getLeftChild();
+		QNode* rightArg = such->getRightChild();
+		if(leftArg->getType() == QSYN) {
+			if(mapper.count(leftArg->getIntVal()) == 0) {
+				addAttribute(leftArg->getIntVal());
+			}
+		}
+
+		if(rightArg->getType() == QSYN) {
+			if(mapper.count(rightArg->getIntVal()) == 0) {
+				addAttribute(rightArg->getIntVal());
+			}
+		}
+		/*TODO
+		*/
+		with = with->getRightSibling();
+	}
+}
+
 void evaluateSuchThat() {
 	QNode* such = qt->getSuchThat()->getLeftChild(); // ONLY 1 SUCH THAT
 	while(such != NULL){
