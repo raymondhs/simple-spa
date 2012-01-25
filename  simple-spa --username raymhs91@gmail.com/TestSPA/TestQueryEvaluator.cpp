@@ -4379,20 +4379,6 @@ void TestQueryEvaluator::testWith(){
 	}
 
 	cout << "testWith = ";
-	query = declaration + "Select a1";
-	PQLParser::parse(query);
-	
-	result.push_back("1");
-
-	try {
-		ans = QueryEvaluator::evaluate();
-	} catch (exception&e) {
-		cout << e.what() << endl;
-		cout << "Test 9 " << endl;
-	}
-
-	CPPUNIT_ASSERT(ans == result);
-	result.clear();
 	
 	/* Test 9 */
 	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=1";
@@ -4428,16 +4414,8 @@ void TestQueryEvaluator::testWith(){
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
-	result.push_back("3");
-	result.push_back("4");
 	result.push_back("5");
-	result.push_back("6");
-	result.push_back("7");
-	result.push_back("8");
-	result.push_back("9");
-	result.push_back("10");
-	result.push_back("11");
-
+	
 	try {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception&e) {

@@ -257,18 +257,18 @@ void evaluateWith(){
 
 		if(typeLeft==QVAR){
 			if(typeRight==QSTRING){
-				int aIdx = mapper[synIdxLeft];
+				int aIdx = mapper[synIdx1];
 				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 					string name=VarTable::getVarTable()->getVarName(table[aIdx][i]);
 					if(name!=rightArg->getStrVal()) deleteRow(i);
 				}
 			} else if(typeRight==QVAR){
-				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
 				}
 			} else if(typeRight==QPROC){
-				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					string name1=VarTable::getVarTable()->getVarName(table[aIdx1][i]);
 					string name2=ProcTable::getProcTable()->getProcName(table[aIdx2][i]);				
@@ -277,37 +277,37 @@ void evaluateWith(){
 			}
 		} else if(typeLeft==QPROC){
 			if(typeRight==QSTRING){
-				int aIdx = mapper[synIdxLeft];
+				int aIdx = mapper[synIdx1];
 				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 					string name=ProcTable::getProcTable()->getProcName(table[aIdx][i]);
 					if(name!=rightArg->getStrVal()) deleteRow(i);
 				}
 			} else if(typeRight==QVAR){
-				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					string name1=ProcTable::getProcTable()->getProcName(table[aIdx1][i]);
 					string name2=VarTable::getVarTable()->getVarName(table[aIdx2][i]);
 					if(name1!=name2) deleteRow(i);
 				}
 			} else if(typeRight==QPROC){
-				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
 				}
 			}
 		} else if(typeLeft==QSTMT||typeLeft==QCONST){
 			if(typeRight==QINT){
-				int aIdx1 = mapper[synIdxLeft];
+				int aIdx1 = mapper[synIdx1];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=rightArg->getIntVal()) deleteRow(i);
 				}
 			} else if(typeRight==QSTMT){
-				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
 				}
 			} else if(typeRight==QCONST){
-				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
 				}
