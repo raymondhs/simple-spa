@@ -238,12 +238,12 @@ void evaluateWith(){
 				addAttribute(leftArg->getIntVal());
 			}
 		}
-
 		if(rightArg->getType() == QSYN) {
 			if(mapper.count(rightArg->getIntVal()) == 0) {
 				addAttribute(rightArg->getIntVal());
 			}
 		}
+
 		int synIdx1 = leftArg->getIntVal();
 		int synIdx2 = rightArg->getType();
 		int typeRight;

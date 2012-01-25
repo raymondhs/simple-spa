@@ -45,6 +45,7 @@ int main() {
 			/*string decl = "while w1,w2; assign a1,a2; stmt s1,s2; variable v1, v2; prog_line n1, n2; constant c1, c2; ";
 			string st = "Select w1 such that Uses(w1,\"x\") and Uses(w1,\"i\") and Parent(w1,w2)";
 			string qq = decl + st;*/
+			cout << q <<endl;
 			PQLParser::parse(q);
 			printResult(QueryEvaluator::evaluate());
 		} catch (exception& e) {

@@ -4371,13 +4371,28 @@ void TestQueryEvaluator::testAnd(){
 	cout << "SUCCESS! testAnd :p" <<endl;
 }
 
-
 void TestQueryEvaluator::testWith(){
 	try {
 		PKBParser::parse("testcases/testQuery.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
+
+	cout << "testWith = ";
+	query = declaration + "Select a1";
+	PQLParser::parse(query);
+	
+	result.push_back("1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 	
 	/* Test 9 */
 	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=1";
