@@ -4370,3 +4370,139 @@ void TestQueryEvaluator::testAnd(){
 
 	cout << "SUCCESS! testAnd :p" <<endl;
 }
+
+
+void TestQueryEvaluator::testWith(){
+	try {
+		PKBParser::parse("testcases/testQuery.txt");
+	} catch (exception& e) {
+		cout << "PKBParser: " << e.what() << endl;
+	}
+	
+	/* Test 9 */
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=1";
+	PQLParser::parse(query);
+	result.push_back("1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 10 */
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=9999";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 11 */
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=c1.value";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 12 */
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=c1.value and c1.value=c2.value and c2.value=2";
+	PQLParser::parse(query);
+	result.push_back("2");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 13 */
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=c1.value and c1.value=c2.value and c2.value=10000";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 14 */
+	query = declaration + "Select c1 with c1.value=0";
+	PQLParser::parse(query);
+	result.push_back("0");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 15 */
+	query = declaration + "Select c1 with c1.value=99999";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 16 */
+	query = declaration + "Select c1 with c1.value=c2.value and c2.value=2";
+	PQLParser::parse(query);
+	result.push_back("2");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+}

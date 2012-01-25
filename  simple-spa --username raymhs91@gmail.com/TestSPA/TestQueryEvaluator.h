@@ -17,6 +17,7 @@ CPPUNIT_TEST( testModifies );
 CPPUNIT_TEST( testUses );
 CPPUNIT_TEST( testPattern );
 CPPUNIT_TEST( testAnd );
+CPPUNIT_TEST( testWith );
 CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -37,6 +38,7 @@ public:
 	void testUses();
 	void testPattern();
 	void testAnd();
+	void testWith();
 };
 #endif
 

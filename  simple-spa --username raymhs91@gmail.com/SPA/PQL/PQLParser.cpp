@@ -342,7 +342,7 @@ QNode* attrRef(){
 QNode* attrCond() {
 	QNode* node = attrCompare(), *current = node;
 	while(text == "and") {
-		next_token = getToken();
+		//next_token = getToken();
 		current->setRightSibling(attrCompare());
 		current = current->getRightSibling();
 	}
