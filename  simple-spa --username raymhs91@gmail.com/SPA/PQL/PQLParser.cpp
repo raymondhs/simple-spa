@@ -368,7 +368,7 @@ QNode* attrCompare(){
 	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
 
 	if (typeLeft==QVAR || typeLeft==QCALL || typeLeft==QPROC){
-		if (typeRight==QCONST || typeRight == QSTMT){
+		if (typeRight==QCONST || typeRight == QSTMT || typeRight == QINT){
 			PQLParser::cleanUp();
 			throw ParseException("Error: Cannot compare string with an integer.");
 		}
@@ -448,7 +448,7 @@ QNode* term() {
 QNode* factor() {
 	QNode* fac;
 	if(next_token == TINTEGER) {
-		fac = new QNode(QCONST);
+		fac = new QNode(QINT);
 		fac->setIntVal(atoi(text.c_str()));
 		next_token = getToken();
 	} else if(next_token == TNAME){

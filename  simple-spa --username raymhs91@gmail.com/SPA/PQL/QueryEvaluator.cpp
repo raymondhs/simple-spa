@@ -62,7 +62,7 @@ void initVars(QNode* leftArg, QNode* rightArg) {
 	rightType = rightArg->getType();
 
 	if(leftType == QSYN) synIdxLeft = leftArg->getIntVal();
-	if(leftType == QCONST) {
+	if(leftType == QINT) {
 		constLeft = leftArg->getIntVal();
 		stmt1 = st->getStmtNode(constLeft);
 		if(stmt1 == NULL) valid = false;
@@ -73,7 +73,7 @@ void initVars(QNode* leftArg, QNode* rightArg) {
 		varIdx = var->getVarIndex(rightArg->getStrVal());
 		if(varIdx == -1) valid = false;
 	}
-	if(rightType == QCONST) {
+	if(rightType == QINT) {
 		constRight = rightArg->getIntVal();
 		stmt2 = st->getStmtNode(constRight);
 		if(stmt2 == NULL) valid = false;
@@ -255,8 +255,6 @@ void evaluateWith(){
 	
 		int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
 
-		/*TODO
-		*/
 		if(typeLeft==QVAR){
 			if(typeRight==QSTRING){
 				int aIdx = mapper[synIdxLeft];
@@ -297,8 +295,8 @@ void evaluateWith(){
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
 				}
 			}
-		} else if(typeLeft==QSTMT){
-			if(typeRight==QCONST){
+		} else if(typeLeft==QSTMT||typeLeft==QCONST){
+			if(typeRight==QINT){
 				int aIdx1 = mapper[synIdxLeft];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=rightArg->getIntVal()) deleteRow(i);
@@ -308,8 +306,13 @@ void evaluateWith(){
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
 				}
-			} 
-		}
+			} else if(typeRight==QCONST){
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
+				}
+			}
+		} 
 		with = with->getRightSibling();
 	}
 }
@@ -427,8 +430,8 @@ void evaluatePattern() {
 void handleParent(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
-	if(leftType == QCONST) {
-		if(rightType == QCONST) {
+	if(leftType == QINT) {
+		if(rightType == QINT) {
 			if(!(stmt1->isParent(stmt2))) clearTable();
 		} else if(rightType == QANY) {
 			if(stmt1->getParentedBy().size() == 0) clearTable();
@@ -440,7 +443,7 @@ void handleParent(QNode* query) {
 			}
 		}
 	} else if(leftType == QANY) {
-		if(rightType == QCONST) {
+		if(rightType == QINT) {
 			if(stmt2->getParent() == NULL) clearTable();
 		} else if(rightType == QANY) {
 			if(st->getAllWhile().size() == 0) clearTable();
@@ -452,7 +455,7 @@ void handleParent(QNode* query) {
 			}
 		}
 	} else if(leftType == QSYN) {
-		if(rightType == QCONST) {
+		if(rightType == QINT) {
 			int aIdx = mapper[synIdxLeft];
 			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 				TNode* stmtNode = st->getStmtNode(table[aIdx][i]);
@@ -478,8 +481,8 @@ void handleParent(QNode* query) {
 void handleParentT(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
-	if(leftType == QCONST) {
-		if(rightType == QCONST) {
+	if(leftType == QINT) {
+		if(rightType == QINT) {
 			if(!(stmt1->isParentTransitive(stmt2))) clearTable();
 		} else if(rightType == QANY) {
 			if(stmt1->getParentedBy().size() == 0) clearTable();
@@ -491,7 +494,7 @@ void handleParentT(QNode* query) {
 			}
 		}
 	} else if(leftType == QANY) {
-		if(rightType == QCONST) {
+		if(rightType == QINT) {
 			if(stmt2->getParent() == NULL) clearTable();
 		} else if(rightType == QANY) {
 			if(st->getAllWhile().size() == 0) clearTable();
@@ -503,7 +506,7 @@ void handleParentT(QNode* query) {
 			}
 		}
 	} else if(leftType == QSYN) {
-		if(rightType == QCONST) {
+		if(rightType == QINT) {
 			int aIdx = mapper[synIdxLeft];
 			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 				TNode* stmtNode = st->getStmtNode(table[aIdx][i]);
@@ -529,8 +532,8 @@ void handleParentT(QNode* query) {
 void handleFollows(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
-	if(leftType == QCONST) {
-		if(rightType == QCONST) {
+	if(leftType == QINT) {
+		if(rightType == QINT) {
 			if(!(stmt1->isFollows(stmt2))) clearTable();
 		} else if(rightType == QANY) {
 			if(stmt1->getFollows() == NULL) clearTable();
@@ -542,7 +545,7 @@ void handleFollows(QNode* query) {
 			}
 		}
 	} else if(leftType == QANY) {
-		if(rightType == QCONST) {
+		if(rightType == QINT) {
 			if(stmt2->getFollowedBy() == NULL) clearTable();
 		} else if(rightType == QANY) {
 			bool found = false;
@@ -559,7 +562,7 @@ void handleFollows(QNode* query) {
 			}
 		}
 	} else if(leftType == QSYN) {
-		if(rightType == QCONST) {
+		if(rightType == QINT) {
 			int aIdx = mapper[synIdxLeft];
 			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 				TNode* stmtNode = st->getStmtNode(table[aIdx][i]);
@@ -585,8 +588,8 @@ void handleFollows(QNode* query) {
 void handleFollowsT(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
-	if(leftType == QCONST) {
-		if(rightType == QCONST) {
+	if(leftType == QINT) {
+		if(rightType == QINT) {
 			if(!(stmt1->isFollowsTransitive(stmt2))) clearTable();
 		} else if(rightType == QANY) {
 			if(stmt1->getFollows() == NULL) clearTable();
@@ -598,7 +601,7 @@ void handleFollowsT(QNode* query) {
 			}
 		}
 	} else if(leftType == QANY) {
-		if(rightType == QCONST) {
+		if(rightType == QINT) {
 			if(stmt2->getFollowedBy() == NULL) clearTable();
 		} else if(rightType == QANY) {
 			bool found = false;
@@ -615,7 +618,7 @@ void handleFollowsT(QNode* query) {
 			}
 		}
 	} else if(leftType == QSYN) {
-		if(rightType == QCONST) {
+		if(rightType == QINT) {
 			int aIdx = mapper[synIdxLeft];
 			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 				TNode* stmtNode = st->getStmtNode(table[aIdx][i]);
@@ -641,7 +644,7 @@ void handleFollowsT(QNode* query) {
 void handleModifies(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
-	if(leftType == QCONST) {
+	if(leftType == QINT) {
 		if(rightType == QSTRING) {
 			if(!(m->isModifiesStmt(constLeft,varIdx))) clearTable();
 		} else if(rightType == QANY) {
@@ -686,7 +689,7 @@ void handleModifies(QNode* query) {
 void handleUses(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
-	if(leftType == QCONST) {
+	if(leftType == QINT) {
 		if(rightType == QSTRING) {
 			if(!(u->isUsesStmt(constLeft,varIdx))) clearTable();
 		} else if(rightType == QANY) {
