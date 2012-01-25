@@ -148,7 +148,7 @@ QNode* stmtRef() {
 	} else if(next_token == TINTEGER) {
 		stmt->setIntVal(atoi(text.c_str()));
 		next_token = getToken();
-		stmt->setType(QCONST);
+		stmt->setType(QINT);
 	} else if(next_token == TNAME) {
 		stmt->setIntVal(getSynIdx(text));
 		next_token = getToken();
@@ -306,7 +306,7 @@ QNode* expr() {
 QNode* ref(){
 	QNode* ref = new QNode();
 	if(next_token == TINTEGER) {
-		ref = new QNode(QCONST);
+		ref = new QNode(QINT);
 		ref->setIntVal(atoi(text.c_str()));
 		next_token = getToken();
 	}
