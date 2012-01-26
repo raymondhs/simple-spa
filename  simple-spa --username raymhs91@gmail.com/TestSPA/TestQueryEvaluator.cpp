@@ -19,7 +19,7 @@
 using namespace std;
 
 void TestQueryEvaluator::setUp() {
-	declaration = "while w1,w2; assign a,a1,a2; stmt s,s#,s1,s2; variable v1, v2; prog_line n1, n2; constant c1, c2; ";
+	declaration = "while w1,w2,w3,w4; assign a,a1,a2,a3,a4; stmt s,s#,s1,s2,s3,s4; variable v1,v2,v3,v4; prog_line n1, n2, n3,n4; constant c1, c2, c3,c4; ";
 }
 
 void TestQueryEvaluator::tearDown() {
@@ -4377,8 +4377,185 @@ void TestQueryEvaluator::testWith(){
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
+	cout<< "testWith = "<<endl;
 
-	cout << "testWith = ";
+	/* Test 1 */
+	query = declaration + "Select a1 with v1.varName=\"x\"";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("11");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 2 */
+
+	query = declaration + "Select s1 with v1.varName=\"x\"";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 3 */
+
+	query = declaration + "Select a1 with v1.varName=\"x\" and s1.stmt#=10";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("11");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 4 */
+
+	query = declaration + "Select s1 with v1.varName=\"x\" and s1.stmt#=10";
+	PQLParser::parse(query);
+	result.push_back("10");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 5 */
+
+	query = declaration + "Select a1 with v1.varName=v2.varName and v2.varName=\"k\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 6 */
+
+	query = declaration + "Select a1 with v1.varName=v2.varName and v2.varName=\"z\"";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("11");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 7 */
+
+	query = declaration + "Select a1 with v1.varName=v2.varName and v2.varName=v3.varName";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("11");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 8 */
+
+	query = declaration + "Select a1 with v1.varName=v2.varName and v2.varName=v3.varName and v4.varName=\"y\"";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("11");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 	
 	/* Test 9 */
 	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=1";
@@ -4498,4 +4675,6 @@ void TestQueryEvaluator::testWith(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
+
+	cout << "SUCCESS! testWith :p" <<endl;
 }
