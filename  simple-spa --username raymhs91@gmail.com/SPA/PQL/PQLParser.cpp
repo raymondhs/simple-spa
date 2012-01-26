@@ -45,7 +45,7 @@ typedef enum tokentype {
 	TEOF, TINVALID, TPROCEDURE, TIF, TTHEN, TELSE, TCALL,
 	TSELECT, TSUCH, TTHAT, TAND, TPROG, TLINE,
 	TSTMT, TASSIGN, TWHILE, TVAR, TCONST,
-	TPARENT, TFOLLOWS, TMODIFIES, TUSES
+	TPARENT, TFOLLOWS, TMODIFIES, TUSES, TBOOL
 };
 
 int getSynIdx(string name) {
@@ -117,6 +117,7 @@ int getToken() {
 					if(text == "Uses") return TUSES;
 					if(text == "Parent") return TPARENT;
 					if(text == "Follows") return TFOLLOWS;
+					if(text == "BOOLEAN") return TBOOL;
 					return TNAME; 
 				}
 				else { return TINVALID; }
@@ -646,18 +647,25 @@ QNode* selectClause() {
 		declaration();
 	}
 	match(TSELECT);
+	
+	if (text!="BOOLEAN"){
+		int synIdx = SynTable::getSynTable()->getSynIdx(text);
+		if(synIdx == -1) {		
+			PQLParser::cleanUp();
+			throw ParseException("Error: Undeclared variable: " + text);
+		} else {
+			QNode* selNode = new QNode(QSYN);
+			selNode->setIntVal(synIdx);
+			qt->getResult()->setLeftChild(selNode);
+		}
 
-	int synIdx = SynTable::getSynTable()->getSynIdx(text);
-	if(synIdx == -1) {		
-		PQLParser::cleanUp();
-		throw ParseException("Error: Undeclared variable: " + text);
-	} else {
-		QNode* selNode = new QNode(QSYN);
-		selNode->setIntVal(synIdx);
-		qt->getResult()->setLeftChild(selNode);
+		match(TNAME);
 	}
-
-	match(TNAME);
+	else{
+			QNode* selNode = new QNode(QBOOL);
+			qt->getResult()->setLeftChild(selNode);
+			match(TBOOL);
+	}
 
 	while(text != "") {
 		if(text == "such") {

@@ -43,3 +43,11 @@ void ProcTable::clearTable(){
 	nameToIdx.clear();
 	idxToName.clear();
 }
+
+std::vector<int> ProcTable::getAllProc() {
+	vector<int> result;
+	for(int i = 0; i < getSize(); i++) {
+		result.push_back(i);
+	}
+	return result;
+}

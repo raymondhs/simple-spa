@@ -58,6 +58,13 @@ public:
 	PROC_IDX getProcIndex(PROC_NAME procName);
 
 	/**
+	 * Gets all procedures in the program
+	 *
+	 * @return Vector of procedures indices in the program
+	 */
+
+	std::vector<int> getAllProc();
+	/**
 	 * Clears the procedure table
 	 */
 	void clearTable();

@@ -28,6 +28,7 @@ static StmtTable *st;
 static UsesTable *u;
 static AST *ast;
 static ConstantTable *ct;
+static ProcTable *pt;
 static vector< vector<int> > table;
 static map< int, int > mapper;
 
@@ -39,6 +40,7 @@ static void addAttribute(int synIdx);
 static void clearTable();
 static bool isEmptyResult();
 
+static void evaluateWith();
 static void evaluateSuchThat();
 static void evaluatePattern();
 static void handleParent(QNode* query);
@@ -123,6 +125,8 @@ vector<int> allEntitiesWithType(int type) {
 			result = st->getAllWhile(); break;
 		case QVAR:
 			result = var->getAllVar(); break;
+		case QPROC:
+			result = pt->getAllProc(); break;
 		case QCONST:
 			result = ct->getAllConstant(); break;
 		case QPROGLINE:
@@ -739,6 +743,7 @@ vector<string> QueryEvaluator::evaluate() {
 	qt = QueryTree::getQueryTree();
 	syn = SynTable::getSynTable();
 	st = StmtTable::getStmtTable();
+	pt = ProcTable::getProcTable();
 	m = ModifiesTable::getModifiesTable();
 	var = VarTable::getVarTable();
 	u = UsesTable::getUsesTable();
@@ -754,39 +759,56 @@ vector<string> QueryEvaluator::evaluate() {
 	evaluateWith();
 
 	QNode* sel = qt->getResult()->getLeftChild();
-	int selIdx = sel->getIntVal();
-	int selType = syn->getSyn(selIdx).second;
-	int aSelIdx = mapper[selIdx];
-	
-	/*
-	for(ui i = 0; i < table.size(); i++) {
-		for(ui j = 0; j < table[i].size(); j++) {
-			cout << table[i][j] << " ";
-		}
-		cout << endl;
-	}
-	*/
-
-	set<int> unique;
-	for(unsigned i = 1; i < table[aSelIdx].size(); i++) {
-		unique.insert(table[aSelIdx][i]);
-	}
 
 	vector<string> resultString;
-	for(set<int>::iterator it = unique.begin(); it != unique.end(); it++) {
-		if(selType == QVAR) {
-			resultString.push_back(var->getVarName(*it));
-		} else {
-			stringstream out;
-			out << *it;
-			resultString.push_back(out.str());
+
+	if (sel->getType() == QBOOL){
+		if(valid && table.size() > 0 && table[0].size() > 0) {
+			resultString.push_back("TRUE");
 		}
-	}
+		else{
+			resultString.push_back("FALSE");
+		}
+	} else {
+
+		int selIdx = sel->getIntVal();
+		int selType = syn->getSyn(selIdx).second;
+		int aSelIdx = mapper[selIdx];
 	
-	/*for(ui i = 0; i < resultString.size(); i++) {
-		cout << resultString[i] << " ";
+		/*
+		for(ui i = 0; i < table.size(); i++) {
+			for(ui j = 0; j < table[i].size(); j++) {
+				cout << table[i][j] << " ";
+			}
+			cout << endl;
+		}
+		*/
+
+		set<int> unique;
+		for(unsigned i = 1; i < table[aSelIdx].size(); i++) {
+			unique.insert(table[aSelIdx][i]);
+		}
+
+		for(set<int>::iterator it = unique.begin(); it != unique.end(); it++) {
+			if(selType == QVAR) {
+				resultString.push_back(var->getVarName(*it));
+			} 
+			else if(selType ==QPROC){
+				resultString.push_back(pt->getProcName(*it));
+			}
+			else {
+				stringstream out;
+				out << *it;
+				resultString.push_back(out.str());
+			}
+		}
+	
+		/*for(ui i = 0; i < resultString.size(); i++) {
+			cout << resultString[i] << " ";
+		}
+		cout << endl;*/
+
 	}
-	cout << endl;*/
 
 	PQLParser::cleanUp();
 	return resultString;
