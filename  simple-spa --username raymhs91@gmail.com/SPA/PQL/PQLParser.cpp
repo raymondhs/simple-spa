@@ -186,7 +186,7 @@ QNode* entRef() {
 QNode* relRef() {
 	string relName = "", temp;
 	int arg1, arg2, tok;
-	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE;
+	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF;
 	QNode *rel, *arg1node, *arg2node;
 	if(text == "Modifies" || text == "Uses") {
 		arg1 = allStmt;
@@ -518,6 +518,9 @@ int entity() {
 		match(TUNDERSCORE);
 		match(TLINE);
 		return QPROGLINE;
+	} else if(text == "if") {
+		next_token = getToken();
+		return QIF;
 	} else {
 		PQLParser::cleanUp();
 		throw ParseException("Syntax error: Invalid query.");

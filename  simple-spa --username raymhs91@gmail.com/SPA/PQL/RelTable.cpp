@@ -28,13 +28,16 @@ void RelTable::init() {
 	mapper.insert(pair<string, vector< vector<int> > >("Modifies",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Uses",vector< vector<int> >()));
 
-	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE;
+	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF;
 	insertRow("Parent",allStmt,allStmt);
 	insertRow("Parent*",allStmt,allStmt);
 	insertRow("Follows",allStmt,allStmt);
 	insertRow("Follows*",allStmt,allStmt);
 	insertRow("Modifies",allStmt,QVAR);
 	insertRow("Uses",allStmt,QVAR);
+
+	insertRow("Modifies",QPROC,QVAR);
+	insertRow("Uses",QPROC,QVAR);
 }
 
 bool RelTable::validate(std::string relName, int arg1, int arg2) {

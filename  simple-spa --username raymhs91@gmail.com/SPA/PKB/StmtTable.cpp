@@ -63,3 +63,12 @@ std::vector<int> StmtTable::getAllProgline() {
 	}
 	return result;
 }
+
+std::vector<int> StmtTable::getAllIf() {
+	vector<int> result;
+	for(int i = 0; i < getSize(); i++) {
+		if(getStmtNode(i+1)->getType() == IF)
+			result.push_back(i+1);
+	}
+	return result;
+}

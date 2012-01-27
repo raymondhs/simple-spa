@@ -75,6 +75,8 @@ public:
 	 */
 	std::vector<int> getAllProgline();
 
+	std::vector<int> getAllIf();
+
 	/**
 	 * Clears statement table
 	 */

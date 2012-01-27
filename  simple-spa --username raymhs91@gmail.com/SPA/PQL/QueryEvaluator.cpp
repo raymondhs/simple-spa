@@ -131,6 +131,8 @@ vector<int> allEntitiesWithType(int type) {
 			result = ct->getAllConstant(); break;
 		case QPROGLINE:
 			result = st->getAllProgline(); break;
+		case QIF:
+			result = st->getAllIf(); break;
 		default:
 			break;
 	}
