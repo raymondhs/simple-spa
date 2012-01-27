@@ -414,8 +414,8 @@ void attrName(int type){
 			return;
 		} else isValid = false;
 	}
-	else if (type == QSTMT){
-		cout << text << endl;
+	else if (type == QSTMT || type == QWHILE || type == QIF || type == QASSIGN){
+		//cout << text << endl;
 		if(text=="stmt#"){
 			next_token=getToken();
 			return;

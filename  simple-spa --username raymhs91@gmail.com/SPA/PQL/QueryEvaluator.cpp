@@ -57,20 +57,23 @@ static int varIdx;
 static TNode *stmt1, *stmt2;
 static bool valid;
 
+static bool isBooleanOnly;
+static bool booleanAnswer;
+
 void initVars(QNode* leftArg, QNode* rightArg) {
 	valid = true;
 
 	leftType = leftArg->getType();
 	rightType = rightArg->getType();
 
-	if(leftType == QSYN) synIdxLeft = leftArg->getIntVal();
+	if(leftType == QSYN) { synIdxLeft = leftArg->getIntVal(); isBooleanOnly = false; }
 	if(leftType == QINT) {
 		constLeft = leftArg->getIntVal();
 		stmt1 = st->getStmtNode(constLeft);
 		if(stmt1 == NULL) valid = false;
 	}
 
-	if(rightType == QSYN) synIdxRight = rightArg->getIntVal();
+	if(rightType == QSYN) { synIdxRight = rightArg->getIntVal(); isBooleanOnly = false; }
 	if(rightType == QSTRING) {
 		varIdx = var->getVarIndex(rightArg->getStrVal());
 		if(varIdx == -1) valid = false;
@@ -142,6 +145,10 @@ vector<int> allEntitiesWithType(int type) {
 void initTable() {
 	table.clear();
 	mapper.clear();
+
+	// Yes/No Question
+	isBooleanOnly = true;
+	booleanAnswer = true;
 
 	QNode* sel = qt->getResult()->getLeftChild();
 
@@ -224,6 +231,7 @@ void addAttribute(int synIdx) {
 }
 
 void clearTable() {
+	booleanAnswer = false;
 	for(ui i = 0; i < table.size(); i++) {
 		table[i].erase(table[i].begin()+1,table[i].end());
 	}
@@ -242,6 +250,12 @@ void deleteRow(int row) {
 void evaluateWith(){
 	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
 	while(with != NULL){
+		/*if (AbstractWrapper::GlobalStop) {
+			// do cleanup 
+			PQLParser::cleanUp();
+			return;
+		}*/
+		isBooleanOnly = false;
 		QNode* leftArg = with->getLeftChild();
 		QNode* rightArg = with->getRightChild();
 		if(leftArg->getType() == QSYN) {
@@ -308,13 +322,13 @@ void evaluateWith(){
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
 				}
 			}
-		} else if(typeLeft==QSTMT||typeLeft==QCONST){
+		} else if((typeLeft&(QSTMT|QASSIGN|QWHILE|QIF))||typeLeft==QCONST){
 			if(typeRight==QINT){
 				int aIdx1 = mapper[synIdx1];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=rightArg->getIntVal()) deleteRow(i);
 				}
-			} else if(typeRight==QSTMT){
+			} else if((typeRight&(QSTMT|QASSIGN|QWHILE|QIF))){
 				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
@@ -381,6 +395,7 @@ void evaluatePattern() {
 			PQLParser::cleanUp();
 			return;
 		}*/
+		isBooleanOnly = false;
 		QNode *copy = new QNode();
 		QNode *left = patt->getLeftChild();
 		QNode *right = patt->getRightChild();
@@ -443,6 +458,7 @@ void evaluatePattern() {
 void handleParent(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
+
 	if(leftType == QINT) {
 		if(rightType == QINT) {
 			if(!(stmt1->isParent(stmt2))) clearTable();
@@ -459,7 +475,7 @@ void handleParent(QNode* query) {
 		if(rightType == QINT) {
 			if(stmt2->getParent() == NULL) clearTable();
 		} else if(rightType == QANY) {
-			if(st->getAllWhile().size() == 0) clearTable();
+			if(st->getAllWhile().size() == 0 && st->getAllIf().size() == 0) clearTable();
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
@@ -494,6 +510,7 @@ void handleParent(QNode* query) {
 void handleParentT(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
+
 	if(leftType == QINT) {
 		if(rightType == QINT) {
 			if(!(stmt1->isParentTransitive(stmt2))) clearTable();
@@ -545,6 +562,7 @@ void handleParentT(QNode* query) {
 void handleFollows(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
+
 	if(leftType == QINT) {
 		if(rightType == QINT) {
 			if(!(stmt1->isFollows(stmt2))) clearTable();
@@ -601,6 +619,7 @@ void handleFollows(QNode* query) {
 void handleFollowsT(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
+
 	if(leftType == QINT) {
 		if(rightType == QINT) {
 			if(!(stmt1->isFollowsTransitive(stmt2))) clearTable();
@@ -654,9 +673,12 @@ void handleFollowsT(QNode* query) {
 	}
 }
 
+// to be implemented:
+// leftType = string (procedure)
 void handleModifies(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
+
 	if(leftType == QINT) {
 		if(rightType == QSTRING) {
 			if(!(m->isModifiesStmt(constLeft,varIdx))) clearTable();
@@ -772,11 +794,19 @@ vector<string> QueryEvaluator::evaluate() {
 	vector<string> resultString;
 	
 	if (sel->getType() == QBOOL){
-		if(table.size() > 0 && table[0].size() > 1) {
-			resultString.push_back("TRUE");
-		}
-		else{
-			resultString.push_back("FALSE");
+		if(isBooleanOnly) {
+			if(booleanAnswer) {
+				resultString.push_back("true");
+			} else {
+				resultString.push_back("false");
+			}
+		} else {
+			if(table.size() > 0 && table[0].size() > 1) {
+				resultString.push_back("true");
+			}
+			else{
+				resultString.push_back("false");
+			}
 		}
 	} else {
 
