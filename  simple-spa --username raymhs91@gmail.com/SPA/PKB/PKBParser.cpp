@@ -25,7 +25,7 @@ static void match(int token);
 static TNode* currProc;
 
 void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx);
-void print(TNode* t);
+//void print(TNode* t);
 
 static TNode* program();
 static TNode* procedure();
@@ -448,9 +448,9 @@ void PKBParser::getAssign() {
 
 	TNode* t;
 	for (unsigned i=0; i < ass.size(); i++) {
-		cout << ass[i] << endl;
+		//cout << ass[i] << endl;
 		t = stmtT->getStmtNode(ass[i]);
-		print(t);
+		//print(t);
 	}
 }
 
@@ -481,7 +481,7 @@ void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx) {
 		child=child->getRightSibling();
 	}
 }
-
+/*
 void print(TNode* t){
 	
 	TNode* lc;
@@ -530,4 +530,4 @@ void print(TNode* t){
 		cout << endl;
 	}
 
-}
+}*/

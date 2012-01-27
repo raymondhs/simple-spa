@@ -142,6 +142,11 @@ void initTable() {
 	mapper.clear();
 
 	QNode* sel = qt->getResult()->getLeftChild();
+
+	if(sel->getType() == QBOOL) {
+		return;
+	}
+
 	int selIdx = sel->getIntVal();
 	
 	if(mapper.count(selIdx) == 0) {
@@ -284,7 +289,9 @@ void evaluateWith(){
 				int aIdx = mapper[synIdx1];
 				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 					string name=ProcTable::getProcTable()->getProcName(table[aIdx][i]);
-					if(name!=rightArg->getStrVal()) deleteRow(i);
+					if(name!=rightArg->getStrVal()) {
+						deleteRow(i);
+					}
 				}
 			} else if(typeRight==QVAR){
 				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
@@ -755,15 +762,15 @@ vector<string> QueryEvaluator::evaluate() {
 	evaluateSuchThat();
 	
 	evaluatePattern();
-
+	
 	evaluateWith();
-
+	
 	QNode* sel = qt->getResult()->getLeftChild();
 
 	vector<string> resultString;
-
+	
 	if (sel->getType() == QBOOL){
-		if(valid && table.size() > 0 && table[0].size() > 0) {
+		if(table.size() > 0 && table[0].size() > 1) {
 			resultString.push_back("TRUE");
 		}
 		else{
