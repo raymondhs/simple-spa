@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 #include "PKBParser.h"
 #include "TNode.h"
 #include "VarTable.h"
@@ -19,6 +20,9 @@ using namespace std;
 static ifstream input;
 static string text;
 static int next_token;
+static vector<int> callerStmt;
+static vector<int> callerProc;
+static vector<string> calledProc;
 
 static bool issymbol(char c);
 static int getToken();
@@ -114,6 +118,21 @@ int getToken() {
 	}
 }
 
+void checkCalls(){
+	for(int i=0 ; i<callerStmt.size(); i++){
+		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
+		if(procIdx==-1) {
+			if(input.is_open()) {
+				input.close();
+			}
+			PKBParser::cleanUp();
+			throw ParseException("Calling an undefined procedure.");
+		}
+		CallsTable::getCallsTable()->insertStmt(callerStmt[i],procIdx);
+		CallsTable::getCallsTable()->insertProc(callerProc[i],procIdx);
+	}
+}
+
 void match (int token){
 	if(next_token ==token){
 		next_token = getToken();
@@ -137,6 +156,7 @@ TNode* program(){
 		prevProc = currProc;
 		prevProc->setRightSibling(procedure());
 	}
+	checkCalls();
 	return program;
 }
 
@@ -230,7 +250,11 @@ TNode* callStmt(){
 	string temp;
 	temp.assign(text);
 	match (TNAME);
-	PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(temp);
+	callerStmt.push_back(stmtIdx);
+	callerProc.push_back(currProc->getAttrib());
+	calledProc.push_back(temp);
+	/*
+	PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(temp);  
 	if(procIdx==-1) {
 		if(input.is_open()) {
 			input.close();
@@ -238,9 +262,10 @@ TNode* callStmt(){
 		PKBParser::cleanUp();
 		throw ParseException("Calling an undefined procedure.");
 	}
+	
 	CallsTable::getCallsTable()->insertStmt(stmtIdx,procIdx);
 	CallsTable::getCallsTable()->insertProc(currProc->getAttrib(),procIdx);
-
+	*/
 	return callNode;
 }
 
@@ -483,6 +508,9 @@ void PKBParser::cleanUp() {
 	VarTable::getVarTable()->clearTable();
 	ProcTable::getProcTable()->clearTable();
 	ConstantTable::getConstantTable()->clearTable();
+	callerStmt.clear();
+	callerProc.clear();
+	calledProc.clear();
 	CallsTable::getCallsTable()->clearTable();
 }
 
