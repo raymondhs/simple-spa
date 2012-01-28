@@ -119,6 +119,9 @@ void match (int token){
 		next_token = getToken();
 	}
 	else {
+		if(input.is_open()) {
+			input.close();
+		}
 		PKBParser::cleanUp();
 		throw ParseException("Error in parsing SIMPLE source code.");
 	}
@@ -143,8 +146,13 @@ TNode* procedure(){
 	string temp;
 	temp.assign(text);
 	match (TNAME);
-	if(ProcTable::getProcTable()->getProcIndex(temp)!=-1)
+	if(ProcTable::getProcTable()->getProcIndex(temp)!=-1) {
+		if(input.is_open()) {
+			input.close();
+		}
+		PKBParser::cleanUp();
 		throw ParseException("Error in parsing SIMPLE source code: Duplicate procedure name.");
+	}
 	int procIdx = ProcTable::getProcTable()->insertProc(temp);
 	proc=new TNode (PROCEDURE,procIdx);
 	//assign proc
@@ -181,13 +189,24 @@ TNode* stmt(){
 	}else throw ParseException("Error in parsing SIMPLE source code.");
 	*/
 	switch(next_token){
-	case TWHILE : stmt=whileStmt(); break;
-	case TNAME  : stmt=assign();
-		match(TSEMICOLON);
-		break;
-	case TIF : stmt=ifStmt(); break;
-	case TCALL : stmt=callStmt(); match(TSEMICOLON); break;
-	default : throw ParseException("Error in parsing SIMPLE source code.");
+		case TWHILE :
+			stmt=whileStmt();
+			break;
+		case TNAME  :
+			stmt=assign();
+			match(TSEMICOLON);
+			break;
+		case TIF :
+			stmt=ifStmt();
+			break;
+		case TCALL :
+			stmt=callStmt();
+			match(TSEMICOLON);
+			break;
+		default :
+			if(input.is_open()) input.close();
+			PKBParser::cleanUp();
+			throw ParseException("Error in parsing SIMPLE source code.");
 	}
 	
 	return stmt;
@@ -212,8 +231,13 @@ TNode* callStmt(){
 	temp.assign(text);
 	match (TNAME);
 	PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(temp);
-	if(procIdx==-1)
+	if(procIdx==-1) {
+		if(input.is_open()) {
+			input.close();
+		}
+		PKBParser::cleanUp();
 		throw ParseException("Calling an undefined procedure.");
+	}
 	CallsTable::getCallsTable()->insertStmt(stmtIdx,procIdx);
 	CallsTable::getCallsTable()->insertProc(currProc->getAttrib(),procIdx);
 
@@ -443,6 +467,9 @@ TNode* factor(STMT_NO stmtIdx) {
 		fac = expr(stmtIdx);
 		match(TRPARENT);
 	} else {
+		if(input.is_open()) {
+			input.close();
+		}
 		PKBParser::cleanUp();
 		throw ParseException("Error in parsing SIMPLE source code.");
 	}
