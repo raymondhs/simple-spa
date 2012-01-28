@@ -483,6 +483,7 @@ void PKBParser::cleanUp() {
 	VarTable::getVarTable()->clearTable();
 	ProcTable::getProcTable()->clearTable();
 	ConstantTable::getConstantTable()->clearTable();
+	CallsTable::getCallsTable()->clearTable();
 }
 
 void PKBParser::parse(string fileName){
