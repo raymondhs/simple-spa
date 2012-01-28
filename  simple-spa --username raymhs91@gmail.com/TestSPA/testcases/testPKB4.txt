@@ -1,0 +1,136 @@
+procedure Second {
+	while i {
+		x = 2 + x +y +z;
+		i = 1 + i; 
+		while p {
+			q=r+s+t;
+			t=u+v;
+		}	
+	}
+	x = 0;
+	i = 5;
+	z = z + x + i;
+	y = 2 + z;
+}
+
+procedure Third {
+	while i {
+		x = 2 + x +y +z;
+		i = 1 + i; 
+		while p {
+			if x then {
+				if x then {
+					while x {
+						if p then {						
+							q=r*(s+t);
+							s=(r-s)*t;
+							while x {
+								if p then {						
+									q=r*(s+t);
+									s=(r-s)*t;
+									Call First;
+									v=(r-(s*t));
+									z=(r+(s*(a-b)));
+								} else {
+									while p {
+										if p then {
+											q=r*(s+t);
+											s=(r-s)*t;
+											v=(r-(s*t));
+											z=(r+(s*(a-b)));
+										} else {
+											a=b+(c-d);
+											e=f+g;
+										}
+									}
+									a=b+(c-d);
+									e=f+g;
+								}
+							}
+							v=(r-(s*t));
+							z=(r+(s*(a-b)));
+						} else {
+							while p {
+								if p then {
+									q=r*(s+t);
+									while x {
+										Call First;
+										if p then {						
+											q=r*(s+t);
+											s=(r-s)*t;
+											Call First;
+											v=(r-(s*t));
+											z=(r+(s*(a-b)));
+										} else {
+											while p {
+												Call First;
+												if p then {
+													q=r*(s+t);
+													s=(r-s)*t;
+													v=(r-(s*t));
+													z=(r+(s*(a-b)));
+												} else {
+													a=b+(c-d);
+													e=f+g;
+												}
+											}
+											a=b+(c-d);
+											e=f+g;
+										}
+									}
+									Call Third;
+									z=(r+(s*(a-b)));
+								} else {
+									a=b+(c-d);
+									e=f+g;
+								}
+							}
+							a=b+(c-d);
+							e=f+g;
+						}
+					}
+				}
+				else {
+					while p {
+						if p then {
+							q=r*(s+t);
+							call First;
+							s=(r-s)*t;
+							v=(r-(s*t));
+							z=(r+(s*(a-b)));
+						} else {
+							a=b+(c-d);
+							e=f+g;
+						}
+					}
+				}
+				q=r+s+t;
+				t=u+v;}
+			else {
+				q=r+s+t;}
+		}
+	}
+	x = 0;
+	i = 5;
+	z = z + x + i;
+	y = 2 + z;
+}
+
+procedure Fourth {	
+	x = 0;
+	i = 5;
+	z = z + x + i;
+	y = 2 + z;
+	call Third;
+	while p {
+		if p then {
+			q=r*(s+t);
+			s=(r-s)*t;
+			v=(r-(s*t));
+			z=(r+(s*(a-b)));
+		} else {
+			a=b+(c-d);
+			e=f+g;
+		}
+	}
+}

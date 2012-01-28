@@ -4377,7 +4377,7 @@ void TestQueryEvaluator::testWith(){
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
-	cout<< "testWith = "<<endl;
+	cout<< "testWith = ";
 
 	/* Test 1 */
 	query = declaration + "Select a1 with v1.varName=\"x\"";
