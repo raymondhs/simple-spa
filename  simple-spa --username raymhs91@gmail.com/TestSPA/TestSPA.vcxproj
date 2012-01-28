@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\SPA\PKB\AST.cpp" />
+    <ClCompile Include="..\SPA\PKB\CallsTable.cpp" />
     <ClCompile Include="..\SPA\PKB\ConstantTable.cpp" />
     <ClCompile Include="..\SPA\PKB\ModifiesTable.cpp" />
     <ClCompile Include="..\SPA\PKB\PKBParser.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="..\SPA\Constants.h" />
     <ClInclude Include="..\SPA\ParseException.h" />
     <ClInclude Include="..\SPA\PKB\AST.h" />
+    <ClInclude Include="..\SPA\PKB\CallsTable.h" />
     <ClInclude Include="..\SPA\PKB\ConstantTable.h" />
     <ClInclude Include="..\SPA\PKB\ModifiesTable.h" />
     <ClInclude Include="..\SPA\PKB\PKBParser.h" />

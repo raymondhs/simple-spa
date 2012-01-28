@@ -90,6 +90,9 @@
     <ClCompile Include="..\SPA\PKB\ConstantTable.cpp">
       <Filter>Source Files\lib\PKB</Filter>
     </ClCompile>
+    <ClCompile Include="..\SPA\PKB\CallsTable.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestAST.h">
@@ -159,6 +162,9 @@
       <Filter>Source Files\lib\PQL</Filter>
     </ClInclude>
     <ClInclude Include="..\SPA\PKB\ConstantTable.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\CallsTable.h">
       <Filter>Source Files\lib\PKB</Filter>
     </ClInclude>
   </ItemGroup>
