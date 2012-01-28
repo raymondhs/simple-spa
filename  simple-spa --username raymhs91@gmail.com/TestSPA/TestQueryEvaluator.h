@@ -14,7 +14,7 @@ CPPUNIT_TEST( testFollows );
 CPPUNIT_TEST( testBoolFollowsT );
 CPPUNIT_TEST( testBoolFollowsTPattern );
 CPPUNIT_TEST( testFollowsT );
-//CPPUNIT_TEST( testBoolParent );
+CPPUNIT_TEST( testBoolParent );
 CPPUNIT_TEST( testParent );
 CPPUNIT_TEST( testBoolParentT );
 CPPUNIT_TEST( testParentT );

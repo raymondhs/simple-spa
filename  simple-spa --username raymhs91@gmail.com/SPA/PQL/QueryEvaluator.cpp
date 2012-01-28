@@ -57,7 +57,6 @@ static int varIdx;
 static TNode *stmt1, *stmt2;
 static bool valid;
 
-static bool isBooleanOnly;
 static bool booleanAnswer;
 
 void initVars(QNode* leftArg, QNode* rightArg) {
@@ -66,14 +65,14 @@ void initVars(QNode* leftArg, QNode* rightArg) {
 	leftType = leftArg->getType();
 	rightType = rightArg->getType();
 
-	if(leftType == QSYN) { synIdxLeft = leftArg->getIntVal(); isBooleanOnly = false; }
+	if(leftType == QSYN) { synIdxLeft = leftArg->getIntVal(); }
 	if(leftType == QINT) {
 		constLeft = leftArg->getIntVal();
 		stmt1 = st->getStmtNode(constLeft);
 		if(stmt1 == NULL) valid = false;
 	}
 
-	if(rightType == QSYN) { synIdxRight = rightArg->getIntVal(); isBooleanOnly = false; }
+	if(rightType == QSYN) { synIdxRight = rightArg->getIntVal(); }
 	if(rightType == QSTRING) {
 		varIdx = var->getVarIndex(rightArg->getStrVal());
 		if(varIdx == -1) valid = false;
@@ -147,7 +146,6 @@ void initTable() {
 	mapper.clear();
 
 	// Yes/No Question
-	isBooleanOnly = true;
 	booleanAnswer = true;
 
 	QNode* sel = qt->getResult()->getLeftChild();
@@ -245,17 +243,18 @@ void deleteRow(int row) {
 	for(ui i = 0; i < table.size(); i++) {
 		table[i].erase(table[i].begin()+row);
 	}
+	if(table[0].size() <= 1) booleanAnswer = false;
 }
 
 void evaluateWith(){
 	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
+
 	while(with != NULL){
 		/*if (AbstractWrapper::GlobalStop) {
 			// do cleanup 
 			PQLParser::cleanUp();
 			return;
 		}*/
-		isBooleanOnly = false;
 		QNode* leftArg = with->getLeftChild();
 		QNode* rightArg = with->getRightChild();
 		if(leftArg->getType() == QSYN) {
@@ -388,14 +387,13 @@ void evaluateSuchThat() {
 
 void evaluatePattern() {
 	QNode* patt = qt->getPattern()->getLeftChild(); // ONLY 1 PATTERN
-			
+
 	while(patt != NULL) {
 		/*if (AbstractWrapper::GlobalStop) {
 			// do cleanup 
 			PQLParser::cleanUp();
 			return;
 		}*/
-		isBooleanOnly = false;
 		QNode *copy = new QNode();
 		QNode *left = patt->getLeftChild();
 		QNode *right = patt->getRightChild();
@@ -794,22 +792,13 @@ vector<string> QueryEvaluator::evaluate() {
 	vector<string> resultString;
 	
 	if (sel->getType() == QBOOL){
-		if(isBooleanOnly) {
-			if(booleanAnswer) {
-				resultString.push_back("true");
-			} else {
-				resultString.push_back("false");
-			}
-		} else {
-			if(table.size() > 0 && table[0].size() > 1) {
-				resultString.push_back("true");
-			}
-			else{
-				resultString.push_back("false");
-			}
+		if(booleanAnswer) {
+			resultString.push_back("true");
+		}
+		else{
+			resultString.push_back("false");
 		}
 	} else {
-
 		int selIdx = sel->getIntVal();
 		int selType = syn->getSyn(selIdx).second;
 		int aSelIdx = mapper[selIdx];

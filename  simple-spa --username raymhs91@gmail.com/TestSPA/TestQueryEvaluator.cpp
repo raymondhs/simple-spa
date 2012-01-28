@@ -38,325 +38,325 @@ void TestQueryEvaluator::testBoolFollows() {
 	cout << "testBoolFollows: ";
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN such that Follows(1, s1) pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(1, s1) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 2 */
+	/* Test BOOL 2 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_) such that Follows(1, s1) ";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_) such that Follows(1, s1) ";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 3 */
+	/* Test BOOL 3 */
 
-query = declaration + "Select BOOLEAN such that Follows(1, s1) pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(1, s1) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 4 */
+	/* Test BOOL 4 */
 
-query = declaration + "Select BOOLEAN such that Follows(s1, 9) pattern a1(\"y\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(s1, 9) pattern a1(\"y\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 5 */
+	/* Test BOOL 5 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(s1, 11)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(s1, 11)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 6 */
+	/* Test BOOL 6 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(s1, 8)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(s1, 8)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 7 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(a1, 8)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(a1, 8)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 8 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"i\",_) such that Follows(a1, 8)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"i\",_) such that Follows(a1, 8)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 9 */
+	/* Test BOOL 9 */
 
-query = declaration + "Select BOOLEAN such that Follows(s1, 7) pattern a1(\"z\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(s1, 7) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 9" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 10 */
+	/* Test BOOL 10 */
 
-query = declaration + "Select BOOLEAN such that Follows(a1, 9) pattern a1(\"z\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(a1, 9) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 10" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 11 */
+	/* Test BOOL 11 */
 
-query = declaration + "Select BOOLEAN such that Follows(a1, 9) pattern a1(\"z\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(a1, 9) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 11" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 12 */
+	/* Test BOOL 12 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows(s1, 5)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows(s1, 5)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 12" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 13 */
+	/* Test BOOL 13 */
 
-query = declaration + "Select BOOLEAN such that Follows(s1, 11) pattern a1(\"z\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows(s1, 11) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 13" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 14 */
+	/* Test BOOL 14 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows(a1, 1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows(a1, 1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 14" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 15 */
+	/* Test BOOL 15 */
 
-query = declaration + "Select BOOLEAN such that Follows(4, s1) pattern a1(_,_\"i\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(4, s1) pattern a1(_,_\"i\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 15" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 16 */
+	/* Test BOOL 16 */
 
-query = declaration + "Select BOOLEAN such that Follows(4, a1) pattern a1(_,_\"i\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(4, a1) pattern a1(_,_\"i\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 16" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 17 */
+	/* Test BOOL 17 */
 
-query = declaration + "Select BOOLEAN such that Follows(4, s1) pattern a1(_,_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(4, s1) pattern a1(_,_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 17" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 18 */
+	/* Test BOOL 18 */
 
-query = declaration + "Select BOOLEAN such that Follows(1, 6) pattern a1(\"x\", _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(1, 6) pattern a1(\"x\", _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 18" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 19 */
+	/* Test BOOL 19 */
 
-query = declaration + "Select BOOLEAN such that Follows(1, 6) pattern a1(\"y\", _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(1, 6) pattern a1(\"y\", _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 19" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 	cout << "SUCCESS ! testBoolFollows :D" << endl;
@@ -657,7 +657,7 @@ void TestQueryEvaluator::testFollows() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-	
+
 	/* Test 17 */
 
 	query = declaration + "Select s1 such that Follows(1, s1) pattern a1(_,_)";
@@ -1004,313 +1004,313 @@ void TestQueryEvaluator::testBoolFollowsT() {
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
-	
+
 	cout << "testBoolFollows* = ";
 
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN such that Follows*(1, s1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(1, s1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 2 */
+	/* Test BOOL 2 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, 5)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, 5)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 3 */
+	/* Test BOOL 3 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, 11)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, 11)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 4 */
+	/* Test BOOL 4 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, 10)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, 10)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 5 */
+	/* Test BOOL 5 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, 1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, 1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 6 */
+	/* Test BOOL 6 */
 
-query = declaration + "Select BOOLEAN such that Follows*(5, s1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(5, s1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 7 */
 
-query = declaration + "Select BOOLEAN such that Follows*(10, s1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(10, s1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 8 */
 
-query = declaration + "Select BOOLEAN such that Follows*(11, s1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(11, s1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 9 */
+	/* Test BOOL 9 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, s1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, s1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 9" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 10 */
+	/* Test BOOL 10 */
 
-query = declaration + "Select BOOLEAN such that Follows*(1, 2)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(1, 2)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 10" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 11 */
+	/* Test BOOL 11 */
 
-query = declaration + "Select BOOLEAN such that Follows*(1, 6)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(1, 6)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 11" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 12 */
+	/* Test BOOL 12 */
 
-query = declaration + "Select BOOLEAN such that Follows*(3, 10)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(3, 10)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 12" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 13 */
+	/* Test BOOL 13 */
 
-query = declaration + "Select BOOLEAN such that Follows*(3, 5)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(3, 5)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 13" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 14 */
+	/* Test BOOL 14 */
 
-query = declaration + "Select BOOLEAN such that Follows*(6, 11)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(6, 11)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 14" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 15 */
+	/* Test BOOL 15 */
 
-query = declaration + "Select BOOLEAN such that Follows*(5, 10)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(5, 10)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 15" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 16 */
+	/* Test BOOL 16 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 16" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 17 */
+	/* Test BOOL 17 */
 
-query = declaration + "Select BOOLEAN such that Follows*(_, s1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(_, s1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 17" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 18 */
+	/* Test BOOL 18 */
 
-query = declaration + "Select BOOLEAN such that Follows(_, _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows(_, _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 18" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 	cout << "SUCCESS ! testBoolFollows :D" << endl;
@@ -1327,328 +1327,328 @@ void TestQueryEvaluator::testBoolFollowsTPattern() {
 
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN such that Follows*(1, s1) pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(1, s1) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 2 */
+	/* Test BOOL 2 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_) such that Follows*(1, s1) ";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_) such that Follows*(1, s1) ";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 3 */
+	/* Test BOOL 3 */
 
-query = declaration + "Select BOOLEAN such that Follows*(1, s1) pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(1, s1) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 4 */
+	/* Test BOOL 4 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, 9) pattern a1(\"y\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, 9) pattern a1(\"y\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 5 */
+	/* Test BOOL 5 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows*(s1, 11)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows*(s1, 11)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 6 */
+	/* Test BOOL 6 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, 11) pattern a1(\"z\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, 11) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 7 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows*(s1, 8)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows*(s1, 8)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 8 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows*(a1, 8)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows*(a1, 8)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 9 */
+	/* Test BOOL 9 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"i\",_) such that Follows*(a1, 8)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"i\",_) such that Follows*(a1, 8)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 9" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 10 */
+	/* Test BOOL 10 */
 
-query = declaration + "Select BOOLEAN such that Follows*(s1, 7) pattern a1(\"z\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(s1, 7) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 10" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 11 */
+	/* Test BOOL 11 */
 
-query = declaration + "Select BOOLEAN such that Follows*(a1, 9) pattern a1(\"z\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(a1, 9) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 11" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 12 */
+	/* Test BOOL 12 */
 
-query = declaration + "Select BOOLEAN such that Follows*(a1, 10) pattern a1(\"z\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(a1, 10) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 12" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 13 */
+	/* Test BOOL 13 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows*(s1, 5)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows*(s1, 5)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 13" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 14 */
+	/* Test BOOL 14 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows*(a1, 1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows*(a1, 1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 14" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 15 */
+	/* Test BOOL 15 */
 
-query = declaration + "Select BOOLEAN such that Follows*(4, s1) pattern a1(_,_\"i\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(4, s1) pattern a1(_,_\"i\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 15" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 16 */
+	/* Test BOOL 16 */
 
-query = declaration + "Select BOOLEAN such that Follows*(2, a1) pattern a1(_,_\"i\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(2, a1) pattern a1(_,_\"i\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 16" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 17 */
+	/* Test BOOL 17 */
 
-query = declaration + "Select BOOLEAN such that Follows*(4, s1) pattern a1(_,_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(4, s1) pattern a1(_,_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 17" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 18 */
+	/* Test BOOL 18 */
 
-query = declaration + "Select BOOLEAN such that Follows*(1, 6) pattern a1(\"x\", _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(1, 6) pattern a1(\"x\", _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 18" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 19 */
+	/* Test BOOL 19 */
 
-query = declaration + "Select BOOLEAN such that Follows*(1, 10) pattern a1(\"y\", _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Follows*(1, 10) pattern a1(\"y\", _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 19" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-cout << "SUCCESS ! testFollows*Pattern :D" << endl;
+	cout << "SUCCESS ! testFollows*Pattern :D" << endl;
 }
 
 void TestQueryEvaluator::testFollowsT() {
@@ -1657,7 +1657,7 @@ void TestQueryEvaluator::testFollowsT() {
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
-	
+
 	cout << "testFollows* = ";
 
 	/* Test 1*/
@@ -2341,376 +2341,369 @@ void TestQueryEvaluator::testBoolParent(){
 	cout << "testBoolParent = ";
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN such that Parent(s1,3) pattern a1(\"x\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent(s1,3) pattern a1(\"x\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	/* Test BOOL 2 */
 
+	query = declaration + "Select BOOLEAN such that Parent(s1,3) pattern a1(\"b\",_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-/* Test BOOL 2 */
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
-query = declaration + "Select BOOLEAN such that Parent(s1,3) pattern a1(\"b\",_)";
-PQLParser::parse(query);
-result.push_back("false");
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	/* Test BOOL 3 */
 
+	query = declaration + "Select BOOLEAN such that Parent(s1,3) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-/* Test BOOL 3 */
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
-query = declaration + "Select BOOLEAN such that Parent(s1,3) pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	/* Test BOOL 4 */
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	query = declaration + "Select BOOLEAN such that Parent(s1,2) pattern a1(_,_\"i\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
-/* Test BOOL 4 */
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
-query = declaration + "Select BOOLEAN such that Parent(s1,2) pattern a1(_,_\"_i_\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	/* Test BOOL 5 */
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Parent(s1,3)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
-/* Test BOOL 5 */
+	/* Test BOOL 6 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Parent(s1,3)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"b\",_) such that Parent(s1,3)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 6 */
+	/* Test BOOL 7 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"b\",_) such that Parent(s1,3)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Parent(_,_) pattern a1(\"i\",_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 8 */
 
-query = declaration + "Select BOOLEAN such that Parent(_,_) pattern a1(\"i\",_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"i\",_\"x\"_) such that Parent(1,_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 9 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"i\",_\"x\"_) such that Parent(1,_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Parent(_,_) pattern a1(\"x\",_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 9 */
+	/* Test BOOL 10 */
 
-query = declaration + "Select BOOLEAN such that Parent(_,_) pattern a1(\"x\",_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Parent(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 9" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
+	/* Test BOOL 11 */
 
-/* Test BOOL 10 */
+	query = declaration + "Select BOOLEAN pattern a1(\"x#3\",_\"x\"_) such that Parent(_,_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Parent(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 10" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 12 */
 
-/* Test BOOL 11 */
+	query = declaration + "Select BOOLEAN such that Parent(_,11) pattern a1(\"y\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN pattern a1(\"x#3\",_\"x\"_) such that Parent(_,_)";
-PQLParser::parse(query);
-result.push_back("false");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 11" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 13 */
 
-/* Test BOOL 12 */
+	query = declaration + "Select BOOLEAN pattern a1(\"y\",_\"z\"_) such that Parent(_,11)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN such that Parent(_,11) pattern a1(\"y\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 12" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 14 */
 
-/* Test BOOL 13 */
+	query = declaration + "Select BOOLEAN such that Parent(1,5) pattern a1(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN pattern a1(\"y\",_\"z\"_) such that Parent(_,11)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 13" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 15 */
 
-/* Test BOOL 14 */
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent(1,5)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN such that Parent(1,5) pattern a1(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 14" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 16 */
 
-/* Test BOOL 15 */
+	query = declaration + "Select BOOLEAN such that Parent(1,4) pattern a1(\"x\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent(1,5)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 15" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 17 */
 
-/* Test BOOL 16 */
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent(1,5)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN such that Parent(1,4) pattern a1(\"x\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 16" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 18 */
 
-/* Test BOOL 17 */
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent(_,3)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent(1,5)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 17" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 19 */
 
-/* Test BOOL 18 */
+	query = declaration + "Select BOOLEAN such that Parent(_,3) pattern a1(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent(_,3)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 18" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 20 */
 
-/* Test BOOL 19 */
+	query = declaration + "Select BOOLEAN such that Parent(_,3) pattern a2(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN such that Parent(_,3) pattern a1(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 19" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 21 */
 
-/* Test BOOL 20 */
+	query = declaration + "Select BOOLEAN pattern a2(_,_\"z\"_) such that Parent(_,3)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN such that Parent(_,3) pattern a2(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 21" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 20" << endl;
-}
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
 
+	/* Test BOOL 22 */
 
-/* Test BOOL 21 */
+	query = declaration + "Select BOOLEAN such that Parent(_,3) pattern a1(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-query = declaration + "Select BOOLEAN pattern a2(_,_\"z\"_) such that Parent(_,3)";
-PQLParser::parse(query);
-result.push_back("true");
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 22" << endl;
+	}
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 21" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test BOOL 22 */
-
-query = declaration + "Select BOOLEAN such that Parent(_,3) pattern a1(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 22" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 
@@ -3481,376 +3474,376 @@ void TestQueryEvaluator::testBoolParentT() {
 	cout << "testBoolParent* = ";
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN such that Parent*(s1,3) pattern a1(\"x\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(s1,3) pattern a1(\"x\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 2 */
+	/* Test BOOL 2 */
 
-query = declaration + "Select BOOLEAN such that Parent*(s1,3) pattern a1(\"b\",_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Parent*(s1,3) pattern a1(\"b\",_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 3 */
+	/* Test BOOL 3 */
 
-query = declaration + "Select BOOLEAN such that Parent*(s1,3) pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(s1,3) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 4 */
+	/* Test BOOL 4 */
 
-query = declaration + "Select BOOLEAN such that Parent*(s1,2) pattern a1(_,_\"i\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(s1,2) pattern a1(_,_\"i\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 5 */
+	/* Test BOOL 5 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Parent*(s1,3)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Parent*(s1,3)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 6 */
+	/* Test BOOL 6 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"b\",_) such that Parent*(s1,3)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"b\",_) such that Parent*(s1,3)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 7 */
 
-query = declaration + "Select BOOLEAN such that Parent*(_,_) pattern a1(\"i\",_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Parent*(_,_) pattern a1(\"i\",_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 8 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"i\",_\"x\"_) such that Parent*(1,_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"i\",_\"x\"_) such that Parent*(1,_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 9 */
+	/* Test BOOL 9 */
 
-query = declaration + "Select BOOLEAN such that Parent*(_,_) pattern a1(\"x\",_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(_,_) pattern a1(\"x\",_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 9" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 10 */
+	/* Test BOOL 10 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Parent*(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Parent*(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 10" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 11 */
+	/* Test BOOL 11 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x#3\",_\"x\"_) such that Parent*(_,_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(\"x#3\",_\"x\"_) such that Parent*(_,_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 11" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 12 */
+	/* Test BOOL 12 */
 
-query = declaration + "Select BOOLEAN such that Parent*(_,11) pattern a1(\"y\",_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(_,11) pattern a1(\"y\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 12" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 13 */
+	/* Test BOOL 13 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"y\",_\"z\"_) such that Parent*(_,11)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"y\",_\"z\"_) such that Parent*(_,11)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 13" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 14 */
+	/* Test BOOL 14 */
 
-query = declaration + "Select BOOLEAN such that Parent*(1,5) pattern a1(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(1,5) pattern a1(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 14" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 15 */
+	/* Test BOOL 15 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent*(1,5)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent*(1,5)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 15" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 16 */
+	/* Test BOOL 16 */
 
-query = declaration + "Select BOOLEAN such that Parent*(1,4) pattern a1(\"x\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(1,4) pattern a1(\"x\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 16" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 17 */
+	/* Test BOOL 17 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent*(1,5)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent*(1,5)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 17" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 18 */
+	/* Test BOOL 18 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent*(_,3)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent*(_,3)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 18" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 19 */
+	/* Test BOOL 19 */
 
-query = declaration + "Select BOOLEAN such that Parent*(_,3) pattern a1(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(_,3) pattern a1(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 19" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 20 */
+	/* Test BOOL 20 */
 
-query = declaration + "Select BOOLEAN such that Parent*(_,3) pattern a2(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(_,3) pattern a2(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 20" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 21 */
+	/* Test BOOL 21 */
 
-query = declaration + "Select BOOLEAN pattern a2(_,_\"z\"_) such that Parent*(_,3)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a2(_,_\"z\"_) such that Parent*(_,3)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 21" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 21" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 22 */
+	/* Test BOOL 22 */
 
-query = declaration + "Select BOOLEAN such that Parent*(_,3) pattern a1(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent*(_,3) pattern a1(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 22" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 22" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 
@@ -4627,376 +4620,376 @@ void TestQueryEvaluator::testBoolModifies() {
 
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 2 */
+	/* Test BOOL 2 */
 
-query = declaration + "Select BOOLEAN such that Modifies(s1,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(s1,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 3 */
+	/* Test BOOL 3 */
 
-query = declaration + "Select BOOLEAN such that Modifies(s1,\"x\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(s1,\"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 4 */
+	/* Test BOOL 4 */
 
-query = declaration + "Select BOOLEAN such that Modifies(s1,\"y\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(s1,\"y\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 5 */
+	/* Test BOOL 5 */
 
-query = declaration + "Select BOOLEAN such that Modifies(s1,\"j\")";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Modifies(s1,\"j\")";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 6 */
+	/* Test BOOL 6 */
 
-query = declaration + "Select BOOLEAN such that Modifies(s1,\"p\")";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Modifies(s1,\"p\")";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 7 */
 
-query = declaration + "Select BOOLEAN such that Modifies(w1,\"x\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(w1,\"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 8 */
 
-query = declaration + "Select BOOLEAN";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 9 */
+	/* Test BOOL 9 */
 
-query = declaration + "Select BOOLEAN such that Modifies(s1,v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(s1,v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 9" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 10 */
+	/* Test BOOL 10 */
 
-query = declaration + "Select BOOLEAN such that Modifies(3,v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(3,v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 10" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 11 */
+	/* Test BOOL 11 */
 
-query = declaration + "Select BOOLEAN such that Modifies(1,v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(1,v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 11" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 12 */
+	/* Test BOOL 12 */
 
-query = declaration + "Select BOOLEAN such that Modifies(w1,v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(w1,v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 12" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 13 */
+	/* Test BOOL 13 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 13" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 14 */
+	/* Test BOOL 14 */
 
-query = declaration + "Select BOOLEAN";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 14" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 15 */
+	/* Test BOOL 15 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,\"x\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,\"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 15" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 16 */
+	/* Test BOOL 16 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 16" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 17 */
+	/* Test BOOL 17 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 17" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 18 */
+	/* Test BOOL 18 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(\"x\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(\"x\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 18" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 19 */
+	/* Test BOOL 19 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(\"j\",_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(\"j\",_)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 19" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 20 */
+	/* Test BOOL 20 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(\"x\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(\"x\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 20" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 21 */
+	/* Test BOOL 21 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(_,_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(_,_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 21" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 21" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 22 */
+	/* Test BOOL 22 */
 
-query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(\"x\",_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,v1) pattern a1(\"x\",_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 22" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 22" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 	cout << "SUCCESS ! testBoolModifies :D" << endl;
@@ -5459,529 +5452,529 @@ void TestQueryEvaluator::testBoolUses() {
 	cout << "testBoolUses = ";
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN such that Uses (s1, _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (s1, _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 2 */
+	/* Test BOOL 2 */
 
-query = declaration + "Select BOOLEAN such that Uses (w1, _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (w1, _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 3 */
+	/* Test BOOL 3 */
 
-query = declaration + "Select BOOLEAN such that Uses (a1, v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (a1, v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 4 */
+	/* Test BOOL 4 */
 
-query = declaration + "Select BOOLEAN such that Uses (s1, v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (s1, v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 5 */
+	/* Test BOOL 5 */
 
-query = declaration + "Select BOOLEAN such that Uses (w1, v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (w1, v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 6 */
+	/* Test BOOL 6 */
 
-query = declaration + "Select BOOLEAN such that Uses (1, v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (1, v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 7 */
 
-query = declaration + "Select BOOLEAN such that Uses (1, v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (1, v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 8 */
 
-query = declaration + "Select BOOLEAN such that Uses (2, v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (2, v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 9 */
+	/* Test BOOL 9 */
 
-query = declaration + "Select BOOLEAN such that Uses (6, v1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Uses (6, v1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 9" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 10 */
+	/* Test BOOL 10 */
 
-query = declaration + "Select BOOLEAN such that Uses (s1, \"i\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (s1, \"i\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 10" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 11 */
+	/* Test BOOL 11 */
 
-query = declaration + "Select BOOLEAN such that Uses (w1, \"i\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (w1, \"i\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 11" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 12 */
+	/* Test BOOL 12 */
 
-query = declaration + "Select BOOLEAN such that Uses (n1, \"x\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (n1, \"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 12" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 13 */
+	/* Test BOOL 13 */
 
-query = declaration + "Select BOOLEAN such that Uses (s1, \"b\")";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Uses (s1, \"b\")";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 13" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 14 */
+	/* Test BOOL 14 */
 
-query = declaration + "Select BOOLEAN such that Uses (15, v1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Uses (15, v1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 14" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 15 */
+	/* Test BOOL 15 */
 
-query = declaration + "Select BOOLEAN such that Uses (s1, \"z\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (s1, \"z\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 15" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 16 */
+	/* Test BOOL 16 */
 
-query = declaration + "Select BOOLEAN such that Uses (s1, _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (s1, _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 16" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 17 */
+	/* Test BOOL 17 */
 
-query = declaration + "Select BOOLEAN such that Uses (1, \"x\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (1, \"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 17" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 18 */
+	/* Test BOOL 18 */
 
-query = declaration + "Select BOOLEAN such that Uses (4, \"x\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (4, \"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 18" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 19 */
+	/* Test BOOL 19 */
 
-query = declaration + "Select BOOLEAN such that Uses (8, \"j\")";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Uses (8, \"j\")";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 19" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 20 */
+	/* Test BOOL 20 */
 
-query = declaration + "Select BOOLEAN such that Uses (8, _)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses (8, _)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 20" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 21 */
+	/* Test BOOL 21 */
 
-query = declaration + "Select BOOLEAN such that Uses (7, _)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Uses (7, _)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 21" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 21" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 22 */
+	/* Test BOOL 22 */
 
-query = declaration + "Select BOOLEAN pattern a1 (\"y\",_) such that Uses (a1, v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1 (\"y\",_) such that Uses (a1, v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 22" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 22" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 23 */
+	/* Test BOOL 23 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Uses (a1, v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Uses (a1, v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 23" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 23" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 24 */
+	/* Test BOOL 24 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Uses (15, v1)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Uses (15, v1)";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 24" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 24" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 25 */
+	/* Test BOOL 25 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"z\",_\"z\"_) such that Uses (1, \"i\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"z\",_\"z\"_) such that Uses (1, \"i\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 25" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 25" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 26 */
+	/* Test BOOL 26 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"i\"_) such that Uses (1, \"i\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"i\"_) such that Uses (1, \"i\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 26" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 26" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 27 */
+	/* Test BOOL 27 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"i\"_) such that Uses (1, \"y\")";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"i\"_) such that Uses (1, \"y\")";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 27" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 27" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 28 */
+	/* Test BOOL 28 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_\"i\"_) such that Uses (1, \"x\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"i\"_) such that Uses (1, \"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 28" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 28" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 29 */
+	/* Test BOOL 29 */
 
-query = declaration + "Select BOOLEAN pattern a1 (\"y\",_) such that Uses (w1, \"i\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1 (\"y\",_) such that Uses (w1, \"i\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 29" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 29" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 30 */
+	/* Test BOOL 30 */
 
-query = declaration + "Select BOOLEAN pattern a1 (\"n\",_) such that Uses (w1, \"i\")";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1 (\"n\",_) such that Uses (w1, \"i\")";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 30" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 30" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 31 */
+	/* Test BOOL 31 */
 
-query = declaration + "Select BOOLEAN pattern a1 (\"x\",_) such that Uses (w1, \"i\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1 (\"x\",_) such that Uses (w1, \"i\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 31" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 31" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 
@@ -6597,138 +6590,138 @@ void TestQueryEvaluator::testBoolPattern() {
 	cout << "testBoolPattern = ";
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN pattern a1(_,_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test BOOL 2 */
-
-query = declaration + "Select BOOLEAN pattern a1(\"i\",_)";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 3 */
+	/* Test BOOL 2 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"i\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test BOOL 4 */
-
-query = declaration + "Select BOOLEAN pattern a1(_,_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 5 */
+	/* Test BOOL 3 */
 
-query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test BOOL 6 */
-
-query = declaration + "Select BOOLEAN pattern a1(_,_\"p\"_)";
-PQLParser::parse(query);
-result.push_back("false");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 4 */
 
-query = declaration + "Select BOOLEAN pattern a2(_,_\"p\"_)";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 5 */
 
-query = declaration + "Select BOOLEAN pattern a2(_,_\"x\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test BOOL 6 */
+
+	query = declaration + "Select BOOLEAN pattern a1(_,_\"p\"_)";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test BOOL 7 */
+
+	query = declaration + "Select BOOLEAN pattern a2(_,_\"p\"_)";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test BOOL 8 */
+
+	query = declaration + "Select BOOLEAN pattern a2(_,_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 
@@ -6907,206 +6900,202 @@ void TestQueryEvaluator::testBoolAnd() {
 	cout << "testBoolAnd = ";
 	/* Test 1 */
 
-query = declaration + "Select BOOLEAN such that Uses(a1,\"x\") and Modifies(a1,\"z\") and Uses(a1,\"z\") and Follows*(7,a1) pattern a1(\"z\",_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses(a1,\"x\") and Modifies(a1,\"z\") and Uses(a1,\"z\") and Follows*(7,a1) pattern a1(\"z\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test 2 */
-
-query = declaration + "Select BOOLEAN such that Uses(w1,\"x\") and Uses(w1,\"i\") and Parent(w1,w2)";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test 3 */
+	/* Test 2 */
 
-query = declaration + "Select BOOLEAN such that Uses(w1,\"x\") and Uses(w1,\"i\") and Parent(w1,w2) and Modifies(w1,\"j\")";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN such that Uses(w1,\"x\") and Uses(w1,\"i\") and Parent(w1,w2)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test 4 */
-
-query = declaration + "Select BOOLEAN such that Uses(w1,\"x\") and Modifies(w1,\"x\")";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test 5 */
+	/* Test 3 */
 
-query = declaration + "Select BOOLEAN such that Uses(w1,\"x\") and Modifies(w1,\"x\") and Uses(w1,\"i\") and Modifies(w1,\"i\")";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses(w1,\"x\") and Uses(w1,\"i\") and Parent(w1,w2) and Modifies(w1,\"j\")";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test 6 */
-
-query = declaration + "Select BOOLEAN such that Modifies(a1,\"y\") and Uses(a1,\"x\") pattern a1(_,_\"z\"_)";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test 7 */
+	/* Test 4 */
 
-query = declaration + "Select n1 such that Parent(32,33) and Uses(23,\"varA\") and Modifies(28,\"varD\") pattern a1(_,_\"varA\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses(w1,\"x\") and Modifies(w1,\"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test 8 */
-
-query = declaration + "Select BOOLEAN such that Parent*(w1,43) and Modifies(w1,\"varLoop10\")";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test 9 */
+	/* Test 5 */
 
-query = declaration + "Select BOOLEAN such that Parent*(w1,43) pattern a1(_,_) and Modifies(w1,\"varLoop10\") and Follows*(w1,35) pattern a2(_,_\"varLoop1\"_)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Uses(w1,\"x\") and Modifies(w1,\"x\") and Uses(w1,\"i\") and Modifies(w1,\"i\")";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 9" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test 10 */
-
-query = declaration + "Select BOOLEAN such that Parent*(w1,43) pattern a1(_,_) and Modifies(w1,\"varLoop10\") and Follows*(w1,35) pattern a2(_,_\"varLoop1\"_) and Follows*(33,w1)";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 10" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test 11 */
+	/* Test 6 */
 
-query = declaration + "Select BOOLEAN such that Parent*(w1,51) and Modifies(w1,v1) and Uses(w1,v1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Modifies(a1,\"y\") and Uses(a1,\"x\") pattern a1(_,_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 11" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test 12 */
+	/* Test 7 */
 
-query = declaration + "Select BOOLEAN such that Parent*(w1,51) and Modifies(w1,v1) and Uses(w1,v1) pattern a1(_,_) and Follows*(w1,35) pattern a2(_,_\"varLoop1\"_) and Follows*(33,w1)";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN such that Parent(32,33) and Uses(23,\"varA\") and Modifies(28,\"varD\") pattern a1(_,_\"varA\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 12" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 8 */
+
+	query = declaration + "Select BOOLEAN such that Parent*(w1,43) and Modifies(w1,\"varLoop10\")";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 9 */
+
+	query = declaration + "Select BOOLEAN such that Parent*(w1,43) and Modifies(w1,\"varLoop10\") and Follows*(w1,46) pattern a2(_,_\"varLoop1\"_) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 10 */
+
+	query = declaration + "Select BOOLEAN such that Parent*(w1,43) pattern a1(_,_) such that Modifies(w1,\"varLoop10\") and Follows*(w1,57) pattern a2(_,_\"varLoop1\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 11 */
+
+	query = declaration + "Select BOOLEAN such that Parent*(w1,51) and Modifies(w1,v1) and Uses(w1,v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 12 */
+	query = declaration + "Select BOOLEAN such that Parent*(w1,51) and Modifies(w1,v1) and Uses(w1,v1) pattern a1(_,_) and pattern a2(_,_\"varLoop1\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 
@@ -7428,138 +7417,138 @@ void TestQueryEvaluator::testBoolWith() {
 	cout<< "testBoolWith = ";
 	/* Test BOOL 1 */
 
-query = declaration + "Select BOOLEAN with v1.varName=\"x\"";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN with v1.varName=\"x\"";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 1" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test BOOL 2 */
-
-query = declaration + "Select BOOLEAN with v1.varName=\"x\"";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 2" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 3 */
+	/* Test BOOL 2 */
 
-query = declaration + "Select BOOLEAN with v1.varName=\"x\" and s1.stmt#=10";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN with v1.varName=\"x\"";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 3" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test BOOL 4 */
-
-query = declaration + "Select BOOLEAN with v1.varName=\"x\" and s1.stmt#=10";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 4" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 5 */
+	/* Test BOOL 3 */
 
-query = declaration + "Select BOOLEAN with v1.varName=v2.varName and v2.varName=\"k\"";
-PQLParser::parse(query);
-result.push_back("false");
+	query = declaration + "Select BOOLEAN with v1.varName=\"x\" and s1.stmt#=10";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 5" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
-
-
-/* Test BOOL 6 */
-
-query = declaration + "Select BOOLEAN with v1.varName=v2.varName and v2.varName=\"z\"";
-PQLParser::parse(query);
-result.push_back("true");
-
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 6" << endl;
-}
-
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 7 */
+	/* Test BOOL 4 */
 
-query = declaration + "Select BOOLEAN with v1.varName=v2.varName and v2.varName=v3.varName";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN with v1.varName=\"x\" and s1.stmt#=10";
+	PQLParser::parse(query);
+	result.push_back("true");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 7" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
-/* Test BOOL 8 */
+	/* Test BOOL 5 */
 
-query = declaration + "Select BOOLEAN with v1.varName=v2.varName and v2.varName=v3.varName and v4.varName=\"y\"";
-PQLParser::parse(query);
-result.push_back("true");
+	query = declaration + "Select BOOLEAN with v1.varName=v2.varName and v2.varName=\"k\"";
+	PQLParser::parse(query);
+	result.push_back("false");
 
-try {
-  ans = QueryEvaluator::evaluate();
- } catch (exception&e) {
-  cout << e.what() << endl;
- cout << "Test 8" << endl;
-}
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
 
- CPPUNIT_ASSERT(ans == result);
- result.clear();
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test BOOL 6 */
+
+	query = declaration + "Select BOOLEAN with v1.varName=v2.varName and v2.varName=\"z\"";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test BOOL 7 */
+
+	query = declaration + "Select BOOLEAN with v1.varName=v2.varName and v2.varName=v3.varName";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test BOOL 8 */
+
+	query = declaration + "Select BOOLEAN with v1.varName=v2.varName and v2.varName=v3.varName and v4.varName=\"y\"";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 
 
@@ -7751,7 +7740,7 @@ void TestQueryEvaluator::testWith(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-	
+
 	/* Test 9 */
 	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=1";
 	PQLParser::parse(query);
@@ -7787,7 +7776,7 @@ void TestQueryEvaluator::testWith(){
 	result.push_back("1");
 	result.push_back("2");
 	result.push_back("5");
-	
+
 	try {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception&e) {
