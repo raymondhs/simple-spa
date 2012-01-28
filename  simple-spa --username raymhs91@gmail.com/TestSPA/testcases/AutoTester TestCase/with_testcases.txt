@@ -1,0 +1,82 @@
+16
+cat: With 
+1 - With, assign
+assign a1; variable v1;
+Select a1 with v1.varName="x"
+3, 4, 5, 6, 7, 8, 9, 11
+5000
+2 - With, assign, stmt
+variable v1; stmt s1;
+Select s1 with v1.varName="x"
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+5000
+3 - With, assign, stmt
+assign a1; stmt s1; variable v1;
+Select a1 with v1.varName="x" and s1.stmt#=10
+3, 4, 5, 6, 7, 8, 9, 11
+5000
+4 - With, assign, stmt
+variable v1; stmt s1;
+Select s1 with v1.varName="x" and s1.stmt#=10
+10
+5000
+5 - With, assign
+assign a1; variable v1,v2;
+Select a1 with v1.varName=v2.varName and v2.varName="k"
+none
+5000
+6 - With
+assign a1; variable v1,v2;
+Select a1 with v1.varName=v2.varName and v2.varName="z"
+3, 4, 5, 6, 7, 8, 9, 11
+5000
+7 - With
+assign a1; variable v1,v2,v3;
+Select a1 with v1.varName=v2.varName and v2.varName=v3.varName
+3, 4, 5, 6, 7, 8, 9, 11
+5000
+8 - With
+assign a1; variable v1,v2,v3,v4;
+Select a1 with v1.varName=v2.varName and v2.varName=v3.varName and v4.varName="y"
+3, 4, 5, 6, 7, 8, 9, 11
+5000
+9 - With, stmt
+stmt s1,s2;
+Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=1
+1
+5000
+10 - With, stmt
+stmt s1,s2;
+Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=9999
+none
+5000
+11 - With, stmt, constant
+stmt s1,s2; constant c1;
+Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=c1.value
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+5000
+12 - With, stmt, constant
+stmt s1,s2; constant c1,c2;
+Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=c1.value and c1.value=c2.value and c2.value=2
+2
+5000
+13 - With, stmt, constant
+stmt s1,s2; constant c1,c2;
+Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=c1.value and c1.value=c2.value and c2.value=10000
+none
+5000
+14 - With, constant
+constant c1;
+Select c1 with c1.value=0
+0
+5000
+15 - With, constant
+constant c1;
+Select c1 with c1.value=99999
+none
+5000
+16 - With, constant
+constant c1,c2;
+Select c1 with c1.value=c2.value and c2.value=2
+2
+5000

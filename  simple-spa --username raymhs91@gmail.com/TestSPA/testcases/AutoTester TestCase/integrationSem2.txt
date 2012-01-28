@@ -28,7 +28,7 @@ procedure Third {
 								if p then {						
 									q=r*(s+t);
 									s=(r-s)*t;
-									Call First;
+									call Second;
 									v=(r-(s*t));
 									z=(r+(s*(a-b)));
 								} else {
@@ -54,16 +54,16 @@ procedure Third {
 								if p then {
 									q=r*(s+t);
 									while x {
-										Call First;
+										call Second;
 										if p then {						
 											q=r*(s+t);
 											s=(r-s)*t;
-											Call First;
+											call Second;
 											v=(r-(s*t));
 											z=(r+(s*(a-b)));
 										} else {
 											while p {
-												Call First;
+												call Second;
 												if p then {
 													q=r*(s+t);
 													s=(r-s)*t;
@@ -78,7 +78,7 @@ procedure Third {
 											e=f+g;
 										}
 									}
-									Call Third;
+									call Fourth;
 									z=(r+(s*(a-b)));
 								} else {
 									a=b+(c-d);
@@ -94,7 +94,7 @@ procedure Third {
 					while p {
 						if p then {
 							q=r*(s+t);
-							call First;
+							call Fourth;
 							s=(r-s)*t;
 							v=(r-(s*t));
 							z=(r+(s*(a-b)));
@@ -114,14 +114,14 @@ procedure Third {
 	i = 5;
 	z = z + x + i;
 	y = 2 + z;
-}
+
 
 procedure Fourth {	
 	x = 0;
 	i = 5;
 	z = z + x + i;
 	y = 2 + z;
-	call Third;
+	call Second;
 	while p {
 		if p then {
 			q=r*(s+t);
