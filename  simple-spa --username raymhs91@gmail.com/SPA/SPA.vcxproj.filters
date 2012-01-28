@@ -52,6 +52,9 @@
     <ClCompile Include="PKB\ConstantTable.cpp">
       <Filter>Source Files\PKB</Filter>
     </ClCompile>
+    <ClCompile Include="PKB\CallsTable.cpp">
+      <Filter>Source Files\PKB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PKB\ModifiesTable.h">
@@ -103,6 +106,9 @@
       <Filter>Header\PQL</Filter>
     </ClInclude>
     <ClInclude Include="PKB\ConstantTable.h">
+      <Filter>Header\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\CallsTable.h">
       <Filter>Header\PKB</Filter>
     </ClInclude>
   </ItemGroup>

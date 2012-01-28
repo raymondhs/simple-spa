@@ -144,7 +144,7 @@ TNode* procedure(){
 	temp.assign(text);
 	match (TNAME);
 	if(ProcTable::getProcTable()->getProcIndex(temp)!=-1)
-		throw ParseException("Duplicate procedure name.");
+		throw ParseException("Error in parsing SIMPLE source code: Duplicate procedure name.");
 	int procIdx = ProcTable::getProcTable()->insertProc(temp);
 	proc=new TNode (PROCEDURE,procIdx);
 	//assign proc
@@ -444,7 +444,7 @@ TNode* factor(STMT_NO stmtIdx) {
 		match(TRPARENT);
 	} else {
 		PKBParser::cleanUp();
-		throw ParseException("(PKB Parser) Error in parsing SIMPLE source code.");
+		throw ParseException("Error in parsing SIMPLE source code.");
 	}
 	return fac;
 }

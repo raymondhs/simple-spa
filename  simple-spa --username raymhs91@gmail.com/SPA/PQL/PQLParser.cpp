@@ -265,7 +265,7 @@ QNode* relRef() {
 		tok = next_token;
 		arg2node = stmtRef();
 		if(tok != TUNDERSCORE && tok != TINTEGER) {
-			arg1 = getSynType(temp);
+			arg2 = getSynType(temp);
 		}
 
 		match(TRPARENT);
@@ -371,13 +371,13 @@ QNode* attrCompare(){
 	if (typeLeft==QVAR || typeLeft==QCALL || typeLeft==QPROC){
 		if (typeRight==QCONST || typeRight == QSTMT || typeRight == QINT){
 			PQLParser::cleanUp();
-			throw ParseException("Error: Cannot compare string with an integer.");
+			throw ParseException("Error: Cannot compare string with integer.");
 		}
 	}
 	else if (typeLeft==QCONST || typeLeft==QSTMT){
 		if (typeRight==QVAR || typeRight == QCALL || typeRight == QPROC || typeRight == QSTRING){
 			PQLParser::cleanUp();
-			throw ParseException("Error: Cannot compare string with an integer.");
+			throw ParseException("Error: Cannot compare integer with string.");
 		}
 	}
 

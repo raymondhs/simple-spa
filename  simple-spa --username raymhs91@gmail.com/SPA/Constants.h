@@ -9,7 +9,7 @@ typedef enum NodeType {
 	TNODE = 0, PROGRAM /*1*/, PROCEDURE /*2*/,
 	STMTLST /*3*/, STMT /*4*/, ASSIGN /*5*/,
 	WHILE /*6*/, IF /*7*/, CONST /*8*/, EXPR /*9*/,
-	PLUS /*10*/, MINUS /*11*/, TIMES /*12*/, VAR /*13*/, PROGLINE /*14*/
+	PLUS /*10*/, MINUS /*11*/, TIMES /*12*/, VAR /*13*/, PROGLINE /*14*/, CALL /*15*/
 };
 
 typedef enum QNodeType {
