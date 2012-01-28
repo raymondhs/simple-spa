@@ -28,14 +28,14 @@ void CallsTable::insertStmt(STMT_NO stmt, PROC_IDX proc) {
 }
 
 void CallsTable::insertProc(PROC_IDX proc1, PROC_IDX proc2) {
-	if((unsigned)proc1-1 >= procCallsTable.size()) { // lazy load
+	if((unsigned)proc1 >= procCallsTable.size()) { // lazy load
 		int i = procCallsTable.size();
-		while(i <= proc1-1) {
+		while(i <= proc1) {
 			i++;
 			procCallsTable.push_back(set<int>());
 		}
 	}
-	procCallsTable[proc1-1].insert(proc2);
+	procCallsTable[proc1].insert(proc2);
 }
 
 STMT_SET CallsTable::getStmtCallsProc(PROC_IDX proc) {
@@ -65,9 +65,9 @@ PROC_SET CallsTable::getProcCalledByStmt(STMT_NO stmt) {
 }
 
 PROC_SET CallsTable::getProcCalledByProc(PROC_IDX proc) {
-	unsigned procIDX = (unsigned) proc-1;
+	unsigned procIDX = (unsigned) proc;
 	if(procIDX >= procCallsTable.size() || procIDX < 0) return set<int>();
-	return procCallsTable[proc-1];
+	return procCallsTable[proc];
 }
 
 bool CallsTable::stmtCallsProc(STMT_NO stmt, PROC_IDX proc){
@@ -75,5 +75,5 @@ bool CallsTable::stmtCallsProc(STMT_NO stmt, PROC_IDX proc){
 }
 
 bool CallsTable::procCallsProc(PROC_IDX proc1, PROC_IDX proc2){
-	return (unsigned)proc1-1<procCallsTable.size() && (unsigned)proc1-1>= 0 && procCallsTable[proc1-1].count(proc2) == 1;
+	return (unsigned)proc1<procCallsTable.size() && (unsigned)proc1-1>= 0 && procCallsTable[proc1].count(proc2) == 1;
 }

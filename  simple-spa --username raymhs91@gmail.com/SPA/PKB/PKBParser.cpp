@@ -249,7 +249,7 @@ TNode* callStmt(){
 	callNode->setAttrib(stmtIdx);
 	string temp;
 	temp.assign(text);
-	match (TNAME);
+	match(TNAME);
 	callerStmt.push_back(stmtIdx);
 	callerProc.push_back(currProc->getAttrib());
 	calledProc.push_back(temp);
