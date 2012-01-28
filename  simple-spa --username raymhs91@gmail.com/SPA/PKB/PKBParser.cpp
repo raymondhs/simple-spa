@@ -12,6 +12,7 @@
 #include "StmtTable.h"
 #include "ModifiesTable.h"
 #include "UsesTable.h"
+#include "CallsTable.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ static TNode* stmtLst();
 static TNode* stmt();
 static TNode* varible();
 static TNode* ifStmt();
+static TNode* callStmt();
 static TNode* whileStmt();
 static TNode* assign();
 //static TNode* plusVarName();
@@ -184,6 +186,7 @@ TNode* stmt(){
 		match(TSEMICOLON);
 		break;
 	case TIF : stmt=ifStmt(); break;
+	case TCALL : stmt=callStmt(); match(TSEMICOLON); break;
 	default : throw ParseException("Error in parsing SIMPLE source code.");
 	}
 	
@@ -197,6 +200,24 @@ TNode* variable(){
 	VAR_IDX varIdx = VarTable::getVarTable()->insertVar(temp);
 	TNode *var=new TNode (VAR,varIdx);
 	return var;
+}
+
+TNode* callStmt(){
+	TNode *callNode;
+	match(TCALL);
+	callNode = new TNode(CALL);
+	STMT_NO stmtIdx=StmtTable::getStmtTable()->insertStmt(callNode);
+	callNode->setAttrib(stmtIdx);
+	string temp;
+	temp.assign(text);
+	match (TNAME);
+	PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(temp);
+	if(procIdx==-1)
+		throw ParseException("Calling an undefined procedure.");
+	CallsTable::getCallsTable()->insertStmt(stmtIdx,procIdx);
+	CallsTable::getCallsTable()->insertProc(currProc->getAttrib(),procIdx);
+
+	return callNode;
 }
 
 TNode* ifStmt(){
