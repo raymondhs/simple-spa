@@ -19,7 +19,7 @@
 using namespace std;
 
 void TestQueryEvaluator::setUp() {
-	declaration = "while w1,w2,w3,w4; assign a,a1,a2,a3,a4; stmt s,s#,s1,s2,s3,s4; variable v1,v2,v3,v4; prog_line n1, n2, n3,n4; constant c1, c2, c3,c4; ";
+	declaration = "procedure p1,p2,p3,p4; while w1,w2,w3,w4; assign a,a1,a2,a3,a4; stmt s,s#,s1,s2,s3,s4; variable v1,v2,v3,v4; prog_line n1, n2, n3,n4; constant c1, c2, c3,c4; ";
 }
 
 void TestQueryEvaluator::tearDown() {
@@ -4671,6 +4671,1245 @@ void TestQueryEvaluator::testWith(){
 	} catch (exception&e) {
 		cout << e.what() << endl;
 		cout << "Test 16 " << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	PKBParser::cleanUp();
+	try {
+		PKBParser::parse("testcases/with2_source.txt");
+	} catch (exception& e) {
+		cout << "PKBParser: " << e.what() << endl;
+	}
+	/* Test 17 */
+
+	query = declaration + "Select s1 with s1.stmt#=1";
+	PQLParser::parse(query);
+	result.push_back("1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 18 */
+
+	query = declaration + "Select s1 with s1.stmt#=1312312311";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 19 */
+
+	query = declaration + "Select s1 with s1.stmt#=999999";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 20 */
+
+	query = declaration + "Select c1 with c1.value=2";
+	PQLParser::parse(query);
+	result.push_back("2");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 21 */
+
+	query = declaration + "Select c1 with c1.value=1";
+	PQLParser::parse(query);
+	result.push_back("1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 21" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 22 */
+
+	query = declaration + "Select c1 with c1.value=12312";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 22" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 23 */
+
+	query = declaration + "Select c1 with c1.value=123019230192";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 23" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 24 */
+
+	query = declaration + "Select c1 with c1.value=1";
+	PQLParser::parse(query);
+	result.push_back("1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 24" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 25 */
+
+	query = declaration + "Select v1 with v1.varName=\"j\"";
+	PQLParser::parse(query);
+	result.push_back("j");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 25" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 26 */
+
+	query = declaration + "Select v1 with v1.varName=\"varLoop5\"";
+	PQLParser::parse(query);
+	result.push_back("varLoop5");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 26" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 27 */
+
+	query = declaration + "Select v1 with v1.varName=\"vasdasdasd\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 27" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 28 */
+
+	query = declaration + "Select p1 with p1.procName=\"Second\"";
+	PQLParser::parse(query);
+	result.push_back("Second");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 28" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 29 */
+
+	query = declaration + "Select p1 with p1.procName=\"InsaneWhile\"";
+	PQLParser::parse(query);
+	result.push_back("InsaneWhile");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 29" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 30 */
+
+	query = declaration + "Select p1 with p1.procName=\"Wrong\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 30" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 31 */
+
+	query = declaration + "Select s1 with s1.stmt#=s1.stmt#";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+	result.push_back("32");
+	result.push_back("33");
+	result.push_back("34");
+	result.push_back("35");
+	result.push_back("36");
+	result.push_back("37");
+	result.push_back("38");
+	result.push_back("39");
+	result.push_back("40");
+	result.push_back("41");
+	result.push_back("42");
+	result.push_back("43");
+	result.push_back("44");
+	result.push_back("45");
+	result.push_back("46");
+	result.push_back("47");
+	result.push_back("48");
+	result.push_back("49");
+	result.push_back("50");
+	result.push_back("51");
+	result.push_back("52");
+	result.push_back("53");
+	result.push_back("54");
+	result.push_back("55");
+	result.push_back("56");
+	result.push_back("57");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 31" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 32 */
+
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt#";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+	result.push_back("32");
+	result.push_back("33");
+	result.push_back("34");
+	result.push_back("35");
+	result.push_back("36");
+	result.push_back("37");
+	result.push_back("38");
+	result.push_back("39");
+	result.push_back("40");
+	result.push_back("41");
+	result.push_back("42");
+	result.push_back("43");
+	result.push_back("44");
+	result.push_back("45");
+	result.push_back("46");
+	result.push_back("47");
+	result.push_back("48");
+	result.push_back("49");
+	result.push_back("50");
+	result.push_back("51");
+	result.push_back("52");
+	result.push_back("53");
+	result.push_back("54");
+	result.push_back("55");
+	result.push_back("56");
+	result.push_back("57");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 32" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 33 */
+
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=30";
+	PQLParser::parse(query);
+	result.push_back("30");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 33" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 34 */
+
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=30 and s3.stmt#=s2.stmt#";
+	PQLParser::parse(query);
+	result.push_back("30");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 34" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 35 */
+
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s2.stmt#=12312";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 35" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 36 */
+
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and s3.stmt#=12312";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 36" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 37 */
+
+	query = declaration + "Select s1 with s1.stmt#=c1.value";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 37" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 38 */
+
+	query = declaration + "Select c1 with s1.stmt#=c1.value";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 38" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 39 */
+
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and c1.value=s2.stmt#";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 39" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 40 */
+
+	query = declaration + "Select c1 with s1.stmt#=s2.stmt# and c1.value=s2.stmt#";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 40" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 41 */
+
+	query = declaration + "Select c1 with s1.stmt#=s2.stmt# and c1.value=s2.stmt# and c1.value=c2.value and c2.value = 0";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 41" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 42 */
+
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and c1.value=s2.stmt# and c1.value=c2.value and c2.value = 0";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 42" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 43 */
+
+	query = declaration + "Select c1 with s1.stmt#=s2.stmt# and c1.value=s2.stmt# and c1.value=c2.value and c2.value = 1";
+	PQLParser::parse(query);
+	result.push_back("1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 43" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 44 */
+
+	query = declaration + "Select s1 with s1.stmt#=s2.stmt# and c1.value=s2.stmt# and c1.value=c2.value and c2.value = 1";
+	PQLParser::parse(query);
+	result.push_back("1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 44" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 45 */
+
+	query = declaration + "Select c1 with c1.value=c1.value";
+	PQLParser::parse(query);
+	result.push_back("0");
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 45" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 46 */
+
+	query = declaration + "Select c2 with c1.value=c2.value";
+	PQLParser::parse(query);
+	result.push_back("0");
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 46" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 47 */
+
+	query = declaration + "Select c1 with c1.value=c2.value and c2.value=0";
+	PQLParser::parse(query);
+	result.push_back("0");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 47" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 48 */
+
+	query = declaration + "Select c1 with c1.value=c2.value and c2.value=0 and c3.value=c2.value";
+	PQLParser::parse(query);
+	result.push_back("0");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 48" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 49 */
+
+	query = declaration + "Select c1 with c1.value=c2.value and c2.value=312931923";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 49" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 50 */
+
+	query = declaration + "Select c1 with c1.value=c2.value and c3.value=312931923";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 50" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 51 */
+
+	query = declaration + "Select v1 with v1.varName=v1.varName";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("y");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+	result.push_back("e");
+	result.push_back("f");
+	result.push_back("varA");
+	result.push_back("varB");
+	result.push_back("varC");
+	result.push_back("varD");
+	result.push_back("g");
+	result.push_back("varE");
+	result.push_back("varF");
+	result.push_back("varG");
+	result.push_back("loop1");
+	result.push_back("loop2");
+	result.push_back("loop3");
+	result.push_back("loop4");
+	result.push_back("loop5");
+	result.push_back("varLoop5");
+	result.push_back("loop6");
+	result.push_back("loop7");
+	result.push_back("loop8");
+	result.push_back("loop9");
+	result.push_back("loop10");
+	result.push_back("lastLoop");
+	result.push_back("varLastLoop");
+	result.push_back("varLoop10");
+	result.push_back("varLoop9");
+	result.push_back("varLoop8");
+	result.push_back("varLoop7");
+	result.push_back("varLoop6");
+	result.push_back("loop4Inside");
+	result.push_back("varLoop4");
+	result.push_back("varLoop3");
+	result.push_back("varLoop2");
+	result.push_back("varLoop1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 51" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 52 */
+
+	query = declaration + "Select v1 with v1.varName=v2.varName";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("y");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+	result.push_back("e");
+	result.push_back("f");
+	result.push_back("varA");
+	result.push_back("varB");
+	result.push_back("varC");
+	result.push_back("varD");
+	result.push_back("g");
+	result.push_back("varE");
+	result.push_back("varF");
+	result.push_back("varG");
+	result.push_back("loop1");
+	result.push_back("loop2");
+	result.push_back("loop3");
+	result.push_back("loop4");
+	result.push_back("loop5");
+	result.push_back("varLoop5");
+	result.push_back("loop6");
+	result.push_back("loop7");
+	result.push_back("loop8");
+	result.push_back("loop9");
+	result.push_back("loop10");
+	result.push_back("lastLoop");
+	result.push_back("varLastLoop");
+	result.push_back("varLoop10");
+	result.push_back("varLoop9");
+	result.push_back("varLoop8");
+	result.push_back("varLoop7");
+	result.push_back("varLoop6");
+	result.push_back("loop4Inside");
+	result.push_back("varLoop4");
+	result.push_back("varLoop3");
+	result.push_back("varLoop2");
+	result.push_back("varLoop1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 52" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 53 */
+
+	query = declaration + "Select v1 with v1.varName=v2.varName and v2.varName=\"varLoop1\"";
+	PQLParser::parse(query);
+	result.push_back("varLoop1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 53" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 54 */
+
+	query = declaration + "Select v1 with v1.varName=v2.varName and v2.varName=\"varLoop1\" and v3.varName=v2.varName";
+	PQLParser::parse(query);
+	result.push_back("varLoop1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 54" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 55 */
+
+	query = declaration + "Select v1 with v1.varName=v2.varName and v2.varName=\"asdas\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 55" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 56 */
+
+	query = declaration + "Select v1 with v1.varName=v2.varName and v3.varName=\"gakada\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 56" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 57 */
+
+	query = declaration + "Select p1 with p1.procName=p1.procName";
+	PQLParser::parse(query);
+	result.push_back("Second");
+	result.push_back("InsaneWhile");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 57" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 58 */
+
+	query = declaration + "Select p1 with p1.procName=p2.procName";
+	PQLParser::parse(query);
+	result.push_back("Second");
+	result.push_back("InsaneWhile");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 58" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 59 */
+
+	query = declaration + "Select p1 with p1.procName=p2.procName and p2.procName=\"Second\"";
+	PQLParser::parse(query);
+	result.push_back("Second");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 59" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 60 */
+
+	query = declaration + "Select p1 with p1.procName=p2.procName and p2.procName=\"InsaneWhile\" and p3.procName=p1.procName";
+	PQLParser::parse(query);
+	result.push_back("InsaneWhile");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 60" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 61 */
+
+	query = declaration + "Select p1 with p1.procName=p2.procName and p2.procName=\"NoProcedure\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 61" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 62 */
+
+	query = declaration + "Select p1 with p1.procName=p2.procName and p3.procName=\"NoProcedure\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 62" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 63 */
+
+	query = declaration + "Select p1 with p1.procName=v1.varName";
+	PQLParser::parse(query);
+	result.push_back("Second");
+	result.push_back("InsaneWhile");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 63" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 64 */
+
+	query = declaration + "Select v1 with p1.procName=v1.varName";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("y");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+	result.push_back("e");
+	result.push_back("f");
+	result.push_back("varA");
+	result.push_back("varB");
+	result.push_back("varC");
+	result.push_back("varD");
+	result.push_back("g");
+	result.push_back("varE");
+	result.push_back("varF");
+	result.push_back("varG");
+	result.push_back("loop1");
+	result.push_back("loop2");
+	result.push_back("loop3");
+	result.push_back("loop4");
+	result.push_back("loop5");
+	result.push_back("varLoop5");
+	result.push_back("loop6");
+	result.push_back("loop7");
+	result.push_back("loop8");
+	result.push_back("loop9");
+	result.push_back("loop10");
+	result.push_back("lastLoop");
+	result.push_back("varLastLoop");
+	result.push_back("varLoop10");
+	result.push_back("varLoop9");
+	result.push_back("varLoop8");
+	result.push_back("varLoop7");
+	result.push_back("varLoop6");
+	result.push_back("loop4Inside");
+	result.push_back("varLoop4");
+	result.push_back("varLoop3");
+	result.push_back("varLoop2");
+	result.push_back("varLoop1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 64" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 65 */
+
+	query = declaration + "Select p1 with p1.procName=p2.procName and v1.varName=v2.varName";
+	PQLParser::parse(query);
+	result.push_back("Second");
+	result.push_back("InsaneWhile");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 65" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 66 */
+
+	query = declaration + "Select v1 with p1.procName=p2.procName and v1.varName=v2.varName";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("y");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+	result.push_back("e");
+	result.push_back("f");
+	result.push_back("varA");
+	result.push_back("varB");
+	result.push_back("varC");
+	result.push_back("varD");
+	result.push_back("g");
+	result.push_back("varE");
+	result.push_back("varF");
+	result.push_back("varG");
+	result.push_back("loop1");
+	result.push_back("loop2");
+	result.push_back("loop3");
+	result.push_back("loop4");
+	result.push_back("loop5");
+	result.push_back("varLoop5");
+	result.push_back("loop6");
+	result.push_back("loop7");
+	result.push_back("loop8");
+	result.push_back("loop9");
+	result.push_back("loop10");
+	result.push_back("lastLoop");
+	result.push_back("varLastLoop");
+	result.push_back("varLoop10");
+	result.push_back("varLoop9");
+	result.push_back("varLoop8");
+	result.push_back("varLoop7");
+	result.push_back("varLoop6");
+	result.push_back("loop4Inside");
+	result.push_back("varLoop4");
+	result.push_back("varLoop3");
+	result.push_back("varLoop2");
+	result.push_back("varLoop1");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 66" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 67 */
+
+	query = declaration + "Select v1 with p1.procName=p2.procName and v1.varName=p2.procName and v1.varName=v2.varName and v2.varName =\"varLoop3\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 67" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 68 */
+
+	query = declaration + "Select p1 with p1.procName=p2.procName and v1.varName=p2.procName and v1.varName=v2.varName and v2.varName =\"varLoop3\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 68" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 69 */
+
+	query = declaration + "Select v1 with p1.procName=p2.procName and v1.varName=p2.procName and v1.varName=v2.varName and v2.varName =\"Second\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 69" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 70 */
+
+	query = declaration + "Select v1 with p1.procName=p2.procName and v1.varName=p2.procName and v1.varName=v2.varName and v2.varName =\"InsaneWhile\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 70" << endl;
 	}
 
 	CPPUNIT_ASSERT(ans == result);
