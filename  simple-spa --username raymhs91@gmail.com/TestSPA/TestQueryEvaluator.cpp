@@ -358,6 +358,561 @@ void TestQueryEvaluator::testBoolFollows() {
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
+	/* Test 1 */
+	query = declaration + "Select BOOLEAN such that Follows(1, s1)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 2 */
+	query = declaration + "Select BOOLEAN such that Follows(s1, 5)"; 
+	PQLParser::parse(query);
+	result.push_back("true");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 3 */
+	query = declaration + "Select BOOLEAN such that Follows(s1, 11)"; 
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 4 */
+	query = declaration + "Select BOOLEAN such that Follows(s1, 10)"; 
+	PQLParser::parse(query);
+	result.push_back("true");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 5 */
+	query = declaration + "Select BOOLEAN such that Follows(s1, 1)"; 
+	PQLParser::parse(query);
+	result.push_back("false");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 6 */
+	query = declaration + "Select BOOLEAN such that Follows(5, s1)"; 
+	PQLParser::parse(query);
+	result.push_back("false");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 7 */
+	query = declaration + "Select BOOLEAN such that Follows(10, s1)"; 
+	PQLParser::parse(query);
+	result.push_back("false");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 8 */
+	query = declaration + "Select BOOLEAN such that Follows(11, s1)"; 
+	PQLParser::parse(query);
+	result.push_back("false");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 9 */
+	query = declaration + "Select BOOLEAN such that Follows(s1, s1)"; 
+	PQLParser::parse(query);
+	result.push_back("false");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 10 */
+	query = declaration + "Select BOOLEAN such that Follows(1, 6)"; 
+	PQLParser::parse(query);
+	result.push_back("true");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 11 */
+	query = declaration + "Select BOOLEAN such that Follows(1, 2)"; 
+	PQLParser::parse(query);
+	result.push_back("false");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 12 */
+	query = declaration + "Select BOOLEAN such that Follows(10, 11)"; 
+	PQLParser::parse(query);
+	result.push_back("false");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 13 */
+	query = declaration + "Select BOOLEAN such that Follows(9, 10)"; 
+	PQLParser::parse(query);
+	result.push_back("true");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 14 */
+	query = declaration + "Select BOOLEAN such that Follows(s1, _)"; 
+	PQLParser::parse(query);
+	result.push_back("true");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 15 */
+	query = declaration + "Select BOOLEAN such that Follows(_, s1)"; 
+	PQLParser::parse(query);
+	result.push_back("true");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+	/* Test 16 */
+	query = declaration + "Select BOOLEAN such that Follows(_, _)"; 
+	PQLParser::parse(query);
+	result.push_back("true");
+
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception& e) {
+		cout << e.what() << endl;
+
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+	
+	/* Test 17 */
+
+	query = declaration + "Select BOOLEAN such that Follows(1, s1) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 18 */
+
+	query = declaration + "Select BOOLEAN pattern a1(_,_) such that Follows(1, s1) ";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 19 */
+
+	query = declaration + "Select BOOLEAN such that Follows(1, s1) pattern a1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 20 */
+
+	query = declaration + "Select BOOLEAN such that Follows(s1, 9) pattern a1(\"z\",_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 21 */
+
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(s1, 11)";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 22 */
+
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(s1, 8)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 23 */
+
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(a1, 8)";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 24 */
+
+	query = declaration + "Select BOOLEAN pattern a1(\"i\",_) such that Follows(a1, 8)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 25 */
+
+	query = declaration + "Select BOOLEAN such that Follows(s1, 7) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 26 */
+
+	query = declaration + "Select BOOLEAN such that Follows(a1, 9) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 27 */
+
+	query = declaration + "Select BOOLEAN such that Follows(a1, 9) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 28 */
+
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows(s1, 5)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 29 */
+
+	query = declaration + "Select BOOLEAN such that Follows(s1, 11) pattern a1(\"z\",_\"z\"_)";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 30 */
+
+	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_) such that Follows(a1, 1)";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 31 */
+
+	query = declaration + "Select BOOLEAN such that Follows(4, s1) pattern a1(_,_\"i\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 32 */
+
+	query = declaration + "Select BOOLEAN such that Follows(4, a1) pattern a1(_,_\"i\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 33 */
+
+	query = declaration + "Select BOOLEAN such that Follows(4, s1) pattern a1(_,_\"x\"_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 34 */
+
+	query = declaration + "Select BOOLEAN such that Follows(1, 6) pattern a1(\"x\", _)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 35 */
+
+	query = declaration + "Select BOOLEAN such that Follows(1, 6) pattern a1(\"y\", _)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
 
 	cout << "SUCCESS ! testBoolFollows :D" << endl;
 }
