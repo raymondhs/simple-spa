@@ -19,6 +19,4 @@ public:
 	* Clear PKB database
 	*/
 	static void cleanUp();
-
-	static void getAssign();
 };

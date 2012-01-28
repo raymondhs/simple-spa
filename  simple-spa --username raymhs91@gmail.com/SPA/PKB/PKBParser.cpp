@@ -530,7 +530,8 @@ void PKBParser::parse(string fileName){
 	}
 }
 
-void PKBParser::getAssign() {
+/*
+void getAssign() {
 	StmtTable* stmtT = StmtTable::getStmtTable();
 	vector<int> ass = stmtT->getAllAssign();
 
@@ -541,6 +542,7 @@ void PKBParser::getAssign() {
 		//print(t);
 	}
 }
+*/
 
 void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx) {
 	while(child!=NULL){
