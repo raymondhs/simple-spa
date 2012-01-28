@@ -5132,7 +5132,6 @@ void TestQueryEvaluator::testWith(){
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
-	result.push_back("3");
 	result.push_back("4");
 	result.push_back("5");
 	result.push_back("6");
@@ -5158,7 +5157,6 @@ void TestQueryEvaluator::testWith(){
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
-	result.push_back("3");
 	result.push_back("4");
 	result.push_back("5");
 	result.push_back("6");
@@ -5184,7 +5182,6 @@ void TestQueryEvaluator::testWith(){
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
-	result.push_back("3");
 	result.push_back("4");
 	result.push_back("5");
 	result.push_back("6");
@@ -5210,7 +5207,6 @@ void TestQueryEvaluator::testWith(){
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
-	result.push_back("3");
 	result.push_back("4");
 	result.push_back("5");
 	result.push_back("6");
@@ -5303,7 +5299,6 @@ void TestQueryEvaluator::testWith(){
 	result.push_back("0");
 	result.push_back("1");
 	result.push_back("2");
-	result.push_back("3");
 	result.push_back("4");
 	result.push_back("5");
 	result.push_back("6");
@@ -5311,6 +5306,7 @@ void TestQueryEvaluator::testWith(){
 	result.push_back("8");
 	result.push_back("9");
 	result.push_back("10");
+	result.push_back("12345");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -5330,7 +5326,6 @@ void TestQueryEvaluator::testWith(){
 	result.push_back("0");
 	result.push_back("1");
 	result.push_back("2");
-	result.push_back("3");
 	result.push_back("4");
 	result.push_back("5");
 	result.push_back("6");
@@ -5338,6 +5333,7 @@ void TestQueryEvaluator::testWith(){
 	result.push_back("8");
 	result.push_back("9");
 	result.push_back("10");
+	result.push_back("12345");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -5704,8 +5700,6 @@ void TestQueryEvaluator::testWith(){
 
 	query = declaration + "Select p1 with p1.procName=v1.varName";
 	PQLParser::parse(query);
-	result.push_back("Second");
-	result.push_back("InsaneWhile");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -5722,48 +5716,6 @@ void TestQueryEvaluator::testWith(){
 
 	query = declaration + "Select v1 with p1.procName=v1.varName";
 	PQLParser::parse(query);
-	result.push_back("i");
-	result.push_back("j");
-	result.push_back("x");
-	result.push_back("z");
-	result.push_back("y");
-	result.push_back("a");
-	result.push_back("b");
-	result.push_back("c");
-	result.push_back("d");
-	result.push_back("e");
-	result.push_back("f");
-	result.push_back("varA");
-	result.push_back("varB");
-	result.push_back("varC");
-	result.push_back("varD");
-	result.push_back("g");
-	result.push_back("varE");
-	result.push_back("varF");
-	result.push_back("varG");
-	result.push_back("loop1");
-	result.push_back("loop2");
-	result.push_back("loop3");
-	result.push_back("loop4");
-	result.push_back("loop5");
-	result.push_back("varLoop5");
-	result.push_back("loop6");
-	result.push_back("loop7");
-	result.push_back("loop8");
-	result.push_back("loop9");
-	result.push_back("loop10");
-	result.push_back("lastLoop");
-	result.push_back("varLastLoop");
-	result.push_back("varLoop10");
-	result.push_back("varLoop9");
-	result.push_back("varLoop8");
-	result.push_back("varLoop7");
-	result.push_back("varLoop6");
-	result.push_back("loop4Inside");
-	result.push_back("varLoop4");
-	result.push_back("varLoop3");
-	result.push_back("varLoop2");
-	result.push_back("varLoop1");
 
 	try {
 		ans = QueryEvaluator::evaluate();
