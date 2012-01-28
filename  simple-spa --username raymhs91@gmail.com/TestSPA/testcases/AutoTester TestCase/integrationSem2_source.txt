@@ -1,7 +1,7 @@
 procedure First {
-	if albert{
+	if albert then{
 		raymond = peter + richard + 0 - 0;
-		jege = (12345)*richard + (-richard) * raymond;
+		jege = (12345)*richard + richard * raymond;
 	} else {
 		albert = albert * albert - raymond + peter;
 		richard = (((albert+1)+2)*albert) - peter;
@@ -125,7 +125,7 @@ procedure Third {
 	i = 5;
 	z = z + x + i;
 	y = 2 + z;
-
+}
 
 procedure Fourth {	
 	x = 0;
