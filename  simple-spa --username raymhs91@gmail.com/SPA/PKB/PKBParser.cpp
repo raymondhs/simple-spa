@@ -141,6 +141,8 @@ TNode* procedure(){
 	string temp;
 	temp.assign(text);
 	match (TNAME);
+	if(ProcTable::getProcTable()->getProcIndex(temp)!=-1)
+		throw ParseException("Duplicate procedure name.");
 	int procIdx = ProcTable::getProcTable()->insertProc(temp);
 	proc=new TNode (PROCEDURE,procIdx);
 	//assign proc
@@ -166,7 +168,7 @@ TNode* stmtLst(){
 
 TNode* stmt(){
 	TNode *stmt;
-
+	/*
 	if (next_token==TWHILE)
 		stmt=whileStmt();
 	else if(next_token==TNAME){
@@ -174,8 +176,17 @@ TNode* stmt(){
 		match(TSEMICOLON);
 	} else if (next_token==TIF) {
 		stmt=ifStmt();
+	}else throw ParseException("Error in parsing SIMPLE source code.");
+	*/
+	switch(next_token){
+	case TWHILE : stmt=whileStmt(); break;
+	case TNAME  : stmt=assign();
+		match(TSEMICOLON);
+		break;
+	case TIF : stmt=ifStmt(); break;
+	default : throw ParseException("Error in parsing SIMPLE source code.");
 	}
-	else throw ParseException("Error in parsing SIMPLE source code.");
+	
 	return stmt;
 }
 
