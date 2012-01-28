@@ -30,7 +30,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION( TestQueryEvaluator );
 
 void TestQueryEvaluator::testFollows() {
 	try {
-		PKBParser::parse("testcases/testQuery.txt");
+		PKBParser::parse("testcases/follows_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -667,7 +667,7 @@ void TestQueryEvaluator::testFollows() {
 
 void TestQueryEvaluator::testFollowsT() {
 	try {
-		PKBParser::parse("testcases/testQuery.txt");
+		PKBParser::parse("testcases/followsT_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -1346,7 +1346,7 @@ void TestQueryEvaluator::testFollowsT() {
 
 void TestQueryEvaluator::testParent() {
 	try {
-		PKBParser::parse("testcases/testQuery.txt");
+		PKBParser::parse("testcases/parent_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -2100,7 +2100,7 @@ void TestQueryEvaluator::testParent() {
 
 void TestQueryEvaluator::testParentT() {
 	try {
-		PKBParser::parse("testcases/testQuery.txt");
+		PKBParser::parse("testcases/parentT_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -2859,7 +2859,7 @@ void TestQueryEvaluator::testParentT() {
 
 void TestQueryEvaluator::testModifies() {
 	try {
-		PKBParser::parse("testcases/testQuery.txt");
+		PKBParser::parse("testcases/modifies_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -3306,7 +3306,7 @@ void TestQueryEvaluator::testModifies() {
 
 void TestQueryEvaluator::testUses() {
 	try {
-		PKBParser::parse("testcases/testQuery.txt");
+		PKBParser::parse("testcases/uses_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -3905,7 +3905,7 @@ void TestQueryEvaluator::testUses() {
 
 void TestQueryEvaluator::testPattern() {
 	try {
-		PKBParser::parse("testcases/testQuery.txt");
+		PKBParser::parse("testcases/pattern_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -4067,7 +4067,7 @@ void TestQueryEvaluator::testPattern() {
 
 void TestQueryEvaluator::testAnd(){
 	try {
-		PKBParser::parse("testcases/testQuery2.txt");
+		PKBParser::parse("testcases/and_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -4373,7 +4373,7 @@ void TestQueryEvaluator::testAnd(){
 
 void TestQueryEvaluator::testWith(){
 	try {
-		PKBParser::parse("testcases/testQuery.txt");
+		PKBParser::parse("testcases/with_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
