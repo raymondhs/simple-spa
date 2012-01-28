@@ -1,0 +1,37 @@
+Select:
+	prog_line
+	stmt
+	assign
+	constant
+	if
+	while
+	*call
+	variable
+	procedure
+	BOOLEAN
+
+such that:   (relation and relation*)
+	Modifies
+	Uses
+	Parent
+	ParentTrans
+	Follows
+	FollowsTrans
+	*Calls
+	*CallsTrans
+	*Next
+	*NextTrans
+	*Affects
+	*AffectsTrans
+
+with:     (with and with*)
+	synonym.atrrName="IDENT"
+	synonym.atrrName="INTEGER"
+	synonym.atrrName=synonym.attrName
+		where sysnonym can be: prog_line, stmt, constant, call, variable, procedure
+
+pattern:   (pattern and pattern*)
+	assign: assign(entRef,_|expression|_expression_)
+	while: while (entRef,_)
+	if: if(entRef,_,_)
+		where entRef= synonm|_|IDENT|INTEGER
