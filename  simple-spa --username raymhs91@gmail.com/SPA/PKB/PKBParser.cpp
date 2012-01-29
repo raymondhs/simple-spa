@@ -119,7 +119,7 @@ int getToken() {
 }
 
 void checkCalls(){
-	for(int i=0 ; i<callerStmt.size(); i++){
+	for(unsigned i=0 ; i<callerStmt.size(); i++){
 		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
 		if(procIdx==-1) {
 			if(input.is_open()) {
