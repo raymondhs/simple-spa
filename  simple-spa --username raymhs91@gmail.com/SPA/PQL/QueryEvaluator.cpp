@@ -250,6 +250,7 @@ void evaluateWith(){
 	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
 
 	while(with != NULL){
+		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
 			// do cleanup 
 			PQLParser::cleanUp();
@@ -346,6 +347,7 @@ void evaluateWith(){
 void evaluateSuchThat() {
 	QNode* such = qt->getSuchThat()->getLeftChild(); // ONLY 1 SUCH THAT
 	while(such != NULL){
+		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
 			// do cleanup 
 			PQLParser::cleanUp();
@@ -389,6 +391,7 @@ void evaluatePattern() {
 	QNode* patt = qt->getPattern()->getLeftChild(); // ONLY 1 PATTERN
 
 	while(patt != NULL) {
+		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
 			// do cleanup 
 			PQLParser::cleanUp();
