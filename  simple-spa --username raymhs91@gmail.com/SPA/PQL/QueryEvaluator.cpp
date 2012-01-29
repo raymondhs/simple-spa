@@ -321,13 +321,13 @@ void evaluateWith(){
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
 				}
 			}
-		} else if((typeLeft&(QSTMT|QASSIGN|QWHILE|QIF))||typeLeft==QCONST){
+		} else if((typeLeft&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE))||typeLeft==QCONST){
 			if(typeRight==QINT){
 				int aIdx1 = mapper[synIdx1];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=rightArg->getIntVal()) deleteRow(i);
 				}
-			} else if((typeRight&(QSTMT|QASSIGN|QWHILE|QIF))){
+			} else if((typeRight&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE))){
 				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 					if(table[aIdx1][i]!=table[aIdx2][i]) deleteRow(i);
