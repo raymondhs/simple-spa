@@ -11,6 +11,7 @@ Select:
 	BOOLEAN
 
 such that:   (relation and relation*)
+		relation(integer,integer), realation(synonm,integer),relation(syn,syn)
 	Modifies
 	Uses
 	Parent
