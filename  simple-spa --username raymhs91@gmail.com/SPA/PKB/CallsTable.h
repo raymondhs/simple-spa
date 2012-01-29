@@ -55,10 +55,10 @@ public:
 	/**
 	 * Get the indices of the procedures called by the specified statement
 	 *
-	 * @param proc Index of the statement calling the procedures
+	 * @param stmt Index of the statement calling the procedures
 	 * @return Set of indices of the procedures called by the specified statement
 	 */
-	PROC_SET getProcCalledByStmt(PROC_IDX proc);
+	PROC_SET getProcCalledByStmt(STMT_NO stmt);
 
 	/**
 	 * Get the indices of the procedures called by the specified procedure
