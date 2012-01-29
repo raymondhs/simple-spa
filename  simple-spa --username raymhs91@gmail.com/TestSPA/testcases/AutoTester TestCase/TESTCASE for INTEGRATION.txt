@@ -30,6 +30,7 @@ with:     (with and with*)
 	synonym.atrrName="INTEGER"
 	synonym.atrrName=synonym.attrName
 		where sysnonym can be: prog_line, stmt, constant, call, variable, procedure
+		where attrName can be: procedure.procName, constant.value, stmt.stmt#
 
 pattern:   (pattern and pattern*)
 	assign: assign(entRef,_|expression|_expression_)

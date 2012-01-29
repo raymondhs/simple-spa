@@ -389,7 +389,6 @@ void evaluateSuchThat() {
 
 void evaluatePattern() {
 	QNode* patt = qt->getPattern()->getLeftChild(); // ONLY 1 PATTERN
-
 	while(patt != NULL) {
 		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
@@ -419,10 +418,13 @@ void evaluatePattern() {
 
 		if(right->getType() == QANY) {
 			if(right->getRightSibling() == NULL) {
-				return;
+				copy->setLeftChild(NULL);
+				copy->setRightChild(NULL);
+				delete copy;
+				patt = patt->getRightSibling();
+				continue;
 			}
 		}
-
 		QNode *arg;
 		if(var != NULL) {
 			arg = new QNode(QSTRING);
