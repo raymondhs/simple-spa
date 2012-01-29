@@ -33,6 +33,6 @@ with:     (with and with*)
 
 pattern:   (pattern and pattern*)
 	assign: assign(entRef,_|expression|_expression_)
-	while: while (entRef,_)
-	if: if(entRef,_,_)
+	*while: while (entRef,_)
+	*if: if(entRef,_,_)
 		where entRef= synonm|_|IDENT|INTEGER
