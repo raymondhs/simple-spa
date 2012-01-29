@@ -369,12 +369,12 @@ QNode* attrCompare(){
 	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
 
 	if (typeLeft==QVAR || typeLeft==QCALL || typeLeft==QPROC){
-		if (typeRight==QCONST || typeRight == QSTMT || typeRight == QINT){
+		if (typeRight==QCONST || typeRight == QSTMT || typeRight == QINT || typeRight == QPROGLINE){
 			PQLParser::cleanUp();
 			throw ParseException("Error: Cannot compare string with integer.");
 		}
 	}
-	else if (typeLeft==QCONST || typeLeft==QSTMT){
+	else if (typeLeft==QCONST || typeLeft==QSTMT || typeRight == QPROGLINE){
 		if (typeRight==QVAR || typeRight == QCALL || typeRight == QPROC || typeRight == QSTRING){
 			PQLParser::cleanUp();
 			throw ParseException("Error: Cannot compare integer with string.");
@@ -412,6 +412,16 @@ void attrName(int type){
 		if(text=="value"){
 			next_token=getToken();
 			return;
+		} else isValid = false;
+	}
+	else if (type == QPROGLINE){
+		if(text=="prog"){
+			match(TPROG);
+			match(TUNDERSCORE);
+			if (text=="line#"){
+				next_token=getToken();
+				return;
+			}
 		} else isValid = false;
 	}
 	else if (type == QSTMT || type == QWHILE || type == QIF || type == QASSIGN){
