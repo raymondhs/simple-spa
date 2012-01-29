@@ -64,7 +64,7 @@ bool issymbol(char c) {
 int getToken() {
 	int state = 0;
 	text.assign("");
-	
+
 	char c=0;
 	while(1) {
 		try{
@@ -75,45 +75,45 @@ int getToken() {
 		}
 
 		switch(state) {
-			case 0:
-				if(isalpha(c)) { text+=c;  state = 1; }
-				else if(isdigit(c)) { text += c; state = 2; }
-				else if(issymbol(c)) {
-					text += c; 
-					if(text.compare("{")==0) return TLBRACE;
-					if(text.compare("}")==0) return TRBRACE;
-					if(text.compare("+")==0) return TPLUS;
-					if(text.compare("-")==0) return TMIN;
-					if(text.compare("*")==0) return TTIMES;
-					if(text.compare(")")==0) return TRPARENT;
-					if(text.compare("(")==0) return TLPARENT;
-					if(text.compare("=")==0) return TEQUAL;
-					if(text.compare(";")==0) return TSEMICOLON;
-					else return TINVALID;
-				}
-				else if(isspace(c)) { }
-				else if(c == EOF) { return TEOF; }
-				else { return TINVALID; }
-				break;
-			case 1:
-				if(isalnum(c)) { text+=c;  }
-				else if(isspace(c) || issymbol(c) || c==EOF) {
-					input.putback(c); 
-					if(text.compare("procedure")==0) return TPROCEDURE;
-					if(text.compare("if")==0) return TIF;
-					if(text.compare("then")==0) return TTHEN;
-					if(text.compare("else")==0) return TELSE;
-					if(text.compare("while")==0) return TWHILE;
-					if(text.compare("call")==0) return TCALL;
-					return TNAME; 
-				}
-				else { return TINVALID; }
-				break;
-			case 2:
-				if(isdigit(c)) { text += c; }
-				else if(isspace(c) || issymbol(c) || c==EOF) { input.putback(c); return TINTEGER; }
-				else { return TINVALID; }
-				break;
+		case 0:
+			if(isalpha(c)) { text+=c;  state = 1; }
+			else if(isdigit(c)) { text += c; state = 2; }
+			else if(issymbol(c)) {
+				text += c; 
+				if(text.compare("{")==0) return TLBRACE;
+				if(text.compare("}")==0) return TRBRACE;
+				if(text.compare("+")==0) return TPLUS;
+				if(text.compare("-")==0) return TMIN;
+				if(text.compare("*")==0) return TTIMES;
+				if(text.compare(")")==0) return TRPARENT;
+				if(text.compare("(")==0) return TLPARENT;
+				if(text.compare("=")==0) return TEQUAL;
+				if(text.compare(";")==0) return TSEMICOLON;
+				else return TINVALID;
+			}
+			else if(isspace(c)) { }
+			else if(c == EOF) { return TEOF; }
+			else { return TINVALID; }
+			break;
+		case 1:
+			if(isalnum(c)) { text+=c;  }
+			else if(isspace(c) || issymbol(c) || c==EOF) {
+				input.putback(c); 
+				if(text.compare("procedure")==0) return TPROCEDURE;
+				if(text.compare("if")==0) return TIF;
+				if(text.compare("then")==0) return TTHEN;
+				if(text.compare("else")==0) return TELSE;
+				if(text.compare("while")==0) return TWHILE;
+				if(text.compare("call")==0) return TCALL;
+				return TNAME; 
+			}
+			else { return TINVALID; }
+			break;
+		case 2:
+			if(isdigit(c)) { text += c; }
+			else if(isspace(c) || issymbol(c) || c==EOF) { input.putback(c); return TINTEGER; }
+			else { return TINVALID; }
+			break;
 		}
 	}
 }
@@ -200,35 +200,35 @@ TNode* stmt(){
 	TNode *stmt;
 	/*
 	if (next_token==TWHILE)
-		stmt=whileStmt();
+	stmt=whileStmt();
 	else if(next_token==TNAME){
-		stmt=assign();
-		match(TSEMICOLON);
+	stmt=assign();
+	match(TSEMICOLON);
 	} else if (next_token==TIF) {
-		stmt=ifStmt();
+	stmt=ifStmt();
 	}else throw ParseException("Error in parsing SIMPLE source code.");
 	*/
 	switch(next_token){
-		case TWHILE :
-			stmt=whileStmt();
-			break;
-		case TNAME  :
-			stmt=assign();
-			match(TSEMICOLON);
-			break;
-		case TIF :
-			stmt=ifStmt();
-			break;
-		case TCALL :
-			stmt=callStmt();
-			match(TSEMICOLON);
-			break;
-		default :
-			if(input.is_open()) input.close();
-			PKBParser::cleanUp();
-			throw ParseException("Error in parsing SIMPLE source code.");
+	case TWHILE :
+		stmt=whileStmt();
+		break;
+	case TNAME  :
+		stmt=assign();
+		match(TSEMICOLON);
+		break;
+	case TIF :
+		stmt=ifStmt();
+		break;
+	case TCALL :
+		stmt=callStmt();
+		match(TSEMICOLON);
+		break;
+	default :
+		if(input.is_open()) input.close();
+		PKBParser::cleanUp();
+		throw ParseException("Error in parsing SIMPLE source code.");
 	}
-	
+
 	return stmt;
 }
 
@@ -256,13 +256,13 @@ TNode* callStmt(){
 	/*
 	PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(temp);  
 	if(procIdx==-1) {
-		if(input.is_open()) {
-			input.close();
-		}
-		PKBParser::cleanUp();
-		throw ParseException("Calling an undefined procedure.");
+	if(input.is_open()) {
+	input.close();
 	}
-	
+	PKBParser::cleanUp();
+	throw ParseException("Calling an undefined procedure.");
+	}
+
 	CallsTable::getCallsTable()->insertStmt(stmtIdx,procIdx);
 	CallsTable::getCallsTable()->insertProc(currProc->getAttrib(),procIdx);
 	*/
@@ -284,33 +284,33 @@ TNode* ifStmt(){
 
 	stmtListThen=stmtLst();
 	TNode *child=stmtListThen->getFirstChild();
-	
+
 	setTables(ifNode, child, stmtIdx);
 	/*
 	while(child!=NULL){
-		//set parent
-		child->setParent(ifNode);
-		STMT_NO childIdx=child->getAttrib();
-		//set modifies for container
-		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
-		set<int>::iterator iterMod;
-		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
-		 {
-			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
-			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
-		 }
-		 
-		//set uses for container
-		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
-		set<int>::iterator iterUses;
-		
-        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
-        {
-			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
-			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
-		}
-		
-		child=child->getRightSibling();
+	//set parent
+	child->setParent(ifNode);
+	STMT_NO childIdx=child->getAttrib();
+	//set modifies for container
+	VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
+	set<int>::iterator iterMod;
+	for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
+	{
+	ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+	ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
+	}
+
+	//set uses for container
+	VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
+	set<int>::iterator iterUses;
+
+	for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
+	{
+	UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
+	UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
+	}
+
+	child=child->getRightSibling();
 	}
 	*/
 	var->setRightSibling(stmtListThen);
@@ -320,33 +320,33 @@ TNode* ifStmt(){
 
 	stmtListElse=stmtLst();
 	child=stmtListElse->getFirstChild();
-	
+
 	setTables(ifNode, child, stmtIdx);
 	/*
 	while(child!=NULL){
-		//set parent
-		child->setParent(ifNode);
-		STMT_NO childIdx=child->getAttrib();
-		//set modifies for container
-		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
-		set<int>::iterator iterMod;
-		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
-		 {
-			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
-			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
-		 }
-		 
-		//set uses for container
-		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
-		set<int>::iterator iterUses;
-		
-        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
-        {
-			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
-			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
-		}
-		
-		child=child->getRightSibling();
+	//set parent
+	child->setParent(ifNode);
+	STMT_NO childIdx=child->getAttrib();
+	//set modifies for container
+	VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
+	set<int>::iterator iterMod;
+	for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
+	{
+	ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+	ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
+	}
+
+	//set uses for container
+	VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
+	set<int>::iterator iterUses;
+
+	for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
+	{
+	UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
+	UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
+	}
+
+	child=child->getRightSibling();
 	}*/
 	stmtListThen->setRightSibling(stmtListElse);
 	match(TRBRACE);
@@ -371,29 +371,29 @@ TNode* whileStmt(){
 	setTables(whileNode, child, stmtIdx);
 	/*
 	while(child!=NULL){
-		//set parent
-		child->setParent(whileNode);
-		STMT_NO childIdx=child->getAttrib();
-		//set modifies for container
-		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
-		set<int>::iterator iterMod;
-		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
-		 {
-			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
-			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
-		 }
-		 
-		//set uses for container
-		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
-		set<int>::iterator iterUses;
-		
-        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
-        {
-			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
-			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
-		}
-		
-		child=child->getRightSibling();
+	//set parent
+	child->setParent(whileNode);
+	STMT_NO childIdx=child->getAttrib();
+	//set modifies for container
+	VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
+	set<int>::iterator iterMod;
+	for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
+	{
+	ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+	ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
+	}
+
+	//set uses for container
+	VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
+	set<int>::iterator iterUses;
+
+	for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
+	{
+	UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
+	UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
+	}
+
+	child=child->getRightSibling();
 	}*/
 	var->setRightSibling(stmtList);
 	match(TRBRACE);
@@ -417,19 +417,19 @@ TNode* assign(){
 }
 /*
 TNode* plusVarName(TNode *term, STMT_NO stmtIdx){
-			TNode *plus, *var;
-			match(TPLUS);
-			plus= new TNode(PLUS);
-			var=variable();
-			UsesTable::getUsesTable()->insertStmt(stmtIdx, var->getAttrib());
-			plus->setFirstChild(term);
-			term->setRightSibling(var);
-			return plus;
+TNode *plus, *var;
+match(TPLUS);
+plus= new TNode(PLUS);
+var=variable();
+UsesTable::getUsesTable()->insertStmt(stmtIdx, var->getAttrib());
+plus->setFirstChild(term);
+term->setRightSibling(var);
+return plus;
 }
 */
 TNode* expr(STMT_NO stmtIdx){
 	TNode* curr = term(stmtIdx), *expr = curr;
-	
+
 	while(next_token == TPLUS || next_token == TMIN) {
 		if(next_token == TPLUS) {
 			expr = new TNode(PLUS);
@@ -444,18 +444,18 @@ TNode* expr(STMT_NO stmtIdx){
 	}
 
 	/*if(next_token==TINTEGER){
-		string temp;
-		temp.assign(text);
-		match(TINTEGER);
-		expr=new TNode(CONST,atoi(temp.c_str()));
-		ConstantTable::getConstantTable()->addConstant(expr);
+	string temp;
+	temp.assign(text);
+	match(TINTEGER);
+	expr=new TNode(CONST,atoi(temp.c_str()));
+	ConstantTable::getConstantTable()->addConstant(expr);
 	}
 	if(next_token==TNAME){
-		expr=variable();
-		UsesTable::getUsesTable()->insertStmt(stmtIdx, expr->getAttrib());
+	expr=variable();
+	UsesTable::getUsesTable()->insertStmt(stmtIdx, expr->getAttrib());
 	}
 	while(next_token!=TSEMICOLON) {
-		expr=plusVarName(expr,stmtIdx);
+	expr=plusVarName(expr,stmtIdx);
 	}*/
 	return expr;
 }
@@ -552,72 +552,72 @@ void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx) {
 		//set modifies for container
 		VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
 		set<int>::iterator iterMod;
-		 for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
-		 {
-			 ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
-			 ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
-		 }
-		 
+		for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
+		{
+			ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
+			ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
+		}
+
 		//set uses for container
 		VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
 		set<int>::iterator iterUses;
-		
-        for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
-        {
+
+		for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
+		{
 			UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
 			UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
 		}
-		
+
 		child=child->getRightSibling();
 	}
 }
 /*
 void print(TNode* t){
-	
-	TNode* lc;
-	TNode* rc;
 
-	if (t == NULL) return;
-	
-	switch (t->getType()) {
-		case 0: 
-			cout << "NODE" << " "; break;
-		case 1:
-			cout << "PROGRAM" << " "; break;
-		case 2:
-			cout << "PROCEDURE" << " ";	break;
-		case 3:
-			cout << "STMTLST" << " "; break;
-		case 4:
-			cout << "STMT" << " "; break;
-		case 5:
-			cout << "ASSIGN" << " "; break;
-		case 6:
-			cout << "WHILE" << " "; break;
-		case 7:
-			cout << "IF" << " "; break;
-		case 8:
-			cout << "'CONST " << t->getAttrib() << "' "; break;
-		case 9:
-			cout << "EXPR" << " "; break;
-		case 10:
-			cout << "PLUS" << " "; break;
-		case 11:
-			cout << "MINUS" << " "; break;
-		case 12:
-			cout << "TIMES" << " "; break;
-		case 13:
-			cout << "'VAR " << t->getAttrib() << "' "; break;
-	}
+TNode* lc;
+TNode* rc;
 
-	if (t->getFirstChild() != NULL){
-		lc = t->getFirstChild();
-		rc = lc->getRightSibling();
+if (t == NULL) return;
 
-		print(lc);
-		print(rc);
+switch (t->getType()) {
+case 0: 
+cout << "NODE" << " "; break;
+case 1:
+cout << "PROGRAM" << " "; break;
+case 2:
+cout << "PROCEDURE" << " ";	break;
+case 3:
+cout << "STMTLST" << " "; break;
+case 4:
+cout << "STMT" << " "; break;
+case 5:
+cout << "ASSIGN" << " "; break;
+case 6:
+cout << "WHILE" << " "; break;
+case 7:
+cout << "IF" << " "; break;
+case 8:
+cout << "'CONST " << t->getAttrib() << "' "; break;
+case 9:
+cout << "EXPR" << " "; break;
+case 10:
+cout << "PLUS" << " "; break;
+case 11:
+cout << "MINUS" << " "; break;
+case 12:
+cout << "TIMES" << " "; break;
+case 13:
+cout << "'VAR " << t->getAttrib() << "' "; break;
+}
 
-		cout << endl;
-	}
+if (t->getFirstChild() != NULL){
+lc = t->getFirstChild();
+rc = lc->getRightSibling();
+
+print(lc);
+print(rc);
+
+cout << endl;
+}
 
 }*/
