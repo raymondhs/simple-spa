@@ -186,7 +186,7 @@ QNode* entRef() {
 QNode* relRef() {
 	string relName = "", temp;
 	int arg1, arg2, tok;
-	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF;
+	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF|QCALL;
 	QNode *rel, *arg1node, *arg2node;
 	if(text == "Modifies" || text == "Uses") {
 		arg1 = allStmt;
@@ -279,6 +279,53 @@ QNode* relRef() {
 		rel = new QNode(t);
 		rel->setLeftChild(arg1node);
 		rel->setRightChild(arg2node);
+	} else if(text=="Calls"){
+		QNodeType t;
+		arg1 = QPROC;
+		arg2 = QPROC;
+		relName = text;
+		if(relName == "Calls") { t = QCALL; }
+		next_token = getToken();
+		if(text == "*") {
+			relName += "*";
+			if(relName == "Calls*") { t = QCALLT; }
+			next_token = getToken();
+		} else if(text == "(") {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Syntax error: Invalid query.");
+		}
+		match(TLPARENT);
+
+		temp = text;
+		tok = next_token;
+		arg1node = entRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER && tok != TDQUOTE) {
+			arg1 = getSynType(temp);
+		}
+
+
+		match(TCOMMA);
+		
+		temp = text;
+		tok = next_token;
+		arg2node = entRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER && tok != TDQUOTE) {
+			arg2 = getSynType(temp);
+		}
+
+		match(TRPARENT);
+
+		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
+		} else {
+			PQLParser::cleanUp();
+		throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+		}
+
+		rel = new QNode(t);
+		rel->setLeftChild(arg1node);
+		rel->setRightChild(arg2node);
+
 	} else {
 		PQLParser::cleanUp();
 		throw ParseException("Syntax error: Invalid query.");
