@@ -1,25 +1,28 @@
 #pragma once
 
-#include <set>
+#include <vector>
 
 class GNode
 {
 private:
 	int attrib;
-	std::set<GNode*> next;
-	std::set<GNode*> previous;
+	std::vector<GNode*> next;
+	std::vector<GNode*> previous;
 	void init();
 public:
 	GNode();
+	GNode(int attrib);
 	~GNode();
-	GNode createNode(int attribute);
+	void setAttrib(int attrib);
 	void setNext(GNode *node);
 	void setPrevious(GNode *node);
-	std::set<GNode*> getNext();
-	std::set<GNode*> getNextTransitive();
-	std::set<GNode*> getPrevious();
-	std::set<GNode*> getPreviousTransitive();
-	bool isNext(GNode node1, GNode node2);
-	bool isNextTransitive(GNode node1, GNode node2);
+	int getAttrib();
+	std::vector<GNode*> getNext();
+	std::vector<GNode*> getNextTransitive();
+	std::vector<GNode*> getPrev();
+	std::vector<GNode*> getPrevTransitive();
+	bool isNext(GNode *next);
+	bool isNextTransitive(GNode *next);
+	bool operator == (const GNode& g);
 };
 
