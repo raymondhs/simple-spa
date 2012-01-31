@@ -7,6 +7,7 @@ class GNode
 private:
 	int attribute;
 	std::set<int> next;
+	void init();
 public:
 	GNode(void);
 	~GNode(void);
