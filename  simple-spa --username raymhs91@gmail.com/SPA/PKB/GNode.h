@@ -10,8 +10,8 @@ private:
 	std::set<GNode*> previous;
 	void init();
 public:
-	GNode(void);
-	~GNode(void);
+	GNode();
+	~GNode();
 	GNode createNode(int attribute);
 	void setNext(GNode *node);
 	void setPrevious(GNode *node);
