@@ -5,7 +5,7 @@
 class GNode
 {
 private:
-	int attribute;
+	int attrib;
 	std::set<GNode*> next;
 	std::set<GNode*> previous;
 	void init();
