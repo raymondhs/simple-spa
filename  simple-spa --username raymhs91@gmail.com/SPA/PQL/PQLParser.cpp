@@ -21,6 +21,7 @@ static void match(int token);
 static QNode* stmtRef();
 static QNode* entRef();
 static QNode* relRef();
+static QNode* lineRef();
 
 static QNode* ref();
 static QNode* attrRef();
@@ -183,6 +184,26 @@ QNode* entRef() {
 	return ent;
 }
 
+QNode* lineRef(){
+	QNode* progLine = new QNode();
+	if(next_token == TUNDERSCORE) {
+		next_token = getToken();
+		progLine->setType(QANY);
+	} else if(next_token == TINTEGER) {
+		progLine->setIntVal(atoi(text.c_str()));
+		next_token = getToken();
+		progLine->setType(QINT);
+	} else if(next_token == TNAME) {
+		progLine->setIntVal(getSynIdx(text));
+		next_token = getToken();
+		progLine->setType(QSYN);
+	} else {
+		PQLParser::cleanUp();
+		throw ParseException("Syntax error: Invalid query.");
+	}
+	return progLine;
+}
+
 QNode* relRef() {
 	string relName = "", temp;
 	int arg1, arg2, tok;
@@ -311,6 +332,53 @@ QNode* relRef() {
 		tok = next_token;
 		arg2node = entRef();
 		if(tok != TUNDERSCORE && tok != TINTEGER && tok != TDQUOTE) {
+			arg2 = getSynType(temp);
+		}
+
+		match(TRPARENT);
+
+		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
+		} else {
+			PQLParser::cleanUp();
+		throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+		}
+
+		rel = new QNode(t);
+		rel->setLeftChild(arg1node);
+		rel->setRightChild(arg2node);
+
+	} else if(text=="Next"){
+		QNodeType t;
+		arg1 = QPROGLINE;
+		arg2 = QPROGLINE;
+		relName = text;
+		if(relName == "Next") { t = QNEXT; }
+		next_token = getToken();
+		if(text == "*") {
+			relName += "*";
+			if(relName == "Next*") { t = QNEXTT; }
+			next_token = getToken();
+		} else if(text == "(") {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Syntax error: Invalid query.");
+		}
+		match(TLPARENT);
+
+		temp = text;
+		tok = next_token;
+		arg1node = lineRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg1 = getSynType(temp);
+		}
+
+
+		match(TCOMMA);
+		
+		temp = text;
+		tok = next_token;
+		arg2node = lineRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER) {
 			arg2 = getSynType(temp);
 		}
 

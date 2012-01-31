@@ -29,6 +29,8 @@ void RelTable::init() {
 	mapper.insert(pair<string, vector< vector<int> > >("Uses",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Calls",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Calls*",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("Next",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("Next*",vector< vector<int> >()));
 
 	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF|QCALL;
 	insertRow("Parent",allStmt,allStmt);
@@ -37,12 +39,12 @@ void RelTable::init() {
 	insertRow("Follows*",allStmt,allStmt);
 	insertRow("Modifies",allStmt,QVAR);
 	insertRow("Uses",allStmt,QVAR);
-
 	insertRow("Modifies",QPROC,QVAR);
 	insertRow("Uses",QPROC,QVAR);
-
 	insertRow("Calls",QPROC,QPROC);
 	insertRow("Calls*",QPROC,QPROC);
+	insertRow("Calls*",QPROGLINE,QPROGLINE);
+	insertRow("Calls*",QPROGLINE,QPROGLINE);
 }
 
 bool RelTable::validate(std::string relName, int arg1, int arg2) {
