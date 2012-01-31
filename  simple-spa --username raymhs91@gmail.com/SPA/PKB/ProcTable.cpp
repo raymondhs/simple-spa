@@ -26,6 +26,14 @@ PROC_NAME ProcTable::getProcName(PROC_IDX index){
 	return this->idxToName[index];
 }
 
+void ProcTable::addRoot(GNode* root){
+	this->cfgRoots.push_back(root);
+}
+
+GNode* ProcTable::getCfgRoot(PROC_IDX proc){
+	return cfgRoots[proc];
+}
+
 PROC_IDX ProcTable::getProcIndex(PROC_NAME procName){
 	map<string, int>::iterator iter = nameToIdx.find(procName);
 	if (iter != nameToIdx.end())

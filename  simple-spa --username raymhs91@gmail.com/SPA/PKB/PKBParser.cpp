@@ -45,6 +45,7 @@ static TNode* assign();
 static TNode* expr(STMT_NO stmtIdx);
 static TNode* term(STMT_NO stmtIdx);
 static TNode* factor(STMT_NO stmtIdx);
+static void buildCFG();
 static void cleanUp();
 
 typedef enum tokentype {
@@ -501,6 +502,11 @@ TNode* factor(STMT_NO stmtIdx) {
 	return fac;
 }
 
+static void buildCFG(){
+	/*TODO
+	*/
+}
+
 void PKBParser::cleanUp() {
 	ModifiesTable::getModifiesTable()->clearTable();
 	UsesTable::getUsesTable()->clearTable();
@@ -528,6 +534,7 @@ void PKBParser::parse(string fileName){
 		PKBParser::cleanUp();
 		throw ParseException("Error in reading file.");
 	}
+	buildCFG();
 }
 
 /*
