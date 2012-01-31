@@ -28,6 +28,7 @@
     <ClCompile Include="..\SPA\PQL\RelTable.cpp" />
     <ClCompile Include="..\SPA\PQL\SynTable.cpp" />
     <ClCompile Include="TestAST.cpp" />
+    <ClCompile Include="TestCallsTable.cpp" />
     <ClCompile Include="TestModifies.cpp" />
     <ClCompile Include="TestProc.cpp" />
     <ClCompile Include="TestQueryEvaluator.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="..\SPA\PQL\RelTable.h" />
     <ClInclude Include="..\SPA\PQL\SynTable.h" />
     <ClInclude Include="TestAST.h" />
+    <ClInclude Include="TestCallsTable.h" />
     <ClInclude Include="TestModifies.h" />
     <ClInclude Include="TestProc.h" />
     <ClInclude Include="TestQueryEvaluator.h" />

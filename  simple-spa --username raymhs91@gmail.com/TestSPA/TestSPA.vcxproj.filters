@@ -93,6 +93,9 @@
     <ClCompile Include="..\SPA\PKB\CallsTable.cpp">
       <Filter>Source Files\lib\PKB</Filter>
     </ClCompile>
+    <ClCompile Include="TestCallsTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestAST.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="..\SPA\PKB\CallsTable.h">
       <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCallsTable.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 /*
- * Author: Peter
+ * @author: Peter
  */
 #ifndef TestVar_h
 #define TestVar_h

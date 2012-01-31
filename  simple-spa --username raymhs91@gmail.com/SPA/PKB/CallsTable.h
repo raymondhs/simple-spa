@@ -1,3 +1,7 @@
+/*
+ * @author: Peter
+ */
+
 #pragma once
 
 #include <vector>
@@ -52,6 +56,8 @@ public:
 	 */
 	PROC_SET getProcCallsProc(PROC_IDX proc);
 
+	PROC_SET getProcCallsProcTransitive(PROC_IDX proc);
+
 	/**
 	 * Get the indices of the procedures called by the specified statement
 	 *
@@ -67,6 +73,8 @@ public:
 	 * @return Set of indices of the procedures called by the specified procedure
 	 */
 	PROC_SET getProcCalledByProc(PROC_IDX proc);
+
+	PROC_SET getProcCalledByProcTransitive(PROC_IDX proc);
 
 	/**
 	 * Checks if a statement calls a procedure

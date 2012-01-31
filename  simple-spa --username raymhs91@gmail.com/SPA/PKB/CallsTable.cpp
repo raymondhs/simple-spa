@@ -1,3 +1,6 @@
+/*
+ * @author: Peter
+ */
 
 #include "CallsTable.h"
 #include "ProcTable.h"
@@ -58,6 +61,20 @@ PROC_SET CallsTable::getProcCallsProc(PROC_IDX proc) {
 	return result;
 }
 
+PROC_SET CallsTable::getProcCallsProcTransitive(PROC_IDX proc) {
+	set<int> result,temp;
+	set<int> caller = getProcCallsProc(proc);
+	set<int>::iterator it,itTemp;
+	for(it = caller.begin(); it!=caller.end() ; it++){
+		result.insert(*it);
+		temp = getProcCallsProcTransitive(*it);
+		for(itTemp = temp.begin(); itTemp!=temp.end() ; itTemp++){
+			result.insert(*itTemp);
+		}
+	}
+	return result;
+}
+
 PROC_SET CallsTable::getProcCalledByStmt(STMT_NO stmt) {
 	unsigned stmtNo = (unsigned) stmt-1;
 	if(stmtNo >= stmtCallsTable.size() || stmtNo < 0) return set<int>();
@@ -68,6 +85,20 @@ PROC_SET CallsTable::getProcCalledByProc(PROC_IDX proc) {
 	unsigned procIDX = (unsigned) proc;
 	if(procIDX >= procCallsTable.size() || procIDX < 0) return set<int>();
 	return procCallsTable[proc];
+}
+
+PROC_SET CallsTable::getProcCalledByProcTransitive(PROC_IDX proc) {
+	set<int> result,temp;
+	set<int> caller = getProcCalledByProc(proc);
+	set<int>::iterator it,itTemp;
+	for(it = caller.begin(); it!=caller.end() ; it++){
+		result.insert(*it);
+		temp = getProcCalledByProcTransitive(*it);
+		for(itTemp = temp.begin(); itTemp!=temp.end() ; itTemp++){
+			result.insert(*itTemp);
+		}
+	}
+	return result;
 }
 
 bool CallsTable::stmtCallsProc(STMT_NO stmt, PROC_IDX proc){
