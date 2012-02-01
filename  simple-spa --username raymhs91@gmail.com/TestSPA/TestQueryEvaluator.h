@@ -29,6 +29,7 @@ CPPUNIT_TEST( testAnd );
 CPPUNIT_TEST( testBoolWith );
 CPPUNIT_TEST( testWith );
 CPPUNIT_TEST( testCalls );
+CPPUNIT_TEST( testCallsT );
 CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -61,6 +62,7 @@ public:
 	void testBoolWith();
 	void testWith();
 	void testCalls();
+	void testCallsT();
 };
 #endif
 
