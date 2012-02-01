@@ -399,11 +399,11 @@ QNode* relRef() {
 		arg1 = allStmt;
 		arg2 = allStmt;
 		relName = text;
-		if(relName == "Affect") { t = QAFFECT; }
+		if(relName == "Affects") { t = QAFFECT; }
 		next_token = getToken();
 		if(text == "*") {
 			relName += "*";
-			if(relName == "Affect*") { t = QAFFECTT; }
+			if(relName == "Affects*") { t = QAFFECTT; }
 			next_token = getToken();
 		} else if(text == "(") {
 		} else {

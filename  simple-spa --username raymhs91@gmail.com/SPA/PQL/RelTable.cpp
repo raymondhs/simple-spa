@@ -45,7 +45,9 @@ void RelTable::init() {
 	insertRow("Uses",QPROC,QVAR);
 	insertRow("Calls",QPROC,QPROC);
 	insertRow("Calls*",QPROC,QPROC);
-	insertRow("Affects*",allStmt,allStmt);
+	insertRow("Next",QPROGLINE,QPROGLINE);
+	insertRow("Next*",QPROGLINE,QPROGLINE);
+	insertRow("Affects",allStmt,allStmt);
 	insertRow("Affects*",allStmt,allStmt);
 }
 
