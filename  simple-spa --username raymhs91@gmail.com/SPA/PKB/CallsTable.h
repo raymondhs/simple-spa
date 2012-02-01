@@ -48,8 +48,6 @@ public:
 	 */
 	STMT_SET getStmtCallsProc(PROC_IDX proc);
 
-	PROC_IDX getProcCalledByStmt(STMT_NO stmt);
-
 	/**
 	 * Get the indices of the procedures which calls the specified procedure
 	 *

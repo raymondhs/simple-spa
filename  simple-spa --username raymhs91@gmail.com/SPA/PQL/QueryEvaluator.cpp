@@ -60,6 +60,7 @@ static void handleCallsT(QNode* query);
 static int leftType, rightType;
 static int synIdxLeft, synIdxRight;
 static int constLeft, constRight;
+static int varIdx;
 static int procIdxLeft, procIdxRight;
 static TNode *stmt1, *stmt2;
 static bool valid;

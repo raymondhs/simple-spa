@@ -52,10 +52,6 @@ STMT_SET CallsTable::getStmtCallsProc(PROC_IDX proc) {
 	return result;
 }
 
-PROC_IDX CallsTable::getProcCalledByStmt(STMT_NO stmt) {
-	return stmtCallsTable[stmt-1];
-}
-
 PROC_SET CallsTable::getProcCallsProc(PROC_IDX proc) {
 	set<int> result;
 	
