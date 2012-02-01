@@ -10,6 +10,7 @@
 #include "../PKB/VarTable.h"
 #include "../PKB/ProcTable.h"
 #include "../PKB/StmtTable.h"
+#include "../PKB/CallsTable.h"
 #include "SynTable.h"
 #include "../PKB/ConstantTable.h"
 #include "PQLParser.h"
@@ -29,11 +30,15 @@ static UsesTable *u;
 static AST *ast;
 static ConstantTable *ct;
 static ProcTable *pt;
+static CallsTable *callst;
 static vector< vector<int> > table;
 static map< int, int > mapper;
 
 static vector< vector<int> > cartesianProduct(vector< vector<int> > table1, vector< vector<int> > table2);
 static vector<int> allEntitiesWithType(int type);
+
+static void initVars(QNode* leftArg, QNode* rightArg);
+static void initVarsForCalls(QNode* leftArg, QNode* rightArg);
 
 static void initTable();
 static void addAttribute(int synIdx);
@@ -49,11 +54,13 @@ static void handleFollows(QNode* query);
 static void handleFollowsT(QNode* query);
 static void handleModifies(QNode* query);
 static void handleUses(QNode* query);
+static void handleCalls(QNode* query);
+static void handleCallsT(QNode* query);
 
 static int leftType, rightType;
 static int synIdxLeft, synIdxRight;
 static int constLeft, constRight;
-static int varIdx;
+static int procIdxLeft, procIdxRight;
 static TNode *stmt1, *stmt2;
 static bool valid;
 
@@ -81,6 +88,25 @@ void initVars(QNode* leftArg, QNode* rightArg) {
 		constRight = rightArg->getIntVal();
 		stmt2 = st->getStmtNode(constRight);
 		if(stmt2 == NULL) valid = false;
+	}
+}
+
+void initVarsForCalls(QNode* leftArg, QNode* rightArg) {
+	valid = true;
+
+	leftType = leftArg->getType();
+	rightType = rightArg->getType();
+
+	if(leftType == QSYN) { synIdxLeft = leftArg->getIntVal(); }
+	if(leftType == QSTRING) {
+		procIdxLeft = pt->getProcIndex(leftArg->getStrVal());
+		if(procIdxLeft == -1) valid = false;
+	}
+
+	if(rightType == QSYN) { synIdxRight = rightArg->getIntVal(); }
+	if(rightType == QSTRING) {
+		procIdxRight = pt->getProcIndex(rightArg->getStrVal());
+		if(procIdxRight == -1) valid = false;
 	}
 }
 
@@ -380,6 +406,10 @@ void evaluateSuchThat() {
 				handleModifies(such); break;
 			case QUSES:
 				handleUses(such); break;
+			case QCALL:
+				handleCalls(such); break;
+			case QCALLT:
+				handleCallsT(such); break;
 			default:
 				break;
 		}
@@ -768,6 +798,96 @@ void handleUses(QNode* query) {
 			int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
 			for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
 				if(!(u->isUsesStmt(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
+			}
+		}
+	}
+}
+
+void handleCalls(QNode* query) {
+	initVarsForCalls(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
+	if(leftType == QSTRING) {
+		if(rightType == QSTRING) {
+			if(!(callst->procCallsProc(procIdxLeft,procIdxRight))) clearTable();
+		} else if(rightType == QANY) {
+			if(callst->getProcCalledByProc(procIdxLeft).size() == 0) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(!(callst->procCallsProc(procIdxLeft,table[aIdx][i]))) deleteRow(i);
+			}
+		}
+	} else if(leftType == QANY) {
+		if(rightType == QSTRING) {
+			if(callst->getProcCallsProc(procIdxRight).size() == 0) clearTable();
+		} else if(rightType == QANY) {
+			if(callst->getAllCall().size() == 0) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(callst->getProcCallsProc(table[aIdx][i]).size() == 0) deleteRow(i);
+			}
+		}
+	} else if(leftType == QSYN) {
+		if(rightType == QSTRING) {
+			int aIdx = mapper[synIdxLeft];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(!(callst->procCallsProc(table[aIdx][i],procIdxRight))) deleteRow(i);
+			}
+		} else if(rightType == QANY) {
+			int aIdx = mapper[synIdxLeft];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(callst->getProcCalledByProc(table[aIdx][i]).size() == 0) deleteRow(i);
+			}
+		} else if(rightType == QSYN) {
+			int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+			for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+				if(!(callst->procCallsProc(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
+			}
+		}
+	}
+}
+
+void handleCallsT(QNode* query) {
+	initVarsForCalls(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
+	if(leftType == QSTRING) {
+		if(rightType == QSTRING) {
+			if(!(callst->procCallsProcTransitive(procIdxLeft,procIdxRight))) clearTable();
+		} else if(rightType == QANY) {
+			if(callst->getProcCalledByProc(procIdxLeft).size() == 0) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(!(callst->procCallsProcTransitive(procIdxLeft,table[aIdx][i]))) deleteRow(i);
+			}
+		}
+	} else if(leftType == QANY) {
+		if(rightType == QSTRING) {
+			if(callst->getProcCallsProc(procIdxRight).size() == 0) clearTable();
+		} else if(rightType == QANY) {
+			if(callst->getAllCall().size() == 0) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(callst->getProcCallsProcTransitive(table[aIdx][i]).size() == 0) deleteRow(i);
+			}
+		}
+	} else if(leftType == QSYN) {
+		if(rightType == QSTRING) {
+			int aIdx = mapper[synIdxLeft];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(!(callst->procCallsProcTransitive(table[aIdx][i],procIdxRight))) deleteRow(i);
+			}
+		} else if(rightType == QANY) {
+			int aIdx = mapper[synIdxLeft];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(callst->getProcCalledByProc(table[aIdx][i]).size() == 0) deleteRow(i);
+			}
+		} else if(rightType == QSYN) {
+			int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+			for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+				if(!(callst->procCallsProcTransitive(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
 			}
 		}
 	}

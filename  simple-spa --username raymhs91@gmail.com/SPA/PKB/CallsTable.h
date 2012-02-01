@@ -10,8 +10,8 @@
 
 class CallsTable{
 private:
-	std::vector< VAR_SET > stmtCallsTable;
-	std::vector< VAR_SET > procCallsTable;
+	std::vector< PROC_IDX > stmtCallsTable;
+	std::vector< PROC_SET > procCallsTable;
 	CallsTable();
 	CallsTable(const CallsTable &);
 	CallsTable& operator=(const CallsTable &);
@@ -62,9 +62,9 @@ public:
 	 * Get the indices of the procedures called by the specified statement
 	 *
 	 * @param stmt Index of the statement calling the procedures
-	 * @return Set of indices of the procedures called by the specified statement
+	 * @return Index of the procedure called by the specified statement
 	 */
-	PROC_SET getProcCalledByStmt(STMT_NO stmt);
+	PROC_IDX CallsTable::getProcCalledByStmt(STMT_NO stmt);
 
 	/**
 	 * Get the indices of the procedures called by the specified procedure
@@ -93,6 +93,10 @@ public:
 	 * @return true if proc1 calls the proc2
 	 */
 	bool procCallsProc(PROC_IDX proc1, PROC_IDX proc2);
+
+	bool procCallsProcTransitive(PROC_IDX proc1, PROC_IDX proc2);
+
+	std::vector<int> getAllCall();
 
 	void clearTable();
 };

@@ -4,6 +4,7 @@
 
 #include "CallsTable.h"
 #include "ProcTable.h"
+#include <queue>
 
 using namespace std;
 
@@ -24,10 +25,10 @@ void CallsTable::insertStmt(STMT_NO stmt, PROC_IDX proc) {
 		int i = stmtCallsTable.size();
 		while(i <= stmt-1) {
 			i++;
-			stmtCallsTable.push_back(set<int>());
+			stmtCallsTable.push_back(-1);
 		}
 	}
-	stmtCallsTable[stmt-1].insert(proc);
+	stmtCallsTable[stmt-1] = proc;
 }
 
 void CallsTable::insertProc(PROC_IDX proc1, PROC_IDX proc2) {
@@ -45,7 +46,7 @@ STMT_SET CallsTable::getStmtCallsProc(PROC_IDX proc) {
 	set<int> result;
 	
 	for(unsigned i = 0; i < stmtCallsTable.size(); i++) {
-		if(stmtCallsTable[i].count(proc)==1) result.insert(i+1);
+		if(stmtCallsTable[i] == proc) result.insert(i+1);
 	}
 
 	return result;
@@ -75,9 +76,9 @@ PROC_SET CallsTable::getProcCallsProcTransitive(PROC_IDX proc) {
 	return result;
 }
 
-PROC_SET CallsTable::getProcCalledByStmt(STMT_NO stmt) {
+PROC_IDX CallsTable::getProcCalledByStmt(STMT_NO stmt) {
 	unsigned stmtNo = (unsigned) stmt-1;
-	if(stmtNo >= stmtCallsTable.size() || stmtNo < 0) return set<int>();
+	if(stmtNo >= stmtCallsTable.size() || stmtNo < 0) return -1;
 	return stmtCallsTable[stmt-1];
 }
 
@@ -102,9 +103,28 @@ PROC_SET CallsTable::getProcCalledByProcTransitive(PROC_IDX proc) {
 }
 
 bool CallsTable::stmtCallsProc(STMT_NO stmt, PROC_IDX proc){
-	return (unsigned)stmt-1<stmtCallsTable.size() && (unsigned)stmt-1>= 0 && stmtCallsTable[stmt-1].count(proc) == 1;
+	return (unsigned)stmt-1<stmtCallsTable.size() && (unsigned)stmt-1>= 0 && stmtCallsTable[stmt-1] == proc;
 }
 
 bool CallsTable::procCallsProc(PROC_IDX proc1, PROC_IDX proc2){
 	return (unsigned)proc1<procCallsTable.size() && (unsigned)proc1-1>= 0 && procCallsTable[proc1].count(proc2) == 1;
+}
+
+bool CallsTable::procCallsProcTransitive(PROC_IDX proc1, PROC_IDX proc2) {
+	PROC_SET callee = getProcCalledByProcTransitive(proc1);
+	PROC_SET::iterator it;
+	for(it = callee.begin(); it != callee.end(); it++) {
+		if(proc2==(*it)) return true;
+	}
+	return false;
+}
+
+std::vector<int> CallsTable::getAllCall() {
+	vector<int> result;
+	for(unsigned i = 0; i < stmtCallsTable.size(); i++) {
+		if(stmtCallsTable[i] != -1) {
+			result.push_back(i+1);
+		}
+	}
+	return result;
 }
