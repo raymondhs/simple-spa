@@ -683,6 +683,9 @@ int entity() {
 	} else if(text == "constant") {
 		next_token = getToken();
 		return QCONST;
+	} else if(text == "call") {
+		next_token = getToken();
+		return QCALL;
 	} else if(text == "prog") {
 		next_token = getToken();
 		match(TUNDERSCORE);

@@ -19,7 +19,7 @@
 using namespace std;
 
 void TestQueryEvaluator::setUp() {
-	declaration = "procedure p1,p2,p3,p4; while w1,w2,w3,w4; assign a,a1,a2,a3,a4; stmt s,s#,s1,s2,s3,s4; variable v1,v2,v3,v4; prog_line n1, n2, n3,n4; constant c1, c2, c3,c4; ";
+	declaration = "procedure p1,p2,p3,p4; while w1,w2,w3,w4; assign a,a1,a2,a3,a4; stmt s,s#,s1,s2,s3,s4; variable v1,v2,v3,v4; prog_line n1, n2, n3,n4; constant c1, c2, c3,c4; call ca1,ca2,ca3,ca4; if i1,i2,i3,i4;";
 }
 
 void TestQueryEvaluator::tearDown() {
@@ -610,7 +610,7 @@ void TestQueryEvaluator::testBoolFollows() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-	
+
 	/* Test 17 */
 
 	query = declaration + "Select BOOLEAN such that Follows(1, s1) pattern a1(_,_)";
@@ -2895,7 +2895,7 @@ void TestQueryEvaluator::testBoolParent(){
 
 	cout << "testBoolParent = ";
 
-	
+
 	// Test 1
 	query = declaration + "Select BOOLEAN such that Parent(1, 1)";
 	PQLParser::parse(query);
@@ -3366,7 +3366,7 @@ void TestQueryEvaluator::testBoolParent(){
 	query = declaration + "Select BOOLEAN such that Parent(_,11) pattern a1(\"y\",_\"z\"_)";
 	PQLParser::parse(query);
 	result.push_back("true");
-	
+
 	try {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception&e) {
@@ -3381,7 +3381,7 @@ void TestQueryEvaluator::testBoolParent(){
 	query = declaration + "Select BOOLEAN pattern a1(\"y\",_\"z\"_) such that Parent(_,11)";
 	PQLParser::parse(query);
 	result.push_back("true");
-	
+
 	try {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception&e) {
@@ -3411,7 +3411,7 @@ void TestQueryEvaluator::testBoolParent(){
 	query = declaration + "Select BOOLEAN pattern a1(_,_\"z\"_) such that Parent(1,5)";
 	PQLParser::parse(query);
 	result.push_back("true");
-	
+
 	try {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception&e) {
@@ -4660,7 +4660,7 @@ void TestQueryEvaluator::testBoolParentT() {
 
 	cout << "testBoolParent* = ";
 
-	
+
 	// Test 1
 	query = declaration + "Select BOOLEAN such that Parent*(1, 1)";
 	PQLParser::parse(query);
@@ -4874,7 +4874,7 @@ void TestQueryEvaluator::testBoolParentT() {
 	// Test 15
 	query = declaration + "Select BOOLEAN such that Parent*(a1, a2)";
 	PQLParser::parse(query);
-result.push_back("false");
+	result.push_back("false");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -4903,7 +4903,7 @@ result.push_back("false");
 	// Test 17
 	query = declaration + "Select BOOLEAN such that Parent*(_, 1)";
 	PQLParser::parse(query);
-result.push_back("false");
+	result.push_back("false");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -5060,7 +5060,7 @@ result.push_back("false");
 
 	query = declaration + "Select BOOLEAN such that Parent*(_,_) pattern a1(\"i\",_\"x\"_)";
 	PQLParser::parse(query);
-result.push_back("false");
+	result.push_back("false");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -10885,6 +10885,1777 @@ void TestQueryEvaluator::testWith(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
+
+	cout << "SUCCESS! testWith :p" <<endl;
+}
+
+void TestQueryEvaluator::testCalls(){
+	try {
+		PKBParser::parse("testcases/calls_source.txt");
+	} catch (exception& e) {
+		cout << "PKBParser: " << e.what() << endl;
+	}
+	cout<< "testCalls = ";
+
+	/* Test 1 */
+
+	query = declaration + "Select n1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 2 */
+
+	query = declaration + "Select n1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 3 */
+
+	query = declaration + "Select n1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 4 */
+
+	query = declaration + "Select n1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 5 */
+
+	query = declaration + "Select n1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 6 */
+
+	query = declaration + "Select n1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 7 */
+
+	query = declaration + "Select n1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 8 */
+
+	query = declaration + "Select n1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 9 */
+
+	query = declaration + "Select s1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 10 */
+
+	query = declaration + "Select s1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 11 */
+
+	query = declaration + "Select s1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 12 */
+
+	query = declaration + "Select s1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 13 */
+
+	query = declaration + "Select s1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 14 */
+
+	query = declaration + "Select s1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 15 */
+
+	query = declaration + "Select s1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 16 */
+
+	query = declaration + "Select s1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 17 */
+
+	query = declaration + "Select a1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 18 */
+
+	query = declaration + "Select a1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 19 */
+
+	query = declaration + "Select a1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 20 */
+
+	query = declaration + "Select a1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 21 */
+
+	query = declaration + "Select a1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 21" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 22 */
+
+	query = declaration + "Select a1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 22" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 23 */
+
+	query = declaration + "Select a1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 23" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 24 */
+
+	query = declaration + "Select a1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 24" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 25 */
+
+	query = declaration + "Select c1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("0");
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 25" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 26 */
+
+	query = declaration + "Select c1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("0");
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 26" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 27 */
+
+	query = declaration + "Select c1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("0");
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 27" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 28 */
+
+	query = declaration + "Select c1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("0");
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 28" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 29 */
+
+	query = declaration + "Select c1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 29" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 30 */
+
+	query = declaration + "Select c1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 30" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 31 */
+
+	query = declaration + "Select c1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 31" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 32 */
+
+	query = declaration + "Select c1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 32" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 33 */
+
+	query = declaration + "Select i1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("15");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 33" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 34 */
+
+	query = declaration + "Select i1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("15");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 34" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 35 */
+
+	query = declaration + "Select i1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("15");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 35" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 36 */
+
+	query = declaration + "Select i1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("15");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 36" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 37 */
+
+	query = declaration + "Select i1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 37" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 38 */
+
+	query = declaration + "Select i1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 38" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 39 */
+
+	query = declaration + "Select i1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 39" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 40 */
+
+	query = declaration + "Select i1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 40" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 41 */
+
+	query = declaration + "Select w1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("11");
+	result.push_back("21");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 41" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 42 */
+
+	query = declaration + "Select w1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("11");
+	result.push_back("21");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 42" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 43 */
+
+	query = declaration + "Select w1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("11");
+	result.push_back("21");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 43" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 44 */
+
+	query = declaration + "Select w1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("11");
+	result.push_back("21");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 44" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 45 */
+
+	query = declaration + "Select w1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 45" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 46 */
+
+	query = declaration + "Select w1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 46" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 47 */
+
+	query = declaration + "Select w1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 47" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 48 */
+
+	query = declaration + "Select w1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 48" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 49 */
+
+	query = declaration + "Select ca1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("5");
+	result.push_back("20");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 49" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 50 */
+
+	query = declaration + "Select ca1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("5");
+	result.push_back("20");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 50" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 51 */
+
+	query = declaration + "Select ca1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("5");
+	result.push_back("20");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 51" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 52 */
+
+	query = declaration + "Select ca1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("5");
+	result.push_back("20");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 52" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 53 */
+
+	query = declaration + "Select ca1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 53" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 54 */
+
+	query = declaration + "Select ca1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 54" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 55 */
+
+	query = declaration + "Select ca1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 55" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 56 */
+
+	query = declaration + "Select ca1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 56" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 57 */
+
+	query = declaration + "Select v1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("y");
+	result.push_back("k");
+	result.push_back("l");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 57" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 58 */
+
+	query = declaration + "Select v1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("y");
+	result.push_back("k");
+	result.push_back("l");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 58" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 59 */
+
+	query = declaration + "Select v1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("y");
+	result.push_back("k");
+	result.push_back("l");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 59" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 60 */
+
+	query = declaration + "Select v1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("y");
+	result.push_back("k");
+	result.push_back("l");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 60" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 61 */
+
+	query = declaration + "Select v1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 61" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 62 */
+
+	query = declaration + "Select v1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 62" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 63 */
+
+	query = declaration + "Select v1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 63" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 64 */
+
+	query = declaration + "Select v1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 64" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 65 */
+
+	query = declaration + "Select p1 such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 65" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 66 */
+
+	query = declaration + "Select p1 such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 66" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 67 */
+
+	query = declaration + "Select p1 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 67" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 68 */
+
+	query = declaration + "Select p2 such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("Beta");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 68" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 69 */
+
+	query = declaration + "Select p1 such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 69" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 70 */
+
+	query = declaration + "Select p1 such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 70" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 71 */
+
+	query = declaration + "Select p1 such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 71" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 72 */
+
+	query = declaration + "Select p1 such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 72" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 73 */
+
+	query = declaration + "Select p1 such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 73" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 74 */
+
+	query = declaration + "Select BOOLEAN such that Calls(\"Alpha\",\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 74" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 75 */
+
+	query = declaration + "Select BOOLEAN such that Calls(p1,p2)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 75" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 76 */
+
+	query = declaration + "Select BOOLEAN such that Calls(\"Alpha\",p2)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 76" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 77 */
+
+	query = declaration + "Select BOOLEAN such that Calls(p1,\"Beta\")";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 77" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 78 */
+
+	query = declaration + "Select BOOLEAN such that Calls(p1,\"Caller\")";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 78" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 79 */
+
+	query = declaration + "Select BOOLEAN such that Calls(\"Gamma\",p2)";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 79" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 80 */
+
+	query = declaration + "Select BOOLEAN such that Calls(\"Gamma\",\"Caller\")";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 80" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 81 */
+
+	query = declaration + "Select BOOLEAN such that Calls(\"Alpha\",\"Gamma\")";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 81" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+
 
 	cout << "SUCCESS! testWith :p" <<endl;
 }
