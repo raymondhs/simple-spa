@@ -167,6 +167,10 @@ QNode* entRef() {
 	if(next_token == TUNDERSCORE) {
 		next_token = getToken();
 		ent->setType(QANY);
+	} else if(next_token == TINTEGER) {
+		ent->setIntVal(atoi(text.c_str()));
+		next_token = getToken();
+		ent->setType(QINT);
 	} else if(next_token == TDQUOTE) {
 		next_token = getToken();
 		ent->setStrVal(text);
@@ -218,12 +222,12 @@ QNode* relRef() {
 		
 		temp = text;
 		tok = next_token;
-		arg1node = stmtRef();
+		arg1node = entRef();
 
 		if(tok == TUNDERSCORE) {
 			arg1 = QANY; // not allowed in Modifies/Uses
 		}
-		if(tok != TUNDERSCORE && tok != TINTEGER) {
+		if(tok != TUNDERSCORE && tok != TINTEGER && tok != TDQUOTE) {
 			arg1 = getSynType(temp);		
 		}
 
@@ -233,7 +237,7 @@ QNode* relRef() {
 		tok = next_token;
 		arg2node = entRef();
 
-		if(tok != TUNDERSCORE && tok != TDQUOTE) {
+		if(tok != TUNDERSCORE && tok != TINTEGER && tok != TDQUOTE) {
 			arg2 = getSynType(temp);
 		}
 

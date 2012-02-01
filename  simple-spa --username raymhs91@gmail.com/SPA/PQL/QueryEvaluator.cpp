@@ -59,12 +59,19 @@ static void handleCallsT(QNode* query);
 
 static int leftType, rightType;
 static int synIdxLeft, synIdxRight;
-static int constLeft, constRight;
-static int varIdx;
-static int procIdxLeft, procIdxRight;
+
+// Modifies and Uses
+static int varIdx, procIdx;
 static TNode *stmt1, *stmt2;
+static int constLeft, constRight;
+
+// Calls
+static int procIdxLeft, procIdxRight;
+
+// to detect non exist input (stmt idx out of range, etc)
 static bool valid;
 
+// to answer boolean queries, and fast termination
 static bool booleanAnswer;
 
 void initVars(QNode* leftArg, QNode* rightArg) {
@@ -78,6 +85,10 @@ void initVars(QNode* leftArg, QNode* rightArg) {
 		constLeft = leftArg->getIntVal();
 		stmt1 = st->getStmtNode(constLeft);
 		if(stmt1 == NULL) valid = false;
+	}
+	if(leftType == QSTRING) {
+		procIdx = pt->getProcIndex(leftArg->getStrVal());
+		if(procIdx == -1) valid = false;
 	}
 
 	if(rightType == QSYN) { synIdxRight = rightArg->getIntVal(); }
@@ -786,20 +797,52 @@ void handleModifies(QNode* query) {
 			}
 		}
 	} else if(leftType == QSYN) {
+		int entType = SynTable::getSynTable()->getSyn(synIdxLeft).second;
+
+		if(entType == QVAR) {
+			if(rightType == QSTRING) {
+				int aIdx = mapper[synIdxLeft];			
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					if(!(m->isModifiesStmt(table[aIdx][i],varIdx))) deleteRow(i);
+				}
+			} else if(rightType == QANY) {
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					if(m->getVarModifiedByStmt(table[aIdx][i]).size() == 0) deleteRow(i);
+				}
+			} else if(rightType == QSYN) {
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(!(m->isModifiesStmt(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
+				}
+			}
+		} else {
+			if(rightType == QSTRING) {
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					if(!(m->isModifiesProc(table[aIdx][i],varIdx))) deleteRow(i);
+				}
+			} else if(rightType == QANY) {
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					if(m->getVarModifiedByProc(table[aIdx][i]).size() == 0) deleteRow(i);
+				}
+			} else if(rightType == QSYN) {
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(!(m->isModifiesProc(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
+				}
+			}
+		}
+	} else if(leftType == QSTRING) {
 		if(rightType == QSTRING) {
-			int aIdx = mapper[synIdxLeft];			
-			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
-				if(!(m->isModifiesStmt(table[aIdx][i],varIdx))) deleteRow(i);
-			}
+			if(!(m->isModifiesProc(procIdx,varIdx))) clearTable();
 		} else if(rightType == QANY) {
-			int aIdx = mapper[synIdxLeft];
-			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
-				if(m->getVarModifiedByStmt(table[aIdx][i]).size() == 0) deleteRow(i);
-			}
+			if(m->getVarModifiedByProc(procIdx).size() == 0) clearTable();
 		} else if(rightType == QSYN) {
-			int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
-			for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
-				if(!(m->isModifiesStmt(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
+			int aIdx = mapper[synIdxRight];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(!(m->isModifiesProc(procIdx,table[aIdx][i]))) deleteRow(i);
 			}
 		}
 	}
@@ -835,20 +878,52 @@ void handleUses(QNode* query) {
 			}
 		}
 	} else if(leftType == QSYN) {
+		int entType = SynTable::getSynTable()->getSyn(synIdxLeft).second;
+
+		if(entType == QVAR) {
+			if(rightType == QSTRING) {
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					if(!(u->isUsesStmt(table[aIdx][i],varIdx))) deleteRow(i);
+				}
+			} else if(rightType == QANY) {
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					if(u->getVarUsedByStmt(table[aIdx][i]).size() == 0) deleteRow(i);
+				}
+			} else if(rightType == QSYN) {
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(!(u->isUsesStmt(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
+				}
+			}
+		} else {
+			if(rightType == QSTRING) {
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					if(!(u->isUsesProc(table[aIdx][i],varIdx))) deleteRow(i);
+				}
+			} else if(rightType == QANY) {
+				int aIdx = mapper[synIdxLeft];
+				for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+					if(u->getVarUsedByProc(table[aIdx][i]).size() == 0) deleteRow(i);
+				}
+			} else if(rightType == QSYN) {
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
+					if(!(u->isUsesProc(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
+				}
+			}
+		}
+	} else if(leftType == QSTRING) {
 		if(rightType == QSTRING) {
-			int aIdx = mapper[synIdxLeft];
-			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
-				if(!(u->isUsesStmt(table[aIdx][i],varIdx))) deleteRow(i);
-			}
+			if(!(u->isUsesProc(procIdx,varIdx))) clearTable();
 		} else if(rightType == QANY) {
-			int aIdx = mapper[synIdxLeft];
-			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
-				if(u->getVarUsedByStmt(table[aIdx][i]).size() == 0) deleteRow(i);
-			}
+			if(u->getVarUsedByProc(procIdx).size() == 0) clearTable();
 		} else if(rightType == QSYN) {
-			int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
-			for(ui i = table[aIdx1].size()-1; i >= 1; i--) {
-				if(!(u->isUsesStmt(table[aIdx1][i],table[aIdx2][i]))) deleteRow(i);
+			int aIdx = mapper[synIdxRight];
+			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+				if(!(u->isUsesProc(procIdx,table[aIdx][i]))) deleteRow(i);
 			}
 		}
 	}
