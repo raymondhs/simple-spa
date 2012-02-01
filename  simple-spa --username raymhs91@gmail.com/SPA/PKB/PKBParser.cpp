@@ -14,6 +14,7 @@
 #include "ModifiesTable.h"
 #include "UsesTable.h"
 #include "CallsTable.h"
+#include "CFG.h"
 
 using namespace std;
 
@@ -178,9 +179,14 @@ TNode* procedure(){
 	proc=new TNode (PROCEDURE,procIdx);
 	//assign proc
 	currProc=proc;
+	int root = StmtTable::getStmtTable()->getSize()+1;
 	match (TLBRACE);
 	proc->setFirstChild(stmtLst());
 	match(TRBRACE);
+	for(int i=root;i<=StmtTable::getStmtTable()->getSize()+1;i++){
+		CFG::getCFG()->addNode();
+	}
+	CFG::getCFG()->addRoot(CFG::getCFG()->getNode(root));
 	return proc;
 }
 
@@ -502,11 +508,6 @@ TNode* factor(STMT_NO stmtIdx) {
 	return fac;
 }
 
-static void buildCFG(){
-	/*TODO
-	*/
-}
-
 void PKBParser::cleanUp() {
 	ModifiesTable::getModifiesTable()->clearTable();
 	UsesTable::getUsesTable()->clearTable();
@@ -518,6 +519,50 @@ void PKBParser::cleanUp() {
 	callerProc.clear();
 	calledProc.clear();
 	CallsTable::getCallsTable()->clearTable();
+}
+
+void connectGNode(STMT_NO stmt){
+	GNode* gNode = CFG::getCFG()->getNode(stmt);
+	TNode* tNode = StmtTable::getStmtTable()->getStmtNode(stmt);
+	NodeType type = tNode->getType();
+	TNode *follower, *child, *thenChild, *elseChild;
+	switch(type){
+	case ASSIGN:
+	case CALL:
+		follower = tNode->getRightSibling();
+		if(follower!=NULL) gNode->setNext(CFG::getCFG()->getNode(follower->getAttrib()));
+		break;
+	case WHILE:
+		follower = tNode->getRightSibling();
+		if(follower!=NULL) gNode->setNext(CFG::getCFG()->getNode(follower->getAttrib()));
+		child = tNode->getFirstChild()->getRightSibling()->getFirstChild();
+		gNode->setNext(CFG::getCFG()->getNode(child->getAttrib()));
+		while(child->getRightSibling()!=NULL)
+			child=child->getRightSibling();
+		CFG::getCFG()->getNode(child->getAttrib())->setNext(gNode);
+		break;
+	case IF:
+		thenChild = tNode->getFirstChild()->getRightSibling()->getFirstChild();
+		elseChild = tNode->getFirstChild()->getRightSibling()->getRightSibling()->getFirstChild();
+		gNode->setNext(CFG::getCFG()->getNode(thenChild->getAttrib()));
+		gNode->setNext(CFG::getCFG()->getNode(elseChild->getAttrib()));
+		follower = tNode->getRightSibling();
+		while(thenChild->getRightSibling()!=NULL)
+			thenChild=thenChild->getRightSibling();
+		while(elseChild->getRightSibling()!=NULL)
+			elseChild=elseChild->getRightSibling();
+		if(follower!=NULL){
+			CFG::getCFG()->getNode(thenChild->getAttrib())->setNext(CFG::getCFG()->getNode(follower->getAttrib()));
+			CFG::getCFG()->getNode(elseChild->getAttrib())->setNext(CFG::getCFG()->getNode(follower->getAttrib()));
+		}
+		break;
+	}
+}
+
+void buildCFG(){
+	for(int i=0;i<StmtTable::getStmtTable()->getSize();i++){
+		connectGNode(i+1);
+	}
 }
 
 void PKBParser::parse(string fileName){

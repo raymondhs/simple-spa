@@ -19,7 +19,7 @@ GNode::GNode(int attrib) {
 }
 
 GNode::~GNode() {
-	for (int i=0; i<next.size(); i++) {
+	for (unsigned i=0; i<next.size(); i++) {
 		delete next[i];
 	}
 
@@ -66,7 +66,7 @@ vector<GNode*> GNode::getNextTransitive() {
 			GNode* v = *it;
 			int idx = v->getAttrib();
 			if (visited[idx-1] == false) {
-				visited[idx-1] == true;
+				visited[idx-1] = true;
 				q.push(v);
 				nextT.push_back(v);
 			}
@@ -99,7 +99,7 @@ vector<GNode*> GNode::getPrevTransitive() {
 			GNode* v = *it;
 			int idx = v->getAttrib();
 			if (visited[idx-1] == false) {
-				visited[idx-1] == true;
+				visited[idx-1] = true;
 				q.push(v);
 				prevT.push_back(v);
 			}
@@ -110,7 +110,7 @@ vector<GNode*> GNode::getPrevTransitive() {
 }
 
 bool GNode::isNext(GNode* next) {
-	for (int i=0; i<this->getNext().size(); i++) {
+	for (unsigned i=0; i<this->getNext().size(); i++) {
 		if (this->getNext()[i] == next) return true;
 	}
 
@@ -120,7 +120,7 @@ bool GNode::isNext(GNode* next) {
 bool GNode::isNextTransitive(GNode* next) {
 	vector<GNode*> nextT = this->getNextTransitive();
 
-	for (int i=0; i<nextT.size(); i++) {
+	for (unsigned i=0; i<nextT.size(); i++) {
 		if(nextT[i] == next) return true;
 	}
 

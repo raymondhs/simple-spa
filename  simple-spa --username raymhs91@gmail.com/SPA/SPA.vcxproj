@@ -90,6 +90,7 @@
     <ClCompile Include="ParseException.cpp" />
     <ClCompile Include="PKB\AST.cpp" />
     <ClCompile Include="PKB\CallsTable.cpp" />
+    <ClCompile Include="PKB\CFG.cpp" />
     <ClCompile Include="PKB\ConstantTable.cpp" />
     <ClCompile Include="PKB\GNode.cpp" />
     <ClCompile Include="PKB\ModifiesTable.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="ParseException.h" />
     <ClInclude Include="PKB\AST.h" />
     <ClInclude Include="PKB\CallsTable.h" />
+    <ClInclude Include="PKB\CFG.h" />
     <ClInclude Include="PKB\ConstantTable.h" />
     <ClInclude Include="PKB\GNode.h" />
     <ClInclude Include="PKB\ModifiesTable.h" />

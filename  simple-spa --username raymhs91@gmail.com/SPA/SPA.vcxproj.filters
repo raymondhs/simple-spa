@@ -55,9 +55,15 @@
     <ClCompile Include="PKB\GNode.cpp">
       <Filter>Source Files\PKB</Filter>
     </ClCompile>
+<<<<<<< .mine
+    <ClCompile Include="PKB\CFG.cpp">
+      <Filter>Source Files\PKB</Filter>
+    </ClCompile>
+=======
     <ClCompile Include="PKB\UsesTable.cpp">
       <Filter>Source Files\PQL</Filter>
     </ClCompile>
+>>>>>>> .r91
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PKB\ModifiesTable.h">
@@ -115,6 +121,9 @@
       <Filter>Header\PKB</Filter>
     </ClInclude>
     <ClInclude Include="PKB\GNode.h">
+      <Filter>Header\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\CFG.h">
       <Filter>Header\PKB</Filter>
     </ClInclude>
   </ItemGroup>

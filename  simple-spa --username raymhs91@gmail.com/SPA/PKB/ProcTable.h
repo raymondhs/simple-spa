@@ -9,14 +9,12 @@
 #include <vector>
 #include <set>
 #include "../Constants.h"
-#include "GNode.h"
 
 class ProcTable {
 
 private:
 	std::map< PROC_NAME, PROC_IDX > nameToIdx;
 	std::vector< PROC_NAME > idxToName;
-	std::vector< GNode* > cfgRoots; 
 	ProcTable();
 	ProcTable(const ProcTable &);
 	ProcTable& operator=(const ProcTable &);
@@ -50,10 +48,6 @@ public:
 	 * @return The procedure name
 	 */
 	PROC_NAME getProcName(PROC_IDX index);
-
-	void addRoot( GNode* root);
-
-	GNode* getCfgRoot(PROC_IDX);
 
 	/**
 	 * Gets the index of procedure with the specified name
