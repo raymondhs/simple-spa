@@ -954,6 +954,7 @@ vector<string> QueryEvaluator::evaluate() {
 	u = UsesTable::getUsesTable();
 	ast = AST::getAST();
 	ct = ConstantTable::getConstantTable();
+	callst = CallsTable::getCallsTable();
 
 	initTable();
 	

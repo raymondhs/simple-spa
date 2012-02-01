@@ -4,9 +4,10 @@
 
 #include "CallsTable.h"
 #include "ProcTable.h"
-#include <queue>
 
 using namespace std;
+
+#include<iostream>
 
 CallsTable::CallsTable() {}
 
@@ -107,7 +108,7 @@ bool CallsTable::stmtCallsProc(STMT_NO stmt, PROC_IDX proc){
 }
 
 bool CallsTable::procCallsProc(PROC_IDX proc1, PROC_IDX proc2){
-	return (unsigned)proc1<procCallsTable.size() && (unsigned)proc1-1>= 0 && procCallsTable[proc1].count(proc2) == 1;
+	return (unsigned)proc1<procCallsTable.size() && (unsigned)proc1>= 0 && procCallsTable[proc1].count(proc2) == 1;
 }
 
 bool CallsTable::procCallsProcTransitive(PROC_IDX proc1, PROC_IDX proc2) {
