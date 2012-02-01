@@ -1,150 +1,139 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="PQL\QueryTree.cpp">
-      <Filter>Source Files\PQL</Filter>
-    </ClCompile>
-    <ClCompile Include="PKB\VarTable.cpp">
-      <Filter>Source Files\PKB</Filter>
-    </ClCompile>
-    <ClCompile Include="PKB\ModifiesTable.cpp">
-      <Filter>Source Files\PKB</Filter>
-    </ClCompile>
-    <ClCompile Include="PKB\StmtTable.cpp">
-      <Filter>Source Files\PKB</Filter>
-    </ClCompile>
-    <ClCompile Include="PKB\ProcTable.cpp">
-      <Filter>Source Files\PKB</Filter>
-    </ClCompile>
-    <ClCompile Include="PKB\TNode.cpp">
-      <Filter>Source Files\PKB</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="PKB\AST.cpp">
-      <Filter>Source Files\PKB</Filter>
-    </ClCompile>
-    <ClCompile Include="PKB\PKBParser.cpp">
-      <Filter>Source Files\PKB</Filter>
-    </ClCompile>
-    <ClCompile Include="ParseException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PQL\PQLParser.cpp">
-      <Filter>Source Files\PQL</Filter>
-    </ClCompile>
-    <ClCompile Include="PQL\RelTable.cpp">
-      <Filter>Source Files\PQL</Filter>
-    </ClCompile>
-    <ClCompile Include="PQL\SynTable.cpp">
-      <Filter>Source Files\PQL</Filter>
-    </ClCompile>
-    <ClCompile Include="PQL\QNode.cpp">
-      <Filter>Source Files\PQL</Filter>
-    </ClCompile>
-    <ClCompile Include="PQL\QueryEvaluator.cpp">
-      <Filter>Source Files\PQL</Filter>
-    </ClCompile>
-    <ClCompile Include="PKB\ConstantTable.cpp">
-      <Filter>Source Files\PKB</Filter>
+      <Filter>PKB</Filter>
     </ClCompile>
     <ClCompile Include="PKB\CallsTable.cpp">
-      <Filter>Source Files\PKB</Filter>
+      <Filter>PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\CFG.cpp">
+      <Filter>PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\ConstantTable.cpp">
+      <Filter>PKB</Filter>
     </ClCompile>
     <ClCompile Include="PKB\GNode.cpp">
-      <Filter>Source Files\PKB</Filter>
+      <Filter>PKB</Filter>
     </ClCompile>
-<<<<<<< .mine
-    <ClCompile Include="PKB\CFG.cpp">
-      <Filter>Source Files\PKB</Filter>
+    <ClCompile Include="PKB\ModifiesTable.cpp">
+      <Filter>PKB</Filter>
     </ClCompile>
-=======
+    <ClCompile Include="PKB\PKBParser.cpp">
+      <Filter>PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="ParseException.cpp">
+      <Filter>PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\ProcTable.cpp">
+      <Filter>PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\StmtTable.cpp">
+      <Filter>PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="PKB\TNode.cpp">
+      <Filter>PKB</Filter>
+    </ClCompile>
     <ClCompile Include="PKB\UsesTable.cpp">
-      <Filter>Source Files\PQL</Filter>
+      <Filter>PKB</Filter>
     </ClCompile>
->>>>>>> .r91
+    <ClCompile Include="PKB\VarTable.cpp">
+      <Filter>PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="PQL\PQLParser.cpp">
+      <Filter>PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="PQL\QNode.cpp">
+      <Filter>PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="PQL\QueryEvaluator.cpp">
+      <Filter>PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="PQL\QueryTree.cpp">
+      <Filter>PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="PQL\RelTable.cpp">
+      <Filter>PQL</Filter>
+    </ClCompile>
+    <ClCompile Include="PQL\SynTable.cpp">
+      <Filter>PQL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PKB\ModifiesTable.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="PKB\StmtTable.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="PKB\UsesTable.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="PKB\VarTable.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="PQL\QueryTree.h">
-      <Filter>Header\PQL</Filter>
-    </ClInclude>
-    <ClInclude Include="PKB\ProcTable.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="PKB\TNode.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="Constants.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="PKB\AST.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="PKB\PKBParser.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="ParseException.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="PQL\PQLParser.h">
-      <Filter>Header\PQL</Filter>
-    </ClInclude>
-    <ClInclude Include="PQL\RelTable.h">
-      <Filter>Header\PQL</Filter>
-    </ClInclude>
-    <ClInclude Include="PQL\SynTable.h">
-      <Filter>Header\PQL</Filter>
+      <Filter>PQL\Header</Filter>
     </ClInclude>
     <ClInclude Include="PQL\QNode.h">
-      <Filter>Header\PQL</Filter>
+      <Filter>PQL\Header</Filter>
     </ClInclude>
     <ClInclude Include="PQL\QueryEvaluator.h">
-      <Filter>Header\PQL</Filter>
+      <Filter>PQL\Header</Filter>
     </ClInclude>
-    <ClInclude Include="PKB\ConstantTable.h">
-      <Filter>Header\PKB</Filter>
+    <ClInclude Include="PQL\QueryTree.h">
+      <Filter>PQL\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PQL\RelTable.h">
+      <Filter>PQL\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PQL\SynTable.h">
+      <Filter>PQL\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\AST.h">
+      <Filter>PKB\Header</Filter>
     </ClInclude>
     <ClInclude Include="PKB\CallsTable.h">
-      <Filter>Header\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="PKB\GNode.h">
-      <Filter>Header\PKB</Filter>
+      <Filter>PKB\Header</Filter>
     </ClInclude>
     <ClInclude Include="PKB\CFG.h">
-      <Filter>Header\PKB</Filter>
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\ConstantTable.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\GNode.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\ModifiesTable.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ParseException.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\PKBParser.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\ProcTable.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\StmtTable.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\TNode.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\UsesTable.h">
+      <Filter>PKB\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PKB\VarTable.h">
+      <Filter>PKB\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Header">
-      <UniqueIdentifier>{10e3231a-29e6-468e-862e-8b7bd83fff8f}</UniqueIdentifier>
+    <Filter Include="PKB">
+      <UniqueIdentifier>{dce71cf2-37ed-4266-98e2-199735ec83d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\PKB">
-      <UniqueIdentifier>{f3c81230-a554-454b-9af4-16c8171a2a26}</UniqueIdentifier>
+    <Filter Include="PQL">
+      <UniqueIdentifier>{78d57037-2fb3-4917-ae09-a1e81e0d0b1f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\PQL">
-      <UniqueIdentifier>{7f4bf188-59b4-4360-b051-c1146da2ed22}</UniqueIdentifier>
+    <Filter Include="PQL\Header">
+      <UniqueIdentifier>{dd21bf80-f2db-482a-80a0-87a24d88e7bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{97d746fa-9593-46d6-8e21-c0c72bee8a0b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\PKB">
-      <UniqueIdentifier>{705fd4da-7f25-489f-8932-f854f3a7bb7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\PQL">
-      <UniqueIdentifier>{972aafd8-d17a-49ce-a8e0-b9af1bc06534}</UniqueIdentifier>
+    <Filter Include="PKB\Header">
+      <UniqueIdentifier>{1f10b745-cdd1-4dff-b2c4-ac63d63117cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
