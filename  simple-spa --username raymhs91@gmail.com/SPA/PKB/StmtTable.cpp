@@ -158,9 +158,6 @@ bool StmtTable::doesMatchPattern(TNode *stmt, QNode *pattern) {
 		} else {
 			preorder(right_pattern->getRightSibling(),expr_pattern);
 			preorder(right,expr_stmt);
-			
-			cout << "pat1: " << expr_pattern << endl;
-			cout << "stmt1: " << expr_stmt << endl;
 
 			int found = expr_stmt.find(expr_pattern);
 			if(found != string::npos) {
@@ -173,9 +170,6 @@ bool StmtTable::doesMatchPattern(TNode *stmt, QNode *pattern) {
 	preorder(right_pattern,expr_pattern);
 	
 	preorder(right,expr_stmt);
-
-	cout << "pat: " << expr_pattern << endl;
-	cout << "stmt: " << expr_stmt << endl;
 
 	if(expr_pattern == expr_stmt) return true;
 	return false;

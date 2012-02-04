@@ -7276,7 +7276,7 @@ void TestQueryEvaluator::testModifies() {
 
 void TestQueryEvaluator::testModifiesP() {
 	try {
-		PKBParser::parse("testcases/calls_sources.txt");
+		PKBParser::parse("testcases/calls_source.txt");
 	} catch (exception& e) {
 		cout << "PKBParser: " << e.what() << endl;
 	}
@@ -7382,6 +7382,7 @@ void TestQueryEvaluator::testModifiesP() {
 	PQLParser::parse(query);
 	result.push_back("Alpha");
 	result.push_back("Beta");
+	result.push_back("Gamma");
 	result.push_back("Caller");
 
 	try {
@@ -7421,6 +7422,7 @@ void TestQueryEvaluator::testModifiesP() {
 	PQLParser::parse(query);
 	result.push_back("Alpha");
 	result.push_back("Beta");
+	result.push_back("Gamma");
 	result.push_back("Caller");
 
 	try {
@@ -7429,14 +7431,14 @@ void TestQueryEvaluator::testModifiesP() {
 		cout << e.what() << endl;
 		cout << "Test 8" << endl;
 	}
-
+	
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
 
 	/* Test 9 */
 
-	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern(v1, \"1\");";
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern a1(v1, \"1\")";
 	PQLParser::parse(query);
 	result.push_back("Gamma");
 
@@ -7453,7 +7455,7 @@ void TestQueryEvaluator::testModifiesP() {
 
 	/* Test 10 */
 
-	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern s1(\"a\",_\"b\"_)";
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(a1, v1) pattern a1(\"a\",_\"b\"_)";
 	PQLParser::parse(query);
 	result.push_back("Alpha");
 	result.push_back("Beta");
@@ -7472,7 +7474,7 @@ void TestQueryEvaluator::testModifiesP() {
 
 	/* Test 11 */
 
-	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern s1(_,_)";
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(a1, v1) pattern a1(_,_)";
 	PQLParser::parse(query);
 	result.push_back("Alpha");
 	result.push_back("Beta");
@@ -7492,7 +7494,7 @@ void TestQueryEvaluator::testModifiesP() {
 
 	/* Test 12 */
 
-	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern s1(\"zz\",_)";
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(a1, v1) pattern a1(\"zz\",_)";
 	PQLParser::parse(query);
 
 	try {
@@ -7508,7 +7510,7 @@ void TestQueryEvaluator::testModifiesP() {
 
 	/* Test 13 */
 
-	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern s1(_,\"zz\")";
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(a1, v1) pattern a1(_,\"zz\")";
 	PQLParser::parse(query);
 
 	try {
@@ -9189,10 +9191,10 @@ void TestQueryEvaluator::testUsesP() {
 
 	query = declaration + "Select v1 such that Uses(p, v1)";
 	PQLParser::parse(query);
-	result.push_back("x");
-	result.push_back("z");
 	result.push_back("i");
 	result.push_back("j");
+	result.push_back("x");	
+	result.push_back("z");
 	result.push_back("k");
 	result.push_back("l");
 	result.push_back("a");
@@ -9218,6 +9220,7 @@ void TestQueryEvaluator::testUsesP() {
 	result.push_back("i");
 	result.push_back("j");
 	result.push_back("k");
+	result.push_back("l");
 	result.push_back("a");
 	result.push_back("b");
 	result.push_back("c");
@@ -17061,7 +17064,6 @@ void TestQueryEvaluator::testNext(){
 		cout << e.what() << endl;
 		cout << "Test 3" << endl;
 	}
-
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
