@@ -524,7 +524,7 @@ void evaluateSuchThat() {
 }
 
 void evaluatePattern() {
-	QNode* patt = qt->getPattern()->getLeftChild(); // ONLY 1 PATTERN
+	QNode* patt = qt->getPattern()->getLeftChild();
 	while(patt != NULL) {
 		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
@@ -532,7 +532,18 @@ void evaluatePattern() {
 			PQLParser::cleanUp();
 			return;
 		}*/
-		QNode *copy = new QNode();
+		
+		if(mapper.count(patt->getIntVal()) == 0) {
+			addAttribute(patt->getIntVal());
+		}
+
+		int aIdx = mapper[patt->getIntVal()];
+		for(ui i = table[aIdx].size()-1; i >= 1; i--) {
+			TNode *assignNode = st->getStmtNode(table[aIdx][i]);
+			if(!(st->doesMatchPattern(assignNode,patt))) deleteRow(i);
+		}
+
+		/*QNode *copy = new QNode();
 		QNode *left = patt->getLeftChild();
 		QNode *right = patt->getRightChild();
 		QNode *var = NULL;
@@ -586,10 +597,10 @@ void evaluatePattern() {
 		copy->setRightChild(patt->getRightChild());
 		handleUses(copy);
 		*/
-
+		/*
 		copy->setLeftChild(NULL);
 		copy->setRightChild(NULL);
-		delete copy;
+		delete copy;*/
 		patt = patt->getRightSibling();
 	}
 }

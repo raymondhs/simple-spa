@@ -8,6 +8,7 @@
 #include "../Constants.h"
 
 class TNode;
+class QNode;
 
 class StmtTable {
 
@@ -75,7 +76,21 @@ public:
 	 */
 	std::vector<int> getAllProgline();
 
+	/**
+	 * Gets all if statements in the program
+	 *
+	 * @return Vector of all if statement numbers in the program
+	 */
 	std::vector<int> getAllIf();
+
+	/**
+	 * Determine whether a pattern matches a given assignment statement 
+	 *
+	 * @param stmt The assignment statement node to be compared against
+	 * @param pattern Pattern to be evaluated
+	 * @return true if pattern matches stmt
+	 */
+	bool doesMatchPattern(TNode *stmt, QNode *pattern);
 
 	/**
 	 * Clears statement table

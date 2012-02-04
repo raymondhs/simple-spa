@@ -51,7 +51,6 @@ void TestQueryEvaluator::testBoolFollows() {
 	}
 
 	CPPUNIT_ASSERT(ans == result);
-
 	result.clear();	
 
 	/* Test BOOL 2 */
@@ -102,8 +101,7 @@ void TestQueryEvaluator::testBoolFollows() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
-
+	
 	/* Test BOOL 5 */
 
 	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(s1, 11)";
@@ -119,7 +117,7 @@ void TestQueryEvaluator::testBoolFollows() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
+	
 	/* Test BOOL 6 */
 
 	query = declaration + "Select BOOLEAN pattern a1(\"x\",_) such that Follows(s1, 8)";
@@ -9508,7 +9506,6 @@ void TestQueryEvaluator::testBoolPattern() {
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
 	/* Test BOOL 3 */
 
 	query = declaration + "Select BOOLEAN pattern a1(\"x\",_)";
@@ -9542,7 +9539,6 @@ void TestQueryEvaluator::testBoolPattern() {
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
 	/* Test BOOL 5 */
 
 	query = declaration + "Select BOOLEAN pattern a1(\"x\",_\"x\"_)";
@@ -9558,7 +9554,6 @@ void TestQueryEvaluator::testBoolPattern() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
 
 	/* Test BOOL 6 */
 
@@ -9576,7 +9571,6 @@ void TestQueryEvaluator::testBoolPattern() {
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
 	/* Test BOOL 7 */
 
 	query = declaration + "Select BOOLEAN pattern a2(_,_\"p\"_)";
@@ -9592,7 +9586,6 @@ void TestQueryEvaluator::testBoolPattern() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
 
 	/* Test BOOL 8 */
 
