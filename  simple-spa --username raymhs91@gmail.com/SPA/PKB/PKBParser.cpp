@@ -384,7 +384,8 @@ void checkCalls(){
 		CallsTable::getCallsTable()->insertProc(callerProc[i],procIdx);
 	}
 	// update Modifies and Uses for procedure
-	postCheckCalls(0);
+	for(unsigned i = 0; i<ProcTable::getProcTable()->getSize();i++)
+		postCheckCalls(i);
 
 	for(unsigned i = 0; i < callerStmt.size(); i++) {
 		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
