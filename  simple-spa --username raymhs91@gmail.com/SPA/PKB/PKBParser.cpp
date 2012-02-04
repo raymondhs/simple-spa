@@ -21,6 +21,7 @@ using namespace std;
 static ifstream input;
 static string text;
 static int next_token;
+
 static vector<int> callerStmt;
 static vector<int> callerProc;
 static vector<string> calledProc;
@@ -42,10 +43,11 @@ static TNode* ifStmt();
 static TNode* callStmt();
 static TNode* whileStmt();
 static TNode* assign();
-//static TNode* plusVarName();
 static TNode* expr(STMT_NO stmtIdx);
 static TNode* term(STMT_NO stmtIdx);
 static TNode* factor(STMT_NO stmtIdx);
+void checkCalls();
+void postCheckCalls(int procIdx);
 static void buildCFG();
 static void cleanUp();
 
@@ -120,21 +122,6 @@ int getToken() {
 	}
 }
 
-void checkCalls(){
-	for(unsigned i=0 ; i<callerStmt.size(); i++){
-		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
-		if(procIdx==-1) {
-			if(input.is_open()) {
-				input.close();
-			}
-			PKBParser::cleanUp();
-			throw ParseException("Calling an undefined procedure.");
-		}
-		CallsTable::getCallsTable()->insertStmt(callerStmt[i],procIdx);
-		CallsTable::getCallsTable()->insertProc(callerProc[i],procIdx);
-	}
-}
-
 void match (int token){
 	if(next_token ==token){
 		next_token = getToken();
@@ -205,16 +192,6 @@ TNode* stmtLst(){
 
 TNode* stmt(){
 	TNode *stmt;
-	/*
-	if (next_token==TWHILE)
-	stmt=whileStmt();
-	else if(next_token==TNAME){
-	stmt=assign();
-	match(TSEMICOLON);
-	} else if (next_token==TIF) {
-	stmt=ifStmt();
-	}else throw ParseException("Error in parsing SIMPLE source code.");
-	*/
 	switch(next_token){
 	case TWHILE :
 		stmt=whileStmt();
@@ -260,19 +237,6 @@ TNode* callStmt(){
 	callerStmt.push_back(stmtIdx);
 	callerProc.push_back(currProc->getAttrib());
 	calledProc.push_back(temp);
-	/*
-	PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(temp);  
-	if(procIdx==-1) {
-	if(input.is_open()) {
-	input.close();
-	}
-	PKBParser::cleanUp();
-	throw ParseException("Calling an undefined procedure.");
-	}
-
-	CallsTable::getCallsTable()->insertStmt(stmtIdx,procIdx);
-	CallsTable::getCallsTable()->insertProc(currProc->getAttrib(),procIdx);
-	*/
 	return callNode;
 }
 
@@ -293,33 +257,7 @@ TNode* ifStmt(){
 	TNode *child=stmtListThen->getFirstChild();
 
 	setTables(ifNode, child, stmtIdx);
-	/*
-	while(child!=NULL){
-	//set parent
-	child->setParent(ifNode);
-	STMT_NO childIdx=child->getAttrib();
-	//set modifies for container
-	VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
-	set<int>::iterator iterMod;
-	for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
-	{
-	ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
-	ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
-	}
-
-	//set uses for container
-	VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
-	set<int>::iterator iterUses;
-
-	for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
-	{
-	UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
-	UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
-	}
-
-	child=child->getRightSibling();
-	}
-	*/
+	
 	var->setRightSibling(stmtListThen);
 	match(TRBRACE);
 	match(TELSE);
@@ -329,32 +267,7 @@ TNode* ifStmt(){
 	child=stmtListElse->getFirstChild();
 
 	setTables(ifNode, child, stmtIdx);
-	/*
-	while(child!=NULL){
-	//set parent
-	child->setParent(ifNode);
-	STMT_NO childIdx=child->getAttrib();
-	//set modifies for container
-	VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
-	set<int>::iterator iterMod;
-	for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
-	{
-	ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
-	ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
-	}
 
-	//set uses for container
-	VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
-	set<int>::iterator iterUses;
-
-	for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
-	{
-	UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
-	UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
-	}
-
-	child=child->getRightSibling();
-	}*/
 	stmtListThen->setRightSibling(stmtListElse);
 	match(TRBRACE);
 
@@ -376,32 +289,7 @@ TNode* whileStmt(){
 	TNode *child=stmtList->getFirstChild();
 
 	setTables(whileNode, child, stmtIdx);
-	/*
-	while(child!=NULL){
-	//set parent
-	child->setParent(whileNode);
-	STMT_NO childIdx=child->getAttrib();
-	//set modifies for container
-	VAR_SET childModVar = ModifiesTable::getModifiesTable()->getVarModifiedByStmt(childIdx);
-	set<int>::iterator iterMod;
-	for (iterMod = childModVar.begin(); iterMod != childModVar.end() ; ++iterMod)
-	{
-	ModifiesTable::getModifiesTable()->insertStmt(stmtIdx, *iterMod);
-	ModifiesTable::getModifiesTable()->insertProc(currProc->getAttrib(), *iterMod);
-	}
 
-	//set uses for container
-	VAR_SET childUsesVar = UsesTable::getUsesTable()->getVarUsedByStmt(childIdx);
-	set<int>::iterator iterUses;
-
-	for (iterUses = childUsesVar.begin(); iterUses != childUsesVar.end() ; ++iterUses)
-	{
-	UsesTable::getUsesTable()->insertStmt(stmtIdx, *iterUses);
-	UsesTable::getUsesTable()->insertProc(currProc->getAttrib(), *iterUses);
-	}
-
-	child=child->getRightSibling();
-	}*/
 	var->setRightSibling(stmtList);
 	match(TRBRACE);
 
@@ -422,18 +310,7 @@ TNode* assign(){
 	leftVar->setRightSibling(exp);
 	return assign;
 }
-/*
-TNode* plusVarName(TNode *term, STMT_NO stmtIdx){
-TNode *plus, *var;
-match(TPLUS);
-plus= new TNode(PLUS);
-var=variable();
-UsesTable::getUsesTable()->insertStmt(stmtIdx, var->getAttrib());
-plus->setFirstChild(term);
-term->setRightSibling(var);
-return plus;
-}
-*/
+
 TNode* expr(STMT_NO stmtIdx){
 	TNode* curr = term(stmtIdx), *expr = curr;
 
@@ -449,21 +326,6 @@ TNode* expr(STMT_NO stmtIdx){
 		curr->setRightSibling(t);
 		curr = expr;
 	}
-
-	/*if(next_token==TINTEGER){
-	string temp;
-	temp.assign(text);
-	match(TINTEGER);
-	expr=new TNode(CONST,atoi(temp.c_str()));
-	ConstantTable::getConstantTable()->addConstant(expr);
-	}
-	if(next_token==TNAME){
-	expr=variable();
-	UsesTable::getUsesTable()->insertStmt(stmtIdx, expr->getAttrib());
-	}
-	while(next_token!=TSEMICOLON) {
-	expr=plusVarName(expr,stmtIdx);
-	}*/
 	return expr;
 }
 
@@ -508,17 +370,56 @@ TNode* factor(STMT_NO stmtIdx) {
 	return fac;
 }
 
-void PKBParser::cleanUp() {
-	ModifiesTable::getModifiesTable()->clearTable();
-	UsesTable::getUsesTable()->clearTable();
-	StmtTable::getStmtTable()->clearTable();
-	VarTable::getVarTable()->clearTable();
-	ProcTable::getProcTable()->clearTable();
-	ConstantTable::getConstantTable()->clearTable();
-	callerStmt.clear();
-	callerProc.clear();
-	calledProc.clear();
-	CallsTable::getCallsTable()->clearTable();
+void checkCalls(){
+	for(unsigned i=0 ; i<callerStmt.size(); i++){
+		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
+		if(procIdx==-1) {
+			if(input.is_open()) {
+				input.close();
+			}
+			PKBParser::cleanUp();
+			throw ParseException("Calling an undefined procedure.");
+		}
+		CallsTable::getCallsTable()->insertStmt(callerStmt[i],procIdx);
+		CallsTable::getCallsTable()->insertProc(callerProc[i],procIdx);
+	}
+	// update Modifies and Uses for procedure
+	postCheckCalls(0);
+
+	for(unsigned i = 0; i < callerStmt.size(); i++) {
+		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
+
+		VAR_SET modified = ModifiesTable::getModifiesTable()->getVarModifiedByProc(procIdx);
+		set<int>::iterator modifiesIt;
+		for(modifiesIt = modified.begin(); modifiesIt != modified.end(); modifiesIt++) {
+			ModifiesTable::getModifiesTable()->insertStmt(callerStmt[i],*modifiesIt);
+		}
+
+		VAR_SET uses = UsesTable::getUsesTable()->getVarUsedByProc(procIdx);
+		set<int>::iterator usesIt;
+		for(usesIt = uses.begin(); usesIt != uses.end(); usesIt++) {
+			UsesTable::getUsesTable()->insertStmt(callerStmt[i],*usesIt);
+		}
+	}
+}
+
+void postCheckCalls(int procIdx) {
+	PROC_SET calledProcs = CallsTable::getCallsTable()->getProcCalledByProc(procIdx);
+	PROC_SET::iterator it;
+	for(it = calledProcs.begin(); it != calledProcs.end(); it++) {
+		postCheckCalls(*it);
+		VAR_SET modified = ModifiesTable::getModifiesTable()->getVarModifiedByProc(*it);
+		set<int>::iterator modifiesIt;
+		for(modifiesIt = modified.begin(); modifiesIt != modified.end(); modifiesIt++) {
+			ModifiesTable::getModifiesTable()->insertProc(procIdx,*modifiesIt);
+		}
+
+		VAR_SET uses = UsesTable::getUsesTable()->getVarUsedByProc(*it);
+		set<int>::iterator usesIt;
+		for(usesIt = uses.begin(); usesIt != uses.end(); usesIt++) {
+			UsesTable::getUsesTable()->insertProc(procIdx,*usesIt);
+		}
+	}
 }
 
 void connectGNode(STMT_NO stmt){
@@ -565,37 +466,6 @@ void buildCFG(){
 	}
 }
 
-void PKBParser::parse(string fileName){
-	input.open(fileName);
-	if(input.good()) {
-		AST::getAST()->setRoot(program());
-		if(input.is_open()) {
-			input.close();
-		}
-	} else {
-		if(input.is_open()) {
-			input.close();
-		}
-		PKBParser::cleanUp();
-		throw ParseException("Error in reading file.");
-	}
-	buildCFG();
-}
-
-/*
-void getAssign() {
-	StmtTable* stmtT = StmtTable::getStmtTable();
-	vector<int> ass = stmtT->getAllAssign();
-
-	TNode* t;
-	for (unsigned i=0; i < ass.size(); i++) {
-		//cout << ass[i] << endl;
-		t = stmtT->getStmtNode(ass[i]);
-		//print(t);
-	}
-}
-*/
-
 void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx) {
 	while(child!=NULL){
 		//set parent
@@ -623,6 +493,52 @@ void setTables(TNode* parent, TNode* child, STMT_NO stmtIdx) {
 		child=child->getRightSibling();
 	}
 }
+
+void PKBParser::parse(string fileName){
+	input.open(fileName);
+	if(input.good()) {
+		AST::getAST()->setRoot(program());
+		if(input.is_open()) {
+			input.close();
+		}
+	} else {
+		if(input.is_open()) {
+			input.close();
+		}
+		PKBParser::cleanUp();
+		throw ParseException("Error in reading file.");
+	}
+	buildCFG();
+}
+
+void PKBParser::cleanUp() {
+	ModifiesTable::getModifiesTable()->clearTable();
+	UsesTable::getUsesTable()->clearTable();
+	StmtTable::getStmtTable()->clearTable();
+	VarTable::getVarTable()->clearTable();
+	ProcTable::getProcTable()->clearTable();
+	ConstantTable::getConstantTable()->clearTable();
+	callerStmt.clear();
+	callerProc.clear();
+	calledProc.clear();
+	CallsTable::getCallsTable()->clearTable();
+}
+
+
+/*
+void getAssign() {
+	StmtTable* stmtT = StmtTable::getStmtTable();
+	vector<int> ass = stmtT->getAllAssign();
+
+	TNode* t;
+	for (unsigned i=0; i < ass.size(); i++) {
+		//cout << ass[i] << endl;
+		t = stmtT->getStmtNode(ass[i]);
+		//print(t);
+	}
+}
+*/
+
 /*
 void print(TNode* t){
 

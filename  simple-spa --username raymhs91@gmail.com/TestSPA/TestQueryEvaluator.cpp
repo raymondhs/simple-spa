@@ -36,6 +36,7 @@ void TestQueryEvaluator::testBoolFollows() {
 	}
 
 	cout << "testBoolFollows: ";
+
 	/* Test BOOL 1 */
 
 	query = declaration + "Select BOOLEAN such that Follows(1, s1) pattern a1(_,_)";
@@ -48,13 +49,12 @@ void TestQueryEvaluator::testBoolFollows() {
 		cout << e.what() << endl;
 		cout << "Test 1" << endl;
 	}
-
+	
 	CPPUNIT_ASSERT(ans == result);
-	result.clear();
 
+	result.clear();	
 
 	/* Test BOOL 2 */
-
 	query = declaration + "Select BOOLEAN pattern a1(_,_) such that Follows(1, s1) ";
 	PQLParser::parse(query);
 	result.push_back("true");
@@ -119,7 +119,6 @@ void TestQueryEvaluator::testBoolFollows() {
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
 
 	/* Test BOOL 6 */
 
@@ -15974,6 +15973,7 @@ void TestQueryEvaluator::testNext(){
 	query = declaration + "Select n1 such that Next(2,n1)";
 	PQLParser::parse(query);
 	result.push_back("3");
+	result.push_back("4");
 
 	try {
 		ans = QueryEvaluator::evaluate();

@@ -2,7 +2,7 @@
  * @author: Peter
  */
 #include"CFG.h"
-
+#include <string>
 using namespace std;
 
 CFG::CFG(){}
@@ -20,7 +20,10 @@ void CFG::addNode(){
 }
 
 GNode* CFG::getNode(STMT_NO stmt){
-	return gNodeTable[stmt-1];
+	if((unsigned)stmt >= 1 && (unsigned)stmt <= gNodeTable.size()) {
+		return gNodeTable[stmt-1];
+	}
+	return NULL;
 }
 
 CFG* CFG::getCFG(){

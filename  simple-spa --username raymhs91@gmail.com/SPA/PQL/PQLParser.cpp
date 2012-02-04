@@ -14,7 +14,7 @@ static istringstream input;
 static int next_token;
 static string text;
 
-// Helper methods
+// helper methods
 static bool issymbol(char c);
 static int getToken();
 static void match(int token);
@@ -39,6 +39,9 @@ static QNode* suchThatCond();
 static QNode* pattern();
 static QNode* patternCond();
 static QNode* selectClause();
+
+// attribute used for call
+static int callAttrib = 0;
 
 typedef enum tokentype {
 	TNAME = 0, TINTEGER, TPLUS, TMIN, TTIMES, TLPARENT, TRPARENT, TEQUAL,
@@ -523,23 +526,31 @@ QNode* attrCompare(){
 
 	int synIdx1 = left->getIntVal();
 	int synIdx2 = right->getType();
+
+	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
+	if((typeLeft == QCALL) && (callAttrib==0)) {
+		left->setStrVal("procName");
+	}
+
 	int typeRight;
 	if(synIdx2 == QSYN){
 		synIdx2 = right->getIntVal();
 		typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
-	} else
+		if((typeRight == QCALL) && (callAttrib==0)) {
+			right->setStrVal("procName");
+		}
+	} else {
 		typeRight = right->getType();
-	
-	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
+	}
 
-	if (typeLeft==QVAR || typeLeft==QCALL || typeLeft==QPROC){
-		if (typeRight==QCONST || typeRight == QSTMT || typeRight == QINT || typeRight == QPROGLINE){
+	if (typeLeft==QVAR || ((typeLeft==QCALL)&&(callAttrib==0)) || typeLeft==QPROC){
+		if (typeRight==QCONST || typeRight == QSTMT || typeRight == QINT || typeRight == QPROGLINE || ((typeLeft==QCALL)&&(callAttrib==1))){
 			PQLParser::cleanUp();
 			throw ParseException("Error: Cannot compare string with integer.");
 		}
 	}
-	else if (typeLeft==QCONST || typeLeft==QSTMT || typeRight == QPROGLINE){
-		if (typeRight==QVAR || typeRight == QCALL || typeRight == QPROC || typeRight == QSTRING){
+	else if (typeLeft==QCONST || typeLeft==QSTMT || typeLeft == QPROGLINE || ((typeLeft==QCALL)&&(callAttrib==1))){
+		if (typeRight==QVAR || typeRight == QCALL || ((typeRight==QCALL)&&(callAttrib==0)) || typeRight == QPROC || typeRight == QSTRING){
 			PQLParser::cleanUp();
 			throw ParseException("Error: Cannot compare integer with string.");
 		}
@@ -567,7 +578,12 @@ void attrName(int type){
 		} else isValid = false;
 	}
 	else if (type == QCALL){
-		if(text=="procName"){
+		if(text=="procName") {
+			callAttrib = 0;
+			next_token=getToken();
+			return;
+		} else if(text=="stmt#") {
+			callAttrib = 1;
 			next_token=getToken();
 			return;
 		} else isValid = false;
@@ -640,7 +656,6 @@ QNode* factor() {
 	}
 	return fac;
 }
-
 
 QNode* exprSpec() {
 	QNode *exp;
@@ -736,43 +751,6 @@ void declaration() {
 	}
 	match(TSEMICOLON);
 }
-
-/*
-void print() {
-	QueryTree *qt = QueryTree::getQueryTree();
-	QNode *curr = qt->getResult();
-	cout << curr->getType() << " " << curr->getIntVal() << endl;
-	curr = curr->getLeftChild();
-
-	while(curr != NULL) {
-		cout << curr->getType() << " " << curr->getIntVal() << endl;
-		curr = curr->getRightSibling();
-	}
-
-	curr = qt->getSuchThat();
-	cout << curr->getType() << " " << curr->getIntVal() << endl;
-	curr = curr->getLeftChild();
-	if(curr != NULL) {
-		cout << curr->getType() << endl;
-		QNode* l = curr->getLeftChild(), *r = curr->getRightChild();
-		cout << l->getType() << " " << l->getIntVal() << " " << l->getStrVal() << endl;
-		cout << r->getType() << " " << r->getIntVal() << " " << r->getStrVal() << endl;
-	}
-
-	cout << endl;
-
-	curr = qt->getPattern();
-	cout << curr->getType() << " " << curr->getIntVal() << endl;
-	curr = curr->getLeftChild();
-	if(curr != NULL) {
-		cout << curr->getType() << endl;
-		QNode* l = curr->getLeftChild(), *r = curr->getRightChild();
-		cout << l->getType() << " " << l->getIntVal() << " " << l->getStrVal() << endl;
-		cout << r->getType() << " " << r->getIntVal() << " " << r->getStrVal() << endl;
-	}
-}
-*/
-
 
 QNode* suchthatCond() {
 	QNode* node = relRef(), *current = node;
@@ -875,3 +853,39 @@ void PQLParser::cleanUp() {
 	QueryTree::getQueryTree()->clearTree();
 	SynTable::getSynTable()->clearTable();
 }
+
+/*
+void print() {
+	QueryTree *qt = QueryTree::getQueryTree();
+	QNode *curr = qt->getResult();
+	cout << curr->getType() << " " << curr->getIntVal() << endl;
+	curr = curr->getLeftChild();
+
+	while(curr != NULL) {
+		cout << curr->getType() << " " << curr->getIntVal() << endl;
+		curr = curr->getRightSibling();
+	}
+
+	curr = qt->getSuchThat();
+	cout << curr->getType() << " " << curr->getIntVal() << endl;
+	curr = curr->getLeftChild();
+	if(curr != NULL) {
+		cout << curr->getType() << endl;
+		QNode* l = curr->getLeftChild(), *r = curr->getRightChild();
+		cout << l->getType() << " " << l->getIntVal() << " " << l->getStrVal() << endl;
+		cout << r->getType() << " " << r->getIntVal() << " " << r->getStrVal() << endl;
+	}
+
+	cout << endl;
+
+	curr = qt->getPattern();
+	cout << curr->getType() << " " << curr->getIntVal() << endl;
+	curr = curr->getLeftChild();
+	if(curr != NULL) {
+		cout << curr->getType() << endl;
+		QNode* l = curr->getLeftChild(), *r = curr->getRightChild();
+		cout << l->getType() << " " << l->getIntVal() << " " << l->getStrVal() << endl;
+		cout << r->getType() << " " << r->getIntVal() << " " << r->getStrVal() << endl;
+	}
+}
+*/
