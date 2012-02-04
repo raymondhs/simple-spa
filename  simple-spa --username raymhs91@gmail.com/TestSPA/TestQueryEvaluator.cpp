@@ -19,7 +19,7 @@
 using namespace std;
 
 void TestQueryEvaluator::setUp() {
-	declaration = "procedure p1,p2,p3,p4; while w1,w2,w3,w4; assign a,a1,a2,a3,a4; stmt s,s#,s1,s2,s3,s4; variable v1,v2,v3,v4; prog_line n1, n2, n3,n4; constant c1, c2, c3,c4; call ca1,ca2,ca3,ca4; if i1,i2,i3,i4;";
+	declaration = "procedure p,p1,p2,p3,p4; while w1,w2,w3,w4; assign a,a1,a2,a3,a4; stmt s,s#,s1,s2,s3,s4; variable v1,v2,v3,v4; prog_line n1, n2, n3,n4; constant c1, c2, c3,c4; call ca1,ca2,ca3,ca4; if i1,i2,i3,i4;";
 }
 
 void TestQueryEvaluator::tearDown() {
@@ -49,7 +49,7 @@ void TestQueryEvaluator::testBoolFollows() {
 		cout << e.what() << endl;
 		cout << "Test 1" << endl;
 	}
-	
+
 	CPPUNIT_ASSERT(ans == result);
 
 	result.clear();	
@@ -7276,6 +7276,677 @@ void TestQueryEvaluator::testModifies() {
 	cout << "SUCCESS! testModifies :j" <<endl;
 }
 
+void TestQueryEvaluator::testModifiesP() {
+	try {
+		PKBParser::parse("testcases/calls_sources.txt");
+	} catch (exception& e) {
+		cout << "PKBParser: " << e.what() << endl;
+	}
+
+	cout << "testModifiesP = ";
+	/* Test 1 */
+
+	query = declaration + "Select p such that Modifies(p, \"k\")";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 2 */
+
+	query = declaration + "Select p such that Modifies(p, \"a\")";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 3 */
+
+	query = declaration + "Select p such that Modifies(p, \"zz\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 4 */
+
+	query = declaration + "Select p such that Modifies(p, _)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 5 */
+
+	query = declaration + "Select p such that Modifies(p, v1) with v1.varName=\"a\"";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 6 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Modifies(w1, v1)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 7 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Modifies(i1, v1)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 8 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Modifies(i1, v1) and  Modifies(w1, v1)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 9 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern(v1, \"1\");";
+	PQLParser::parse(query);
+	result.push_back("Gamma");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 10 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern s1(\"a\",_\"b\"_)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 11 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern s1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 12 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern s1(\"zz\",_)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 13 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) pattern s1(_,\"zz\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 14 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(w1, v1)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 15 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(w1, v1) with v1.varName=\"x\"";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 16 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(w1, v1) with v1.varName=\"x\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 17 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(i1, v1)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 18 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(i1, v1) with v1.varName=\"i\"";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 19 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(i1, v1) with v1.varName=\"j\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 20 */
+
+	query = declaration + "Select p such that Modifies(p, v1) and Uses(s1, v1) and Uses(w1, v1) and Uses(i1, v1)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 21 */
+
+	query = declaration + "Select v1 such that Modifies(5, v1)";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("k");
+	result.push_back("l");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 21" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 22 */
+
+	query = declaration + "Select v1 such that Modifies(20, v1)";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("k");
+	result.push_back("l");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 22" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 23 */
+
+	query = declaration + "Select v1 such that Modifies(28, v1)";
+	PQLParser::parse(query);
+	result.push_back("x");
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("k");
+	result.push_back("l");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("z");
+	result.push_back("y");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 23" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 24 */
+
+	query = declaration + "Select v1 such that Modifies(5, v1) and v1.varName=\"zz\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 24" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 25 */
+
+	query = declaration + "Select v1 such that Modifies(5, v1) and v1.varName=\"a\"";
+	PQLParser::parse(query);
+	result.push_back("a");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 25" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 26 */
+
+	query = declaration + "Select v1 such that Modifies(28, v1) and Modifies(29, v1) and Modifies(30, v1)";
+	PQLParser::parse(query);
+	result.push_back("i");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 26" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 27 */
+
+	query = declaration + "Select BOOLEAN such that Modifies(\"Alpha\", \"x\")";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 27" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 28 */
+
+	query = declaration + "Select BOOLEAN such that Modifies(\"Alpha\", v1) with v1.varName = \"k\"";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 28" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 29 */
+
+	query = declaration + "Select v1 such that Modifies(\"Alpha\", v1)";
+	PQLParser::parse(query);
+	result.push_back("x");
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("k");
+	result.push_back("l");
+	result.push_back("y");
+	result.push_back("z");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 29" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 30 */
+
+	query = declaration + "Select BOOLEAN such that Modifies(\"Alpha\", v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 30" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 31 */
+
+	query = declaration + "Select BOOLEAN such that Modifies(\"Caller\", v1)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 31" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 32 */
+
+	query = declaration + "Select v1 such that Modifies(\"Caller\", v1)";
+	PQLParser::parse(query);
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("x");
+	result.push_back("y");
+	result.push_back("z");
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("k");
+	result.push_back("l");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 32" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 33 */
+
+	query = declaration + "Select BOOLEAN such that Modifies(\"Caller\", _)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 33" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 34 */
+
+	query = declaration + "Select BOOLEAN such that Modifies(\"Gamma\", \"a\")";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 34" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 35 */
+
+	query = declaration + "Select BOOLEAN such that Modifies(\"Gamma\", v1) and Modifies(\"Caller\", \"x\") and Modifies(\"Alpha\", \"a\") with v1.varName=\"j\"";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 35" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+
+	cout << "SUCCESS ! testModifiesP." << endl;
+}
+
 void TestQueryEvaluator::testBoolUses() {
 	try {
 		PKBParser::parse("testcases/uses_source.txt");
@@ -8412,6 +9083,388 @@ void TestQueryEvaluator::testUses() {
 
 
 	cout << "SUCCESS! testUses :P" <<endl;
+}
+
+void TestQueryEvaluator::testUsesP() {
+	try {
+		PKBParser::parse("testcases/calls_source.txt");
+	} catch (exception& e) {
+		cout << "PKBParser: " << e.what() << endl;
+	}
+
+	cout << "testUses = ";
+	/* Test 1 */
+
+	query = declaration + "Select p";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 2 */
+
+	query = declaration + "Select p such that Uses(p, _)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 3 */
+
+	query = declaration + "Select p such that Uses(p, \"x\")";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 4 */
+
+	query = declaration + "Select p such that Uses(p, \"zz\")";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 5 */
+
+	query = declaration + "Select p such that Uses(p, \"j\")";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 6 */
+
+	query = declaration + "Select v1 such that Uses(p, v1)";
+	PQLParser::parse(query);
+	result.push_back("x");
+	result.push_back("z");
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("k");
+	result.push_back("l");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 7 */
+
+	query = declaration + "Select v1 such that Uses(5, v1)";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("k");
+	result.push_back("a");
+	result.push_back("b");
+	result.push_back("c");
+	result.push_back("d");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 8 */
+
+	query = declaration + "Select v1 such that Uses(q, v1) and Uses(p, v1)";
+	PQLParser::parse(query);
+	result.push_back("i");
+	result.push_back("j");
+	result.push_back("k");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 9 */
+
+	query = declaration + "Select v1 such that Uses(p, v1) with v1.varName=\"x\"";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 10 */
+
+	query = declaration + "Select v1 such that Uses(p, v1) with v1.varName=\"xx\"";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 11 */
+
+	query = declaration + "Select s1 pattern s1(_, _) such that Uses(p, v1) and Uses(s1, v1)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 12 */
+
+	query = declaration + "Select s1 pattern s1(\"x\", _) such that Uses(p, v1) and Uses(s1, v1)";
+	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Caller");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 13 */
+
+	query = declaration + "Select BOOLEAN such that Uses(p, v1) with v1.varName=\"x\"";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 14 */
+
+	query = declaration + "Select BOOLEAN such that Uses(p, v1) and Uses(s1, v1) pattern s1(_,_)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 15 */
+
+	query = declaration + "Select BOOLEAN such that Uses(p, \"j\")";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 16 */
+
+	query = declaration + "Select BOOLEAN such that Uses(p, \"zz\")";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 17 */
+
+	query = declaration + "Select BOOLEAN such that Uses(20, \"x\")";
+	PQLParser::parse(query);
+	result.push_back("false");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 18 */
+
+	query = declaration + "Select BOOLEAN such that Uses(20, \"j\")";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 19 */
+
+	query = declaration + "Select BOOLEAN such that Uses(28, \"z\")";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 20 */
+
+	query = declaration + "Select BOOLEAN such that Uses(5, _)";
+	PQLParser::parse(query);
+	result.push_back("true");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+
+	cout << " SUCCESS! testUses." << endl;
 }
 
 void TestQueryEvaluator::testBoolPattern() {
@@ -18461,8 +19514,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-	
-	
+
+
 	/* Test 113 */
 
 	query = declaration + "Select p1 such that Next(23,22)";
@@ -18477,8 +19530,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 114 */
 
 	query = declaration + "Select p1 such that Next(17,18)";
@@ -18493,8 +19546,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 115 */
 
 	query = declaration + "Select p1 such that Next(30,_)";
@@ -18513,8 +19566,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 116 */
 
 	query = declaration + "Select p1 such that Next(31,_)";
@@ -18529,8 +19582,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 117 */
 
 	query = declaration + "Select p1 such that Next(_,28)";
@@ -18545,7 +19598,7 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
+
 
 	/* Test 118 */
 
@@ -18565,8 +19618,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 119 */
 
 	query = declaration + "Select p1 such that Next(_,_)";
@@ -18585,8 +19638,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 120 */
 
 	query = declaration + "Select BOOLEAN such that Next(3,n1)";
@@ -18602,8 +19655,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 121 */
 
 	query = declaration + "Select BOOLEAN such that Next(6,1)";
@@ -18619,8 +19672,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 122 */
 
 	query = declaration + "Select BOOLEAN such that Next(10,n1)";
@@ -18636,8 +19689,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 123 */
 
 	query = declaration + "Select BOOLEAN such that Next(12,n1)";
@@ -18653,8 +19706,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 124 */
 
 	query = declaration + "Select BOOLEAN such that Next(6,2)";
@@ -18670,8 +19723,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 125 */
 
 	query = declaration + "Select BOOLEAN such that Next(2,2)";
@@ -18687,8 +19740,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 126 */
 
 	query = declaration + "Select BOOLEAN such that Next(n1,21)";
@@ -18704,8 +19757,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 127 */
 
 	query = declaration + "Select BOOLEAN such that Next(17,18)";
@@ -18721,8 +19774,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 128 */
 
 	query = declaration + "Select BOOLEAN such that Next(30,_)";
@@ -18738,8 +19791,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 129 */
 
 	query = declaration + "Select BOOLEAN such that Next(31,_)";
@@ -18755,8 +19808,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 130 */
 
 	query = declaration + "Select BOOLEAN such that Next(_,28)";
@@ -18772,8 +19825,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 131 */
 
 	query = declaration + "Select BOOLEAN such that Next(_,1)";
@@ -18789,8 +19842,8 @@ void TestQueryEvaluator::testNext(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 132 */
 
 	query = declaration + "Select BOOLEAN such that Next(_,_)";
@@ -21719,8 +22772,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-	
-	
+
+
 	/* Test 113 */
 
 	query = declaration + "Select p1 such that Next*(23,22)";
@@ -21739,8 +22792,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 114 */
 
 	query = declaration + "Select p1 such that Next*(17,18)";
@@ -21755,8 +22808,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 115 */
 
 	query = declaration + "Select p1 such that Next*(30,_)";
@@ -21775,8 +22828,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 116 */
 
 	query = declaration + "Select p1 such that Next*(31,_)";
@@ -21791,8 +22844,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 117 */
 
 	query = declaration + "Select p1 such that Next*(_,28)";
@@ -21807,7 +22860,7 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
+
 
 	/* Test 118 */
 
@@ -21827,8 +22880,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();	
-	
-	
+
+
 	/* Test 119 */
 
 	query = declaration + "Select p1 such that Next*(_,_)";
@@ -21847,8 +22900,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 120 */
 
 	query = declaration + "Select BOOLEAN such that Next*(3,n1)";
@@ -21864,8 +22917,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 121 */
 
 	query = declaration + "Select BOOLEAN such that Next*(6,1)";
@@ -21881,8 +22934,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 122 */
 
 	query = declaration + "Select BOOLEAN such that Next*(10,n1)";
@@ -21898,8 +22951,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 123 */
 
 	query = declaration + "Select BOOLEAN such that Next*(12,n1)";
@@ -21915,8 +22968,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 124 */
 
 	query = declaration + "Select BOOLEAN such that Next*(6,2)";
@@ -21932,8 +22985,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 125 */
 
 	query = declaration + "Select BOOLEAN such that Next*(2,2)";
@@ -21949,8 +23002,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 126 */
 
 	query = declaration + "Select BOOLEAN such that Next*(n1,21)";
@@ -21966,8 +23019,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 127 */
 
 	query = declaration + "Select BOOLEAN such that Next*(17,18)";
@@ -21983,8 +23036,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 128 */
 
 	query = declaration + "Select BOOLEAN such that Next*(30,_)";
@@ -22000,8 +23053,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 129 */
 
 	query = declaration + "Select BOOLEAN such that Next*(31,_)";
@@ -22017,8 +23070,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 130 */
 
 	query = declaration + "Select BOOLEAN such that Next*(_,28)";
@@ -22034,8 +23087,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 131 */
 
 	query = declaration + "Select BOOLEAN such that Next*(_,1)";
@@ -22051,8 +23104,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-		
-	
+
+
 	/* Test 132 */
 
 	query = declaration + "Select BOOLEAN such that Next*(_,_)";
@@ -22068,8 +23121,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-			
-	
+
+
 	/* Test 133 */
 
 	query = declaration + "Select n1 such that Next*(7,n1)";
@@ -22090,8 +23143,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-				
-	
+
+
 	/* Test 134 */
 
 	query = declaration + "Select n1 such that Next*(12,12)";
@@ -22161,8 +23214,8 @@ void TestQueryEvaluator::testNextT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-				
-	
+
+
 
 	cout<< "SUCCESS! testNextTransitive!! :D" <<endl;
 }
