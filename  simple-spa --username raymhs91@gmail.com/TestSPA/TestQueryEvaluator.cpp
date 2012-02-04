@@ -17553,7 +17553,37 @@ void TestQueryEvaluator::testNext(){
 
 	query = declaration + "Select s1 such that Next(2,n1)";
 	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
 	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17571,7 +17601,36 @@ void TestQueryEvaluator::testNext(){
 	query = declaration + "Select s1 such that Next(n1,2)";
 	PQLParser::parse(query);
 	result.push_back("1");
+	result.push_back("2");
 	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17588,7 +17647,37 @@ void TestQueryEvaluator::testNext(){
 
 	query = declaration + "Select s1 such that Next(3,n1)";
 	PQLParser::parse(query);
+	result.push_back("1");
 	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17622,6 +17711,36 @@ void TestQueryEvaluator::testNext(){
 	query = declaration + "Select s1 such that Next(6,n1)";
 	PQLParser::parse(query);
 	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17638,7 +17757,37 @@ void TestQueryEvaluator::testNext(){
 
 	query = declaration + "Select s1 such that Next(10,n1)";
 	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
 	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17655,7 +17804,37 @@ void TestQueryEvaluator::testNext(){
 
 	query = declaration + "Select s1 such that Next(12,n1)";
 	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
 	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17751,9 +17930,37 @@ void TestQueryEvaluator::testNext(){
 
 	query = declaration + "Select s1 such that Next(n1,21)";
 	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
 	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
 	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
 	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17833,8 +18040,37 @@ void TestQueryEvaluator::testNext(){
 
 	query = declaration + "Select s1 such that Next(15,n1)";
 	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
 	result.push_back("16");
+	result.push_back("17");
 	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -20551,7 +20787,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 22 */
 
-	query = declaration + "Select s1 such that Next*(2,s1)";
+	query = declaration + "Select s1 such that Next*(2,n1)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -20579,7 +20815,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 23 */
 
-	query = declaration + "Select s1 such that Next*(s1,2)";
+	query = declaration + "Select s1 such that Next*(n1,2)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -20601,7 +20837,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 24 */
 
-	query = declaration + "Select s1 such that Next*(3,s1)";
+	query = declaration + "Select s1 such that Next*(3,n1)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -20629,7 +20865,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 25 */
 
-	query = declaration + "Select s1 such that Next*(5,s1)";
+	query = declaration + "Select s1 such that Next*(5,n1)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -20657,7 +20893,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 26 */
 
-	query = declaration + "Select s1 such that Next*(6,s1)";
+	query = declaration + "Select s1 such that Next*(6,n1)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -20685,7 +20921,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 27 */
 
-	query = declaration + "Select s1 such that Next*(10,s1)";
+	query = declaration + "Select s1 such that Next*(10,n1)";
 	PQLParser::parse(query);
 	result.push_back("11");
 	result.push_back("12");
@@ -20703,7 +20939,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 28 */
 
-	query = declaration + "Select s1 such that Next*(12,s1)";
+	query = declaration + "Select s1 such that Next*(12,n1)";
 	PQLParser::parse(query);
 	result.push_back("11");
 	result.push_back("12");
@@ -20862,7 +21098,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 32 */
 
-	query = declaration + "Select s1 such that Next*(s1,21)";
+	query = declaration + "Select s1 such that Next*(n1,21)";
 	PQLParser::parse(query);
 	result.push_back("13");
 	result.push_back("14");
@@ -20983,7 +21219,7 @@ void TestQueryEvaluator::testNextT(){
 
 	/* Test 35 */
 
-	query = declaration + "Select s1 such that Next*(15,s1)";
+	query = declaration + "Select s1 such that Next*(15,n1)";
 	PQLParser::parse(query);
 	result.push_back("16");
 	result.push_back("17");
