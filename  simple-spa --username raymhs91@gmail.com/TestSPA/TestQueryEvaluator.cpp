@@ -17062,7 +17062,6 @@ void TestQueryEvaluator::testNext(){
 	query = declaration + "Select n1 such that Next(3,n1)";
 	PQLParser::parse(query);
 	result.push_back("2");
-	result.push_back("4");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17077,9 +17076,8 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 4 */
 
-	query = declaration + "Select n1 such that Next(5,n1)";
+	query = declaration + "Select n1 such that Next(6,7)";
 	PQLParser::parse(query);
-	result.push_back("6");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17097,7 +17095,6 @@ void TestQueryEvaluator::testNext(){
 	query = declaration + "Select n1 such that Next(6,n1)";
 	PQLParser::parse(query);
 	result.push_back("1");
-	result.push_back("7");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17561,7 +17558,7 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 22 */
 
-	query = declaration + "Select s1 such that Next(2,s1)";
+	query = declaration + "Select s1 such that Next(2,n1)";
 	PQLParser::parse(query);
 	result.push_back("3");
 
@@ -17578,7 +17575,7 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 23 */
 
-	query = declaration + "Select s1 such that Next(s1,2)";
+	query = declaration + "Select s1 such that Next(n1,2)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("3");
@@ -17596,10 +17593,9 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 24 */
 
-	query = declaration + "Select s1 such that Next(3,s1)";
+	query = declaration + "Select s1 such that Next(3,n1)";
 	PQLParser::parse(query);
 	result.push_back("2");
-	result.push_back("4");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17614,9 +17610,8 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 25 */
 
-	query = declaration + "Select s1 such that Next(5,s1)";
+	query = declaration + "Select s1 such that Next(6,7)";
 	PQLParser::parse(query);
-	result.push_back("6");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17631,10 +17626,9 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 26 */
 
-	query = declaration + "Select s1 such that Next(6,s1)";
+	query = declaration + "Select s1 such that Next(6,n1)";
 	PQLParser::parse(query);
 	result.push_back("1");
-	result.push_back("7");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -17649,7 +17643,7 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 27 */
 
-	query = declaration + "Select s1 such that Next(10,s1)";
+	query = declaration + "Select s1 such that Next(10,n1)";
 	PQLParser::parse(query);
 	result.push_back("11");
 
@@ -17666,7 +17660,7 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 28 */
 
-	query = declaration + "Select s1 such that Next(12,s1)";
+	query = declaration + "Select s1 such that Next(12,n1)";
 	PQLParser::parse(query);
 	result.push_back("11");
 
@@ -17762,7 +17756,7 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 32 */
 
-	query = declaration + "Select s1 such that Next(s1,21)";
+	query = declaration + "Select s1 such that Next(n1,21)";
 	PQLParser::parse(query);
 	result.push_back("17");
 	result.push_back("20");
@@ -17844,7 +17838,7 @@ void TestQueryEvaluator::testNext(){
 
 	/* Test 35 */
 
-	query = declaration + "Select s1 such that Next(15,s1)";
+	query = declaration + "Select s1 such that Next(15,n1)";
 	PQLParser::parse(query);
 	result.push_back("16");
 	result.push_back("18");
