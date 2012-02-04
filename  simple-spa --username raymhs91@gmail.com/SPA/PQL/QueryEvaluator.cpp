@@ -1142,7 +1142,7 @@ void handleNextT(QNode* query) {
 			int aIdx = mapper[synIdxRight];
 			for(ui i = table[aIdx].size()-1; i >= 1; i--) {
 				GNode* lineNode = cfg->getNode(table[aIdx][i]);
-				if(!(line1->isNext(lineNode))) deleteRow(i);
+				if(!(line1->isNextTransitive(lineNode))) deleteRow(i);
 			}
 		}
 	} else if(leftType == QANY) {
