@@ -9470,7 +9470,7 @@ void TestQueryEvaluator::testUsesP(){
 
 
 
-	cout << "SUCCESS! testUsesP.";
+	cout << "SUCCESS! testUsesP :p" << endl;
 }
 
 void TestQueryEvaluator::testBoolPattern() {
