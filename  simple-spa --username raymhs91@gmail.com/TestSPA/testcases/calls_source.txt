@@ -5,7 +5,7 @@ procedure Alpha {
   x = 2 + x;
   call Beta;
   i = 1 + i; }
-x = 0;
+  x = 0;
   i = 5;
   z = z + x + i;
   y = 2 + z;
