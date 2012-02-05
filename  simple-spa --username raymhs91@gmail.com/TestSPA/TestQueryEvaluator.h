@@ -33,8 +33,8 @@ CPPUNIT_TEST( testBoolWith );
 CPPUNIT_TEST( testWith );
 CPPUNIT_TEST( testCalls );
 CPPUNIT_TEST( testCallsT );
-//CPPUNIT_TEST( testNext );
-//CPPUNIT_TEST( testNextT );
+CPPUNIT_TEST( testNext );
+CPPUNIT_TEST( testNextT );
 CPPUNIT_TEST_SUITE_END();
 
 private:

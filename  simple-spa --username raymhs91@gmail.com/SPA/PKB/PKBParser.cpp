@@ -384,7 +384,7 @@ void checkCalls(){
 		CallsTable::getCallsTable()->insertProc(callerProc[i],procIdx);
 	}
 	// update Modifies and Uses for procedure
-	for(unsigned i = 0; i<ProcTable::getProcTable()->getSize();i++)
+	for(int i = 0; i<ProcTable::getProcTable()->getSize();i++)
 		postCheckCalls(i);
 
 	for(unsigned i = 0; i < callerStmt.size(); i++) {
@@ -523,6 +523,7 @@ void PKBParser::cleanUp() {
 	callerProc.clear();
 	calledProc.clear();
 	CallsTable::getCallsTable()->clearTable();
+	CFG::getCFG()->clearTable();
 }
 
 
