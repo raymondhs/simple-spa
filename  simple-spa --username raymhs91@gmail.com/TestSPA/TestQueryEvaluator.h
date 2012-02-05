@@ -71,8 +71,8 @@ public:
 	void testWith();
 	void testCalls();
 	void testCallsT();
-//	void testNext();
-//	void testNextT();
+	void testNext();
+	void testNextT();
 };
 #endif
 
