@@ -26,14 +26,15 @@ CPPUNIT_TEST( testUses );
 CPPUNIT_TEST( testUsesP );
 CPPUNIT_TEST( testBoolPattern );
 CPPUNIT_TEST( testPattern );
+CPPUNIT_TEST( testPatternAssignComplete );
 CPPUNIT_TEST( testBoolAnd );
 CPPUNIT_TEST( testAnd );
 CPPUNIT_TEST( testBoolWith );
 CPPUNIT_TEST( testWith );
 CPPUNIT_TEST( testCalls );
 CPPUNIT_TEST( testCallsT );
-CPPUNIT_TEST( testNext );
-CPPUNIT_TEST( testNextT );
+//CPPUNIT_TEST( testNext );
+//CPPUNIT_TEST( testNextT );
 CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -63,6 +64,7 @@ public:
 	void testUsesP();
 	void testBoolPattern();
 	void testPattern();
+	void testPatternAssignComplete();
 	void testBoolAnd();
 	void testAnd();
 	void testBoolWith();
