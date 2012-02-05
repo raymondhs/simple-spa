@@ -1,0 +1,28 @@
+procedure InsaneWhile {
+	while loop1 {
+		while loop2 {
+			while loop3 {
+				while loop4 {
+					while loop5 {
+						varLoop5 = 5;
+						while loop6 {
+							while x{
+								while loop8 {
+									while loop9 {
+										while loop10 {
+											while lastLoop{
+												x= varLoop5; }
+											varLoop10 = 10 + varLoop10; }
+										varLoop9 = 9 + varLoop9; }
+									varLoop8 = 8 + varLoop8; }
+								varLoop7 = 7 + varLoop7; }
+							varLoop6 = 6 + varLoop6; }
+						varLoop5 = 5 + varLoop5; }
+					while loop4Inside {
+						varLoop4 = varLoop10 + varLoop9;
+						varLoop4 = 4 + varLoop4; } }
+				varLoop3 = varLoop4 + varLoop5 + varLoop6 + varLoop7 + varLoop8 + varLoop9; }
+			varLoop2 = 2 + varLoop2; }
+		varLoop1 = 1 + varLoop1; }
+	varLoop1 = varLoop10;
+}

@@ -87,47 +87,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="ParseException.cpp" />
-    <ClCompile Include="PKB\AST.cpp" />
-    <ClCompile Include="PKB\CallsTable.cpp" />
-    <ClCompile Include="PKB\CFG.cpp" />
-    <ClCompile Include="PKB\ConstantTable.cpp" />
-    <ClCompile Include="PKB\GNode.cpp" />
-    <ClCompile Include="PKB\ModifiesTable.cpp" />
-    <ClCompile Include="PKB\PKBParser.cpp" />
-    <ClCompile Include="PKB\ProcTable.cpp" />
-    <ClCompile Include="PKB\StmtTable.cpp" />
-    <ClCompile Include="PKB\TNode.cpp" />
-    <ClCompile Include="PKB\UsesTable.cpp" />
-    <ClCompile Include="PKB\VarTable.cpp" />
-    <ClCompile Include="PQL\PQLParser.cpp" />
-    <ClCompile Include="PQL\QNode.cpp" />
-    <ClCompile Include="PQL\QueryEvaluator.cpp" />
-    <ClCompile Include="PQL\QueryTree.cpp" />
-    <ClCompile Include="PQL\RelTable.cpp" />
-    <ClCompile Include="PQL\SynTable.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Constants.h" />
-    <ClInclude Include="ParseException.h" />
-    <ClInclude Include="PKB\AST.h" />
-    <ClInclude Include="PKB\CallsTable.h" />
-    <ClInclude Include="PKB\CFG.h" />
-    <ClInclude Include="PKB\ConstantTable.h" />
-    <ClInclude Include="PKB\GNode.h" />
-    <ClInclude Include="PKB\ModifiesTable.h" />
-    <ClInclude Include="PKB\PKBParser.h" />
-    <ClInclude Include="PKB\ProcTable.h" />
-    <ClInclude Include="PKB\StmtTable.h" />
-    <ClInclude Include="PKB\TNode.h" />
-    <ClInclude Include="PKB\UsesTable.h" />
-    <ClInclude Include="PKB\VarTable.h" />
-    <ClInclude Include="PQL\PQLParser.h" />
-    <ClInclude Include="PQL\QNode.h" />
-    <ClInclude Include="PQL\QueryEvaluator.h" />
-    <ClInclude Include="PQL\QueryTree.h" />
-    <ClInclude Include="PQL\RelTable.h" />
-    <ClInclude Include="PQL\SynTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
