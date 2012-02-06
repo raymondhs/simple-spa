@@ -81,56 +81,56 @@ int getToken() {
 	while(1) {
 		c = input.get();
 		switch(state) {
-			case 0:
-				if(isalpha(c)) { text += c; state = 1; }
-				else if(isdigit(c)) { text += c; state = 2; }
-				else if(issymbol(c)) {
-					text += c; 
-					if(text == "+") return TPLUS;
-					if(text == "-") return TMIN;
-					if(text == "*") return TTIMES;
-					if(text == ")") return TRPARENT;
-					if(text == "(") return TLPARENT;
-					if(text == "=") return TEQUAL;
-					if(text == ";") return TSEMICOLON;
-					if(text == "\"") return TDQUOTE;
-					if(text == "_") return TUNDERSCORE;
-					if(text == ",") return TCOMMA;
-					if(text == ".") return TDOT;
-					else return TINVALID;
-				}
-				else if(isspace(c)) { }
-				else if(c == EOF) { return TEOF; }
-				else { return TINVALID; }
-				break;
-			case 1:
-				if(isalnum(c) || c == '#') { text += c; }
-				else if(isspace(c) || issymbol(c) || c==EOF) {
-					input.putback(c); 
-					if(text == "Select") return TSELECT;
-					if(text == "such") return TSUCH;
-					if(text == "that") return TTHAT;
-					if(text == "stmt") return TSELECT;
-					if(text == "assign") return TASSIGN;
-					if(text == "while") return TWHILE;
-					if(text == "variable") return TVAR;
-					if(text == "constant") return TCONST;
-					if(text == "prog") return TPROG;
-					if(text == "line") return TLINE;
-					if(text == "Modifies") return TMODIFIES;
-					if(text == "Uses") return TUSES;
-					if(text == "Parent") return TPARENT;
-					if(text == "Follows") return TFOLLOWS;
-					if(text == "BOOLEAN") return TBOOL;
-					return TNAME; 
-				}
-				else { return TINVALID; }
-				break;
-			case 2:
-				if(isdigit(c)) { text += c; }
-				else if(isspace(c) || issymbol(c) || c==EOF) { input.putback(c); return TINTEGER; }
-				else { return TINVALID; }
-				break;
+		case 0:
+			if(isalpha(c)) { text += c; state = 1; }
+			else if(isdigit(c)) { text += c; state = 2; }
+			else if(issymbol(c)) {
+				text += c; 
+				if(text == "+") return TPLUS;
+				if(text == "-") return TMIN;
+				if(text == "*") return TTIMES;
+				if(text == ")") return TRPARENT;
+				if(text == "(") return TLPARENT;
+				if(text == "=") return TEQUAL;
+				if(text == ";") return TSEMICOLON;
+				if(text == "\"") return TDQUOTE;
+				if(text == "_") return TUNDERSCORE;
+				if(text == ",") return TCOMMA;
+				if(text == ".") return TDOT;
+				else return TINVALID;
+			}
+			else if(isspace(c)) { }
+			else if(c == EOF) { return TEOF; }
+			else { return TINVALID; }
+			break;
+		case 1:
+			if(isalnum(c) || c == '#') { text += c; }
+			else if(isspace(c) || issymbol(c) || c==EOF) {
+				input.putback(c); 
+				if(text == "Select") return TSELECT;
+				if(text == "such") return TSUCH;
+				if(text == "that") return TTHAT;
+				if(text == "stmt") return TSELECT;
+				if(text == "assign") return TASSIGN;
+				if(text == "while") return TWHILE;
+				if(text == "variable") return TVAR;
+				if(text == "constant") return TCONST;
+				if(text == "prog") return TPROG;
+				if(text == "line") return TLINE;
+				if(text == "Modifies") return TMODIFIES;
+				if(text == "Uses") return TUSES;
+				if(text == "Parent") return TPARENT;
+				if(text == "Follows") return TFOLLOWS;
+				if(text == "BOOLEAN") return TBOOL;
+				return TNAME; 
+			}
+			else { return TINVALID; }
+			break;
+		case 2:
+			if(isdigit(c)) { text += c; }
+			else if(isspace(c) || issymbol(c) || c==EOF) { input.putback(c); return TINTEGER; }
+			else { return TINVALID; }
+			break;
 		}
 	}
 }
@@ -222,7 +222,7 @@ QNode* relRef() {
 		relName = text;
 		next_token = getToken();
 		match(TLPARENT);
-		
+
 		temp = text;
 		tok = next_token;
 		arg1node = entRef();
@@ -288,7 +288,7 @@ QNode* relRef() {
 
 
 		match(TCOMMA);
-		
+
 		temp = text;
 		tok = next_token;
 		arg2node = stmtRef();
@@ -301,7 +301,7 @@ QNode* relRef() {
 		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
 		} else {
 			PQLParser::cleanUp();
-		throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+			throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
 		}
 
 		rel = new QNode(t);
@@ -334,7 +334,7 @@ QNode* relRef() {
 
 
 		match(TCOMMA);
-		
+
 		temp = text;
 		tok = next_token;
 		arg2node = entRef();
@@ -347,7 +347,7 @@ QNode* relRef() {
 		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
 		} else {
 			PQLParser::cleanUp();
-		throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+			throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
 		}
 
 		rel = new QNode(t);
@@ -381,7 +381,7 @@ QNode* relRef() {
 
 
 		match(TCOMMA);
-		
+
 		temp = text;
 		tok = next_token;
 		arg2node = lineRef();
@@ -394,7 +394,7 @@ QNode* relRef() {
 		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
 		} else {
 			PQLParser::cleanUp();
-		throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+			throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
 		}
 
 		rel = new QNode(t);
@@ -418,16 +418,16 @@ QNode* relRef() {
 			throw ParseException("Syntax error: Invalid query.");
 		}
 		match(TLPARENT);
-		
+
 		temp = text;
 		tok = next_token;
 		arg1node = stmtRef();
 		if(tok != TUNDERSCORE && tok != TINTEGER) {
 			arg1 = getSynType(temp);
 		}
-		
+
 		match(TCOMMA);
-		
+
 		temp = text;
 		tok = next_token;
 		arg2node = stmtRef();
@@ -440,7 +440,7 @@ QNode* relRef() {
 		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
 		} else {
 			PQLParser::cleanUp();
-		throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+			throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
 		}
 
 		rel = new QNode(t);
@@ -455,7 +455,7 @@ QNode* relRef() {
 
 QNode* expr() {
 	QNode* curr = term(), *exp = curr;
-	
+
 	while(next_token == TPLUS || next_token == TMIN) {
 		if(next_token == TPLUS) {
 			exp = new QNode(QPLUS);
@@ -722,7 +722,7 @@ int entity() {
 void declaration() {
 	int type = entity();
 	string temp = text;
-	
+
 	match(TNAME);	
 	QNode *ent = NULL, *sibling = NULL;
 	if(SynTable::getSynTable()->getSynIdx(temp) == -1) {
@@ -746,7 +746,7 @@ void declaration() {
 			ent->setRightSibling(ent);
 		} else {
 			PQLParser::cleanUp();
-		throw ParseException("Error: Redeclaration of variable "+temp);
+			throw ParseException("Error: Redeclaration of variable "+temp);
 		}
 	}
 	match(TSEMICOLON);
@@ -769,21 +769,44 @@ QNode* pattern() {
 
 	string temp = text;
 	match(TNAME);
-	if(getSynType(temp) != QASSIGN) {
+	if(getSynType(temp) == QASSIGN) {
+		match(TLPARENT);
+		left = entRef();
+		match(TCOMMA);
+		right = exprSpec();
+		match(TRPARENT);
+		node = new QNode(QSYN);
+		node->setIntVal(getSynIdx(temp));
+		node->setLeftChild(left);
+		node->setRightChild(right);
+		return node;
+	} else if (getSynType(temp) == QIF){
+		match(TLPARENT);
+		left = entRef();
+		match(TCOMMA);
+		match(TUNDERSCORE);
+		match(TCOMMA);
+		match(TUNDERSCORE);
+		match(TRPARENT);
+		node = new QNode(QSYN);
+		node->setIntVal(getSynIdx(temp));
+		node->setLeftChild(left);
+		return node;
+	} else if (getSynType(temp) == QWHILE){
+		match(TLPARENT);
+		left = entRef();
+		match(TCOMMA);
+		match(TUNDERSCORE);
+		match(TRPARENT);
+		node = new QNode(QSYN);
+		node->setIntVal(getSynIdx(temp));
+		node->setLeftChild(left);
+		return node;
+	} else {
 		PQLParser::cleanUp();
-		throw ParseException("Error: Expecting assignment in pattern clause.");
+		throw ParseException("Error: Expecting assignment/if/while in pattern clause.");
 	}
-	match(TLPARENT);
-	left = entRef();
-	match(TCOMMA);
-	right = exprSpec();
-	match(TRPARENT);
-	node = new QNode(QSYN);
-	node->setIntVal(getSynIdx(temp));
-	node->setLeftChild(left);
-	node->setRightChild(right);
 
-	return node;
 }
 
 QNode* patternCond() {
@@ -805,7 +828,7 @@ QNode* selectClause() {
 		declaration();
 	}
 	match(TSELECT);
-	
+
 	if (text!="BOOLEAN"){
 		int synIdx = SynTable::getSynTable()->getSynIdx(text);
 		if(synIdx == -1) {		
@@ -820,9 +843,9 @@ QNode* selectClause() {
 		match(TNAME);
 	}
 	else{
-			QNode* selNode = new QNode(QBOOL);
-			qt->getResult()->setLeftChild(selNode);
-			match(TBOOL);
+		QNode* selNode = new QNode(QBOOL);
+		qt->getResult()->setLeftChild(selNode);
+		match(TBOOL);
 	}
 
 	while(text != "") {
@@ -856,36 +879,36 @@ void PQLParser::cleanUp() {
 
 /*
 void print() {
-	QueryTree *qt = QueryTree::getQueryTree();
-	QNode *curr = qt->getResult();
-	cout << curr->getType() << " " << curr->getIntVal() << endl;
-	curr = curr->getLeftChild();
+QueryTree *qt = QueryTree::getQueryTree();
+QNode *curr = qt->getResult();
+cout << curr->getType() << " " << curr->getIntVal() << endl;
+curr = curr->getLeftChild();
 
-	while(curr != NULL) {
-		cout << curr->getType() << " " << curr->getIntVal() << endl;
-		curr = curr->getRightSibling();
-	}
+while(curr != NULL) {
+cout << curr->getType() << " " << curr->getIntVal() << endl;
+curr = curr->getRightSibling();
+}
 
-	curr = qt->getSuchThat();
-	cout << curr->getType() << " " << curr->getIntVal() << endl;
-	curr = curr->getLeftChild();
-	if(curr != NULL) {
-		cout << curr->getType() << endl;
-		QNode* l = curr->getLeftChild(), *r = curr->getRightChild();
-		cout << l->getType() << " " << l->getIntVal() << " " << l->getStrVal() << endl;
-		cout << r->getType() << " " << r->getIntVal() << " " << r->getStrVal() << endl;
-	}
+curr = qt->getSuchThat();
+cout << curr->getType() << " " << curr->getIntVal() << endl;
+curr = curr->getLeftChild();
+if(curr != NULL) {
+cout << curr->getType() << endl;
+QNode* l = curr->getLeftChild(), *r = curr->getRightChild();
+cout << l->getType() << " " << l->getIntVal() << " " << l->getStrVal() << endl;
+cout << r->getType() << " " << r->getIntVal() << " " << r->getStrVal() << endl;
+}
 
-	cout << endl;
+cout << endl;
 
-	curr = qt->getPattern();
-	cout << curr->getType() << " " << curr->getIntVal() << endl;
-	curr = curr->getLeftChild();
-	if(curr != NULL) {
-		cout << curr->getType() << endl;
-		QNode* l = curr->getLeftChild(), *r = curr->getRightChild();
-		cout << l->getType() << " " << l->getIntVal() << " " << l->getStrVal() << endl;
-		cout << r->getType() << " " << r->getIntVal() << " " << r->getStrVal() << endl;
-	}
+curr = qt->getPattern();
+cout << curr->getType() << " " << curr->getIntVal() << endl;
+curr = curr->getLeftChild();
+if(curr != NULL) {
+cout << curr->getType() << endl;
+QNode* l = curr->getLeftChild(), *r = curr->getRightChild();
+cout << l->getType() << " " << l->getIntVal() << " " << l->getStrVal() << endl;
+cout << r->getType() << " " << r->getIntVal() << " " << r->getStrVal() << endl;
+}
 }
 */

@@ -556,10 +556,35 @@ void evaluatePattern() {
 			addAttribute(patt->getIntVal());
 		}
 
+		SynTable *synT = SynTable::getSynTable();
+		int type = synT->getSyn(patt->getIntVal()).second;
 		int aIdx = mapper[patt->getIntVal()];
-		for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-			TNode *assignNode = st->getStmtNode((*it)[aIdx]);
-			if(!(st->doesMatchPattern(assignNode,patt))) deleteRow(it--);
+
+		if (type == QASSIGN){
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				TNode *assignNode = st->getStmtNode((*it)[aIdx]);
+				if(!(st->doesMatchPattern(assignNode,patt))) deleteRow(it--);
+			}
+		} else if (type == QWHILE){
+			QNode *leftPatt = patt->getLeftChild();
+			if(leftPatt->getType()==QANY && st->getAllWhile().size()==0) clearTable();
+			else {
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					TNode *whileNode = st->getStmtNode((*it)[aIdx]);
+					int varIdx = VarTable::getVarTable()->getVarIndex(patt->getLeftChild()->getStrVal());
+					if(!(whileNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
+				}
+			}
+		} else if (type == QIF){
+			QNode *leftPatt = patt->getLeftChild();
+			if(leftPatt->getType()==QANY && st->getAllIf().size()==0) clearTable();
+			else {
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+					int varIdx = VarTable::getVarTable()->getVarIndex(patt->getLeftChild()->getStrVal());
+					if(!(ifNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
+				}
+			}
 		}
 
 		/*QNode *copy = new QNode();
