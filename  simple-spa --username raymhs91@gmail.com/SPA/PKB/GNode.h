@@ -1,3 +1,6 @@
+/*
+	@author: Richard
+*/
 #pragma once
 
 #include <vector>
