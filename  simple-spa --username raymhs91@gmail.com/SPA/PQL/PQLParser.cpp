@@ -530,9 +530,7 @@ QNode* attrCompare(){
 	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
 	if((typeLeft == QCALL) && (callAttrib==0)) {
 		left->setStrVal("procName");
-	} else if ((typeLeft == QCALL) && (callAttrib==1)) {
-		left->setStrVal("stmt#");
-	}
+	} 
 
 	int typeRight;
 	if(synIdx2 == QSYN){
@@ -540,9 +538,7 @@ QNode* attrCompare(){
 		typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
 		if((typeRight == QCALL) && (callAttrib==0)) {
 			right->setStrVal("procName");
-		} else if ((typeLeft == QCALL) && (callAttrib==1)) {
-			left->setStrVal("stmt#");
-		}
+		} 
 	} else {
 		typeRight = right->getType();
 	}
@@ -851,12 +847,23 @@ QNode* selectClause() {
 			PQLParser::cleanUp();
 			throw ParseException("Error: Undeclared variable: " + text);
 		} else {
-			QNode* selNode = new QNode(QSYN);
-			selNode->setIntVal(synIdx);
-			qt->getResult()->setLeftChild(selNode);
+			match(TNAME);
+			if (text=="."){
+				match(TDOT);
+				QNode* selNode = new QNode(QSYN);
+				int type = SynTable::getSynTable()->getSyn(synIdx).second;
+				attrName(type);
+				if((type==QCALL)&&(callAttrib==0)){
+					selNode->setStrVal("procName");
+				}
+				selNode->setIntVal(synIdx);
+				qt->getResult()->setLeftChild(selNode);
+			}else{
+				QNode* selNode = new QNode(QSYN);
+				selNode->setIntVal(synIdx);
+				qt->getResult()->setLeftChild(selNode);
+			}
 		}
-
-		match(TNAME);
 	}
 	else{
 		QNode* selNode = new QNode(QBOOL);
