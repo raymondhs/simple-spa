@@ -1311,6 +1311,9 @@ vector<string> QueryEvaluator::evaluate() {
 			else if(selType ==QPROC){
 				resultString.push_back(pt->getProcName(*it));
 			}
+			else if((selType == QCALL)&&(sel->getStrVal()=="procName")){
+				resultString.push_back(pt->getProcName(callst->getProcCalledByStmt(*it)));
+			}
 			else {
 				stringstream out;
 				out << *it;
