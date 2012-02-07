@@ -530,6 +530,8 @@ QNode* attrCompare(){
 	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
 	if((typeLeft == QCALL) && (callAttrib==0)) {
 		left->setStrVal("procName");
+	} else if ((typeLeft == QCALL) && (callAttrib==1)) {
+		left->setStrVal("stmt#");
 	}
 
 	int typeRight;
@@ -538,6 +540,8 @@ QNode* attrCompare(){
 		typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
 		if((typeRight == QCALL) && (callAttrib==0)) {
 			right->setStrVal("procName");
+		} else if ((typeLeft == QCALL) && (callAttrib==1)) {
+			left->setStrVal("stmt#");
 		}
 	} else {
 		typeRight = right->getType();
@@ -772,6 +776,10 @@ QNode* pattern() {
 	if(getSynType(temp) == QASSIGN) {
 		match(TLPARENT);
 		left = entRef();
+		if (left->getType() == QINT || (left->getType() == QSYN && SynTable::getSynTable()->getSyn(left->getIntVal()).second != QVAR)) {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Expecting underscore/variable in the first argument");
+		}
 		match(TCOMMA);
 		right = exprSpec();
 		match(TRPARENT);
@@ -783,6 +791,10 @@ QNode* pattern() {
 	} else if (getSynType(temp) == QIF){
 		match(TLPARENT);
 		left = entRef();
+		if (left->getType() == QINT || (left->getType() == QSYN && SynTable::getSynTable()->getSyn(left->getIntVal()).second != QVAR)) {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Expecting underscore/variable in the first argument");
+		}
 		match(TCOMMA);
 		match(TUNDERSCORE);
 		match(TCOMMA);
@@ -795,6 +807,10 @@ QNode* pattern() {
 	} else if (getSynType(temp) == QWHILE){
 		match(TLPARENT);
 		left = entRef();
+		if (left->getType() == QINT || (left->getType() == QSYN && SynTable::getSynTable()->getSyn(left->getIntVal()).second != QVAR)) {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Expecting underscore/variable in the first argument");
+		}
 		match(TCOMMA);
 		match(TUNDERSCORE);
 		match(TRPARENT);
