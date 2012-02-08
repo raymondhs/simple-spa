@@ -1,7 +1,7 @@
-54
+1
 cat: With 
 1 - With, stmt
 stmt s1;
 Select s1 such that Modifies(s1,"x") and Uses(s1,"x")
-1
+8
 5000
