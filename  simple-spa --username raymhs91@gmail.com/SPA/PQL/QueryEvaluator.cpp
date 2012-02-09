@@ -1301,6 +1301,9 @@ vector<string> QueryEvaluator::evaluate() {
 
 		set<int> unique;
 		for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+			if( (selType == QCALL)&&(sel->getStrVal()=="procName")){
+				unique.insert(callst->getProcCalledByStmt((*it)[aSelIdx]));
+			} else
 			unique.insert((*it)[aSelIdx]);
 		}
 
@@ -1312,7 +1315,7 @@ vector<string> QueryEvaluator::evaluate() {
 				resultString.push_back(pt->getProcName(*it));
 			}
 			else if((selType == QCALL)&&(sel->getStrVal()=="procName")){
-				resultString.push_back(pt->getProcName(callst->getProcCalledByStmt(*it)));
+				resultString.push_back(pt->getProcName(*it));
 			}
 			else {
 				stringstream out;
