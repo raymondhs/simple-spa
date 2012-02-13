@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ParseException.cpp" />
+    <ClCompile Include="PKB\AffectsTable.cpp" />
     <ClCompile Include="PKB\AST.cpp" />
     <ClCompile Include="PKB\CallsTable.cpp" />
     <ClCompile Include="PKB\CFG.cpp" />
@@ -110,6 +111,7 @@
   <ItemGroup>
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ParseException.h" />
+    <ClInclude Include="PKB\AffectsTable.h" />
     <ClInclude Include="PKB\AST.h" />
     <ClInclude Include="PKB\CallsTable.h" />
     <ClInclude Include="PKB\CFG.h" />

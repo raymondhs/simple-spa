@@ -102,6 +102,9 @@
     <ClCompile Include="..\SPA\PKB\GNode.cpp">
       <Filter>Source Files\lib\PKB</Filter>
     </ClCompile>
+    <ClCompile Include="..\SPA\PKB\AffectsTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestAST.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="..\SPA\PKB\GNode.h">
       <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\AffectsTable.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
