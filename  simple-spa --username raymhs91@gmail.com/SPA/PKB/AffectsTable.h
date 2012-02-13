@@ -19,7 +19,7 @@ private:
 	AffectsTable(const AffectsTable &);
 	AffectsTable& operator=(const AffectsTable &);
 public:
-	AffectsTable* getAffectsTable();
+	static AffectsTable* getAffectsTable();
 	void clearTable();
 	void init();
 	int getSize();
