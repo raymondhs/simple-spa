@@ -25,7 +25,7 @@ void AffectsTable::clearTable(){
 
 void AffectsTable::init(){
 	vector<STMT_NO> assign = StmtTable::getStmtTable()->getAllAssign();
-	for(int i=0; i<assign.size();i++){
+	for(unsigned i=0; i<assign.size();i++){
 		fillTable(assign[i]);
 	}
 }
@@ -60,8 +60,8 @@ void AffectsTable::fillTable(STMT_NO stmt){
 					for(int i=this->affectedByTable.size()-1; i<idx; i++){
 						this->affectedByTable.push_back(set<int>());
 					}
-					affectsTable[stmt].push_back(idx);
-					affectedByTable[idx].push_back(stmt);
+					affectsTable[stmt].insert(idx);
+					affectedByTable[idx].insert(stmt);
 				}
 				if((type==ASSIGN||type==CALL)&&ModifiesTable::getModifiesTable()->isModifiesStmt(idx,var))
 					continue;

@@ -103,7 +103,7 @@
       <Filter>Source Files\lib\PKB</Filter>
     </ClCompile>
     <ClCompile Include="..\SPA\PKB\AffectsTable.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\lib\PKB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,7 +189,7 @@
       <Filter>Source Files\lib\PKB</Filter>
     </ClInclude>
     <ClInclude Include="..\SPA\PKB\AffectsTable.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\lib\PKB</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

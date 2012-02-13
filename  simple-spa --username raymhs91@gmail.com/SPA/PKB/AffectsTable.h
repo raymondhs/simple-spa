@@ -8,6 +8,8 @@
 #include <set>
 #include "../Constants.h"
 
+using namespace std;
+
 class AffectsTable{
 private:
 	std::vector<set<STMT_NO>> affectsTable;

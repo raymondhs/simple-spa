@@ -422,7 +422,7 @@ void postCheckCalls(int procIdx) {
 		}
 	}
 }
-
+/*
 void connectGNode(STMT_NO stmt){
 	GNode* gNode = CFG::getCFG()->getNode(stmt);
 	TNode* tNode = StmtTable::getStmtTable()->getStmtNode(stmt);
@@ -464,6 +464,68 @@ void connectGNode(STMT_NO stmt){
 void buildCFG(){
 	for(int i=0;i<StmtTable::getStmtTable()->getSize();i++){
 		connectGNode(i+1);
+	}
+}
+*/
+
+vector<GNode*> connectGNode(GNode* gNode){
+	int stmt = gNode->getAttrib();
+	vector<GNode*> next, last;
+	TNode* tNode = StmtTable::getStmtTable()->getStmtNode(stmt);
+	NodeType type = tNode->getType();
+	TNode *follower, *child, *thenChild, *elseChild;
+	last = vector<GNode*>();
+	switch(type){
+	case ASSIGN:
+	case CALL:
+		follower = tNode->getRightSibling();
+		if(follower!=NULL) gNode->setNext(CFG::getCFG()->getNode(follower->getAttrib()));
+		if(follower==NULL) last.push_back(gNode);
+		else
+			last=connectGNode(CFG::getCFG()->getNode(follower->getAttrib()));
+		break;
+	case WHILE:
+		follower = tNode->getRightSibling();
+		if(follower!=NULL) gNode->setNext(CFG::getCFG()->getNode(follower->getAttrib()));
+		child = tNode->getFirstChild()->getRightSibling()->getFirstChild();
+		gNode->setNext(CFG::getCFG()->getNode(child->getAttrib()));
+		last = connectGNode(CFG::getCFG()->getNode(child->getAttrib()));
+		for(unsigned i=0; i<last.size();i++){
+			last[i]->setNext(gNode);
+		}
+		last = vector<GNode*>();
+		if(follower==NULL) last.push_back(gNode);
+		else
+			last=connectGNode(CFG::getCFG()->getNode(follower->getAttrib()));
+		break;
+	case IF:
+		thenChild = tNode->getFirstChild()->getRightSibling()->getFirstChild();
+		elseChild = tNode->getFirstChild()->getRightSibling()->getRightSibling()->getFirstChild();
+		gNode->setNext(CFG::getCFG()->getNode(thenChild->getAttrib()));
+		gNode->setNext(CFG::getCFG()->getNode(elseChild->getAttrib()));
+		follower = tNode->getRightSibling();
+		next=connectGNode(CFG::getCFG()->getNode(thenChild->getAttrib()));
+		for(unsigned i=0; i<next.size();i++){
+			last.push_back(next[i]);
+		}
+		next=connectGNode(CFG::getCFG()->getNode(elseChild->getAttrib()));
+		for(unsigned i=0; i<next.size();i++){
+			last.push_back(next[i]);
+		}
+		if(follower!=NULL){
+			for(unsigned i=0; i<last.size();i++){
+				last[i]->setNext(CFG::getCFG()->getNode(follower->getAttrib()));
+			}
+			last=connectGNode(CFG::getCFG()->getNode(follower->getAttrib()));
+		}
+		break;
+	}
+	return last;
+}
+
+void buildCFG(){
+	for(int i=0; i<ProcTable::getProcTable()->getSize();i++){
+		connectGNode(CFG::getCFG()->getCfgRoot(i));
 	}
 }
 
