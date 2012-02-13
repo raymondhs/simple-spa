@@ -11,6 +11,7 @@
 class AffectsTable{
 private:
 	std::vector<set<STMT_NO>> affectsTable;
+	std::vector<set<STMT_NO>> affectedByTable;
 	void fillTable(STMT_NO idx);
 	AffectsTable();
 	AffectsTable(const AffectsTable &);

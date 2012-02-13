@@ -1,6 +1,6 @@
 /*
- * @author: Peter
- */
+* @author: Peter
+*/
 
 #include "AffectsTable.h"
 #include "StmtTable.h"
@@ -56,8 +56,13 @@ void AffectsTable::fillTable(STMT_NO stmt){
 			int type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
 			if (visited[idx-1] == false) {
 				visited[idx-1] = true;
-				if(type==ASSIGN&&UsesTable::getUsesTable()->isUsesStmt(idx,var))
+				if(type==ASSIGN&&UsesTable::getUsesTable()->isUsesStmt(idx,var)){
+					for(int i=this->affectedByTable.size()-1; i<idx; i++){
+						this->affectedByTable.push_back(set<int>());
+					}
 					affectsTable[stmt].push_back(idx);
+					affectedByTable[idx].push_back(stmt);
+				}
 				if((type==ASSIGN||type==CALL)&&ModifiesTable::getModifiesTable()->isModifiesStmt(idx,var))
 					continue;
 				q.push(v);
