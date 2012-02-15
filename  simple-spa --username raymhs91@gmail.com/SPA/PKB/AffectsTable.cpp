@@ -60,8 +60,8 @@ void AffectsTable::fillTable(STMT_NO stmt){
 					for(int i=this->affectedByTable.size()-1; i<idx; i++){
 						this->affectedByTable.push_back(set<int>());
 					}
-					affectsTable[stmt].insert(idx);
-					affectedByTable[idx].insert(stmt);
+					affectsTable[stmt-1].insert(idx);
+					affectedByTable[idx-1].insert(stmt);
 				}
 				if((type==ASSIGN||type==CALL)&&ModifiesTable::getModifiesTable()->isModifiesStmt(idx,var))
 					continue;
@@ -69,4 +69,8 @@ void AffectsTable::fillTable(STMT_NO stmt){
 			}
 		}
 	}
+}
+
+vector<STMT_NO> getAffects(STMT_NO affects){
+
 }
