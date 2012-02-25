@@ -151,8 +151,8 @@ void initVarsForNext(QNode* leftArg, QNode* rightArg) {
 	}
 }
 
-list< vector<int> > cartesianProduct(list< vector<int> > table1, list< vector<int> > table2) {
-	list< vector<int> > result;
+void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, list< vector<int> >& result) {
+	result.clear();
 	vector<int> temp;
 	temp = table1.front();
 	for( unsigned i = 0; i< table2.front().size(); i++){
@@ -199,7 +199,6 @@ list< vector<int> > cartesianProduct(list< vector<int> > table1, list< vector<in
 		}
 	}
 	*/
-	return result;
 }
 
 vector<int> allEntitiesWithType(int type) {
@@ -236,17 +235,6 @@ void initTable() {
 	// Yes/No Question
 	booleanAnswer = true;
 
-	QNode* sel = qt->getResult()->getLeftChild();
-
-	if(sel->getType() == QBOOL) {
-		return;
-	}
-
-	int selIdx = sel->getIntVal();
-	
-	if(mapper.count(selIdx) == 0) {
-		addAttribute(selIdx);
-	}
 	/*QNode* sel = qt->getResult()->getLeftChild();
 	QNode* suchthat = qt->getSuchThat()->getLeftChild();
 	QNode* pattern = qt->getPattern()->getLeftChild();
@@ -312,7 +300,9 @@ void addAttribute(int synIdx) {
 	if(table.size() == 0) {
 		table = newCol;
 	} else {
-		table = cartesianProduct(table,newCol);
+		list< vector<int> > result;
+		cartesianProduct(table,newCol,result);
+		table=result;
 	}
 
 	mapper.insert(pair<int,int>(synIdx,mapper.size()));
@@ -1285,9 +1275,13 @@ vector<string> QueryEvaluator::evaluate() {
 		else{
 			resultString.push_back("false");
 		}
-	} else {
+	} else if(booleanAnswer){
 		int selIdx = sel->getIntVal();
 		int selType = syn->getSyn(selIdx).second;
+		if(mapper.count(selIdx) == 0) {
+			initTable();
+			addAttribute(selIdx);
+		}
 		int aSelIdx = mapper[selIdx];
 	
 		/*

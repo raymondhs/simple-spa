@@ -70,7 +70,7 @@ void AffectsTable::fillTable(STMT_NO stmt){
 		}
 	}
 }
-
-vector<STMT_NO> getAffects(STMT_NO affects){
-
+/*
+vector<STMT_NO> AffectsTable::getAffects(STMT_NO affects){
 }
+*/
