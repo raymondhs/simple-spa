@@ -231,6 +231,7 @@ void TestModifies::testIsModifiesStmtUsingParser(){
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(7,varMod-> getVarIndex("y"))==true);
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(1,varMod-> getVarIndex("y"))==false);
 	cout <<"SUCCESS! OK! :)"<<endl;
+	//PKBParser::cleanUp();
 }
 
 void TestModifies::testIsModifiesStmtUsingParser2(){
@@ -270,6 +271,7 @@ void TestModifies::testIsModifiesStmtUsingParser2(){
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(6,varMod-> getVarIndex("t"))==true);
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(7,varMod-> getVarIndex("q"))==false);
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(8,varMod-> getVarIndex("t"))==false);
+	//PKBParser::cleanUp();
 	cout <<"SUCCESS! OK! :)"<<endl;
 }
 
@@ -349,5 +351,6 @@ void TestModifies::testIsModifiesStmtUsingParser3(){
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(15,varMod-> getVarIndex("e"))==true);
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(15,varMod-> getVarIndex("q"))==true);
 	CPPUNIT_ASSERT (modifies->isModifiesStmt(16,varMod-> getVarIndex("q"))==true);
+	//PKBParser::cleanUp();
 	cout <<"SUCCESS! OK! :)"<<endl;
 }

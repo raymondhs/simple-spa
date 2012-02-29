@@ -21,13 +21,15 @@ AffectsTable* AffectsTable::getAffectsTable() {
 
 void AffectsTable::clearTable(){
 	this->affectsTable.clear();
+	this->affectedByTable.clear();
+	affectsEntryCreated.clear();
+	affectedByEntryCreated.clear();
 }
 
 void AffectsTable::init(){
 	vector<STMT_NO> assign = StmtTable::getStmtTable()->getAllAssign();
-	for(unsigned i=0; i<assign.size();i++){
-		fillTable(assign[i]);
-	}
+	affectsEntryCreated.assign(StmtTable::getStmtTable()->getSize(),false);
+	affectedByEntryCreated.assign(StmtTable::getStmtTable()->getSize(),false);
 }
 
 int AffectsTable::getSize(){
@@ -35,6 +37,7 @@ int AffectsTable::getSize(){
 }
 
 void AffectsTable::fillTable(STMT_NO stmt){
+	if(StmtTable::getStmtTable()->getStmtNode(stmt)->getType()!=ASSIGN) return;
 	for(int i=this->affectsTable.size()-1; i<stmt; i++){
 		this->affectsTable.push_back(set<int>());
 	}
@@ -70,7 +73,49 @@ void AffectsTable::fillTable(STMT_NO stmt){
 		}
 	}
 }
-/*
-vector<STMT_NO> AffectsTable::getAffects(STMT_NO affects){
+
+void AffectsTable::fillTable2(STMT_NO stmt){
+	if(StmtTable::getStmtTable()->getStmtNode(stmt)->getType()!=ASSIGN) return;
+	queue<GNode*> q;
+	q.push(CFG::getCFG()->getNode(stmt));
+
+	vector<bool> visited(StmtTable::getStmtTable()->getSize(), false);
+
+	while (!q.empty()) {
+		GNode* u = q.front(); q.pop();
+		vector<GNode*> prev = u->getPrev();
+		vector<GNode*>::iterator it;
+
+		for (it = prev.begin(); it < prev.end(); it++) {
+			GNode* v = *it;
+			int idx = v->getAttrib();
+			int type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
+			if (visited[idx-1] == false) {
+				visited[idx-1] = true;
+			if(!affectsEntryCreated[idx-1])
+				fillTable(idx);
+			q.push(v);
+			}
+		}
+	}
 }
-*/
+
+set<STMT_NO> AffectsTable::getAffects(STMT_NO affects){
+	if(!affectsEntryCreated[affects-1])
+		fillTable(affects);
+	affectsEntryCreated[affects-1] = true;
+	return affectsTable[affects-1];
+}
+
+set<STMT_NO> AffectsTable::getAffects(STMT_NO affected){
+	if(!affectedByEntryCreated[affected-1])
+		fillTable2(affected);
+	affectedByEntryCreated[affected-1] = true;
+	return affectedByTable[affected-1];
+}
+
+bool AffectsTable::isAffects(STMT_NO affects, STMT_NO affected){
+	set<STMT_NO> entry = getAffects(affects);
+	return (entry.find(affected)!=entry.end());
+}
+
