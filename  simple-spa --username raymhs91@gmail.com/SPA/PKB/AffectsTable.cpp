@@ -107,15 +107,64 @@ set<STMT_NO> AffectsTable::getAffects(STMT_NO affects){
 	return affectsTable[affects-1];
 }
 
-set<STMT_NO> AffectsTable::getAffects(STMT_NO affected){
+set<STMT_NO> AffectsTable::getAffectsTransitive(STMT_NO stmt){
+	set<STMT_NO> affectsT;
+	vector<bool> visited(StmtTable::getStmtTable()->getSize(), false);
+	queue<int> q;
+	q.push(stmt);
+	while(!q.empty()){
+		int u = q.front(); q.pop();
+		set<int> affects = getAffects(u);
+		set<int>::iterator it;
+
+		for (it = affects.begin(); it != affects.end(); it++) {
+			int v = *it;
+			if (visited[v-1] == false) {
+				visited[v-1] = true;
+				q.push(v);
+				affectsT.insert(v);
+			}
+		}
+	}
+	return affectsT;
+}
+
+set<STMT_NO> AffectsTable::getAffectedBy(STMT_NO affected){
 	if(!affectedByEntryCreated[affected-1])
 		fillTable2(affected);
 	affectedByEntryCreated[affected-1] = true;
 	return affectedByTable[affected-1];
 }
 
+set<STMT_NO> AffectsTable::getAffectedByTransitive(STMT_NO stmt){
+	set<STMT_NO> affectedByT;
+	vector<bool> visited(StmtTable::getStmtTable()->getSize(), false);
+	queue<int> q;
+	q.push(stmt);
+	while(!q.empty()){
+		int u = q.front(); q.pop();
+		set<int> affected = getAffectedBy(u);
+		set<int>::iterator it;
+
+		for (it = affected.begin(); it != affected.end(); it++) {
+			int v = *it;
+			if (visited[v-1] == false) {
+				visited[v-1] = true;
+				q.push(v);
+				affectedByT.insert(v);
+			}
+		}
+	}
+	return affectedByT;
+}
+
 bool AffectsTable::isAffects(STMT_NO affects, STMT_NO affected){
 	set<STMT_NO> entry = getAffects(affects);
+	return (entry.find(affected)!=entry.end());
+}
+
+bool AffectsTable::isAffectsTransitive(STMT_NO affects, STMT_NO affected){
+	set<STMT_NO> entry = getAffectsTransitive(affects);
 	return (entry.find(affected)!=entry.end());
 }
 
