@@ -325,6 +325,8 @@ void deleteRow(list< vector<int> >::iterator it) {
 }
 
 void evaluateWithNode(QNode* with){
+	//cout << "with" << endl;
+	if(!booleanAnswer) return;
 	QNode* leftArg = with->getLeftChild();
 	QNode* rightArg = with->getRightChild();
 	if(leftArg->getType() == QSYN) {
@@ -472,6 +474,8 @@ void evaluateWithNode(QNode* with){
 }
 
 void evaluateSuchThatNode(QNode* such){
+	//cout << "such" << endl;
+	if(!booleanAnswer) return;
 	QNode* leftArg = such->getLeftChild();
 	QNode* rightArg = such->getRightChild();
 	if(leftArg->getType() == QSYN) {
@@ -513,6 +517,8 @@ void evaluateSuchThatNode(QNode* such){
 }
 
 void evaluatePatternNode(QNode* patt){
+	//cout << "pat" << endl;
+	if(!booleanAnswer) return;
 	if(mapper.count(patt->getIntVal()) == 0) {
 		addAttribute(patt->getIntVal());
 	}
@@ -573,6 +579,7 @@ void evaluatePatternNode(QNode* patt){
 }
 
 void evaluateSelectNode(QNode* sel){
+	//cout << "sel" << endl;
 	if (sel->getLeftChild()->getType() == QBOOL){
 		if(booleanAnswer) {
 			resultString.push_back("true");
@@ -635,8 +642,19 @@ void evaluateNode(QNode* node){
 }
 
 void evaluateCluster(vector<QNode*> cluster){
-	for(unsigned i=0;booleanAnswer&&i<cluster.size();i++){
+	for(unsigned i=0;i<cluster.size();i++){
+		//cout <<"evaluating cluster "<<i<<endl;
 		evaluateNode(cluster[i]);
+	}
+}
+
+void processClauses(){
+	//cout<<"evaluating"<<endl;
+	vector<QNode*> cluster = qt->nextClauses();
+	while(cluster.size()!=0){
+		initTable();
+		evaluateCluster(cluster);
+		cluster = qt->nextClauses();
 	}
 }
 
@@ -1346,12 +1364,14 @@ vector<string> QueryEvaluator::evaluate() {
 	initTable();
 
 	resultString.clear();
-
+	
+	processClauses();
+	/*
 	evaluateSuchThat();
 	evaluatePattern();
 	evaluateWith();
 	evaluateSelect();
-
+	*/
 	/*for(ui i = 0; i < resultString.size(); i++) {
 	cout << resultString[i] << " ";
 	}
