@@ -323,17 +323,8 @@ void deleteRow(list< vector<int> >::iterator it) {
 	if(table.size() <= 1) booleanAnswer = false;
 }
 
-void evaluateWith(){
-	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
-
-	while(with != NULL){
-		if(!booleanAnswer) return;
-		/*if (AbstractWrapper::GlobalStop) {
-			// do cleanup 
-			PQLParser::cleanUp();
-			return;
-		}*/
-		QNode* leftArg = with->getLeftChild();
+void evaluateWithNode(QNode* with){
+	QNode* leftArg = with->getLeftChild();
 		QNode* rightArg = with->getRightChild();
 		if(leftArg->getType() == QSYN) {
 			if(mapper.count(leftArg->getIntVal()) == 0) {
@@ -477,20 +468,25 @@ void evaluateWith(){
 				}
 			}
 		} 
-		with = with->getRightSibling();
-	}
 }
 
-void evaluateSuchThat() {
-	QNode* such = qt->getSuchThat()->getLeftChild(); // ONLY 1 SUCH THAT
-	while(such != NULL){
+void evaluateWith(){
+	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
+	
+	while(with != NULL){
 		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
 			// do cleanup 
 			PQLParser::cleanUp();
 			return;
 		}*/
-		QNode* leftArg = such->getLeftChild();
+		evaluateWithNode(with);
+		with = with->getRightSibling();
+	}
+}
+
+void evaluateSuchThatNode(QNode* such){
+	QNode* leftArg = such->getLeftChild();
 		QNode* rightArg = such->getRightChild();
 		if(leftArg->getType() == QSYN) {
 			if(mapper.count(leftArg->getIntVal()) == 0) {
@@ -528,21 +524,24 @@ void evaluateSuchThat() {
 			default:
 				break;
 		}
-		such = such->getRightSibling();
-	}
 }
 
-void evaluatePattern() {
-	QNode* patt = qt->getPattern()->getLeftChild();
-	while(patt != NULL) {
+void evaluateSuchThat() {
+	QNode* such = qt->getSuchThat()->getLeftChild(); // ONLY 1 SUCH THAT
+	while(such != NULL){
 		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
 			// do cleanup 
 			PQLParser::cleanUp();
 			return;
 		}*/
-		
-		if(mapper.count(patt->getIntVal()) == 0) {
+		evaluateSuchThatNode(such);
+		such = such->getRightSibling();
+	}
+}
+
+void evaluatePatternNode(QNode* patt){
+	if(mapper.count(patt->getIntVal()) == 0) {
 			addAttribute(patt->getIntVal());
 		}
 		SynTable *synT = SynTable::getSynTable();
@@ -599,6 +598,19 @@ void evaluatePattern() {
 				}
 			}
 		}
+}
+
+void evaluatePattern() {
+	QNode* patt = qt->getPattern()->getLeftChild();
+	while(patt != NULL) {
+		if(!booleanAnswer) return;
+		/*if (AbstractWrapper::GlobalStop) {
+			// do cleanup 
+			PQLParser::cleanUp();
+			return;
+		}*/
+		
+		evaluatePatternNode(patt);
 
 		/*QNode *copy = new QNode();
 		QNode *left = patt->getLeftChild();
