@@ -13,6 +13,7 @@ using namespace std;
 static istringstream input;
 static int next_token;
 static string text;
+static QueryTree *qt = QueryTree::getQueryTree();
 
 // helper methods
 static bool issymbol(char c);
@@ -25,7 +26,7 @@ static QNode* lineRef();
 
 static QNode* ref();
 static QNode* attrRef();
-static QNode* attrCond();
+static void attrCond();
 static QNode* attrCompare();
 void attrName(int type);
 static QNode* term();
@@ -35,9 +36,9 @@ static QNode* exprSpec();
 
 static int entity();
 static void declaration();
-static QNode* suchThatCond();
+static void suchThatCond();
 static QNode* pattern();
-static QNode* patternCond();
+static void patternCond();
 static QNode* selectClause();
 
 // attribute used for call
@@ -49,7 +50,7 @@ typedef enum tokentype {
 	TEOF, TINVALID, TPROCEDURE, TIF, TTHEN, TELSE, TCALL,
 	TSELECT, TSUCH, TTHAT, TAND, TPROG, TLINE,
 	TSTMT, TASSIGN, TWHILE, TVAR, TCONST,
-	TPARENT, TFOLLOWS, TMODIFIES, TUSES, TBOOL
+	TPARENT, TFOLLOWS, TMODIFIES, TUSES, TBOOL, TLESSTHAN, TMORETHAN
 };
 
 int getSynIdx(string name) {
@@ -97,6 +98,8 @@ int getToken() {
 				if(text == "_") return TUNDERSCORE;
 				if(text == ",") return TCOMMA;
 				if(text == ".") return TDOT;
+				if(text == "<") return TLESSTHAN;
+				if(text == ">") return TMORETHAN;
 				else return TINVALID;
 			}
 			else if(isspace(c)) { }
@@ -507,14 +510,12 @@ QNode* attrRef(){
 	return attr;
 }
 
-QNode* attrCond() {
-	QNode* node = attrCompare(), *current = node;
+void attrCond() {
+	qt->addClause(attrCompare());
 	while(text == "and") {
 		//next_token = getToken();
-		current->setRightSibling(attrCompare());
-		current = current->getRightSibling();
+		qt->addClause(attrCompare());
 	}
-	return node;
 }
 
 QNode* attrCompare(){
@@ -752,14 +753,12 @@ void declaration() {
 	match(TSEMICOLON);
 }
 
-QNode* suchthatCond() {
-	QNode* node = relRef(), *current = node;
+void suchthatCond() {
+	qt->addClause(relRef());
 	while(text == "and"){
-		next_token = getToken();
-		current->setRightSibling(relRef());
-		current = current->getRightSibling();
+		next_token = getToken();		
+		qt->addClause(relRef());
 	}
-	return node;
 }
 
 QNode* pattern() {
@@ -821,19 +820,16 @@ QNode* pattern() {
 
 }
 
-QNode* patternCond() {
-	QNode* node = pattern(), *current = node;
+void patternCond() {
+	qt->addClause(pattern());
 	while(text == "and") {
 		next_token = getToken();
-		current->setRightSibling(pattern());
-		current = current->getRightSibling();
+		qt->addClause(pattern());
 	}
-	return node;
 }
 
 QNode* selectClause() {
 	next_token = getToken();
-	QueryTree *qt = QueryTree::getQueryTree();
 
 	QNode* curr = NULL; int count = 0;
 	while(text != "Select") {
@@ -841,7 +837,40 @@ QNode* selectClause() {
 	}
 	match(TSELECT);
 
-	if (text!="BOOLEAN"){
+	if (text=="<"){
+		//Select tuple
+		match(TLESSTHAN);
+		while(text!=">"){
+			int synIdx = SynTable::getSynTable()->getSynIdx(text);
+			if(synIdx == -1) {		
+				PQLParser::cleanUp();
+				throw ParseException("Error: Undeclared variable: " + text);
+			} else {
+				match(TNAME);
+				if (text=="."){
+					match(TDOT);
+					QNode* selNode = new QNode(QSELECT);
+					selNode -> setLeftChild(new QNode(QSYN));
+					int type = SynTable::getSynTable()->getSyn(synIdx).second;
+					attrName(type);
+					if((type==QCALL)&&(callAttrib==0)){
+						selNode->getLeftChild()->setStrVal("procName");
+					}
+					selNode->getLeftChild()->setIntVal(synIdx);
+					qt->addClause(selNode);
+				} else{
+					QNode* selNode = new QNode(QSELECT);
+					selNode->setLeftChild(new QNode(QSYN));
+					selNode->getLeftChild()->setIntVal(synIdx);
+					qt->addClause(selNode);
+				}
+			}
+			match(TCOMMA);
+		}
+		match(TMORETHAN);
+	}
+	else if (text!="BOOLEAN" && text != "<"){
+		//Select QSYN
 		int synIdx = SynTable::getSynTable()->getSynIdx(text);
 		if(synIdx == -1) {		
 			PQLParser::cleanUp();
@@ -858,19 +887,20 @@ QNode* selectClause() {
 					selNode->getLeftChild()->setStrVal("procName");
 				}
 				selNode->getLeftChild()->setIntVal(synIdx);
-				qt->getResult()->setLeftChild(selNode);
+				qt->addClause(selNode);
 			}else{
 				QNode* selNode = new QNode(QSELECT);
 				selNode->setLeftChild(new QNode(QSYN));
 				selNode->getLeftChild()->setIntVal(synIdx);
-				qt->getResult()->setLeftChild(selNode);
+				qt->addClause(selNode);
 			}
 		}
 	}
 	else{
+		//Select Boolean
 		QNode* selNode = new QNode(QSELECT);
 		selNode->setLeftChild(new QNode(QBOOL));
-		qt->getResult()->setLeftChild(selNode);
+		qt->addClause(selNode);
 		match(TBOOL);
 	}
 
@@ -878,11 +908,11 @@ QNode* selectClause() {
 		if(text == "such") {
 			next_token = getToken();
 			match(TTHAT);
-			qt->addSuchThat(suchthatCond());
+			suchthatCond();
 		} else if(text == "pattern") {
-			qt->addPattern(patternCond());
+			patternCond();
 		} else if(text == "with") {
-			qt->addWith(attrCond());
+			attrCond();
 		} else if(text != "") {
 			PQLParser::cleanUp();
 			throw ParseException("Syntax error: Invalid query.");

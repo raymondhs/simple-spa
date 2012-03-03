@@ -18,7 +18,7 @@ void QueryTree::addClause(QNode* clause) {
 			isBooleanAnswer = true;
 		} else {
 			syn = clause->getLeftChild()->getIntVal();
-			if(dependencyGraph.size() <= syn)
+			if(dependencyGraph.size() <= (unsigned)syn)
 				dependencyGraph.resize(syn+1,vector<QNode*>());
 			dependencyGraph[syn].push_back(clause);
 		}
@@ -28,21 +28,21 @@ void QueryTree::addClause(QNode* clause) {
 	} else {
 		if(clause->getType() == QSYN) {
 			syn = clause->getIntVal();
-			if(dependencyGraph.size() <= syn)
+			if(dependencyGraph.size() <= (unsigned)syn)
 				dependencyGraph.resize(syn+1,vector<QNode*>());
 			dependencyGraph[syn].push_back(clause);
 		}
 		if(clause->getLeftChild() != NULL &&
 		   clause->getLeftChild()->getType() == QSYN) {
 			syn = clause->getLeftChild()->getIntVal();
-			if(dependencyGraph.size() <= syn)
+			if(dependencyGraph.size() <= (unsigned)syn)
 				dependencyGraph.resize(syn+1,vector<QNode*>());
 			dependencyGraph[syn].push_back(clause);
 		}
 		if(clause->getRightChild() != NULL &&
 		   clause->getRightChild()->getType() == QSYN) {
 			syn = clause->getLeftChild()->getIntVal();
-			if(dependencyGraph.size() <= syn)
+			if(dependencyGraph.size() <= (unsigned)syn)
 				dependencyGraph.resize(syn+1,vector<QNode*>());
 			dependencyGraph[syn].push_back(clause);
 		}
@@ -57,7 +57,7 @@ vector<QNode*> QueryTree::nextClauses() {
 	} else {
 		int i, j, syn;
 		bool isEmpty = true;
-		for(i = 0; i < dependencyGraph.size(); i++) {
+		for(i = 0; (unsigned)i < dependencyGraph.size(); i++) {
 			if(!dependencyGraph[i].empty()) { isEmpty = false; break; }
 		}
 		if(isEmpty) return clauseList;
@@ -69,7 +69,7 @@ vector<QNode*> QueryTree::nextClauses() {
 			i = q.front(); q.pop();
 			vis[i] = true;
 			synList.push_back(i);
-			for(j = 0; j < dependencyGraph[i].size(); i++) {
+			for(j = 0; (unsigned)j < dependencyGraph[i].size(); i++) {
 				QNode* node = dependencyGraph[i][j];
 				if(node->getType() == QSYN) {
 					syn = node->getIntVal();
@@ -86,8 +86,8 @@ vector<QNode*> QueryTree::nextClauses() {
 			}
 		}
 		set<QNode*> clauseSet;
-		for(i = 0; i < synList.size(); i++) {
-			for(j = 0; j < dependencyGraph[ synList[i] ].size(); j++) {
+		for(i = 0; (unsigned)i < synList.size(); i++) {
+			for(j = 0; (unsigned)j < dependencyGraph[ synList[i] ].size(); j++) {
 				clauseSet.insert(dependencyGraph[ synList[i] ] [j]);
 			}
 			dependencyGraph[ synList[i] ].clear();
