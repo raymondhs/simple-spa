@@ -35,8 +35,8 @@ static CFG *cfg;
 static ConstantTable *ct;
 static ProcTable *pt;
 static CallsTable *callst;
-static list< vector<int> > table;
-static map< int, int > mapper;
+static list< vector<int> > table, resultTable;
+static map< int, int > mapper, mapperResult;
 static AffectsTable *a;
 
 static void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, list< vector<int> >& result);
@@ -48,13 +48,17 @@ static void initVarsForCalls(QNode* leftArg, QNode* rightArg);
 static void initVarsForNext(QNode* leftArg, QNode* rightArg);
 
 static void initTable();
-static void addAttribute(int synIdx);
+static void initResultTable();
+static void addAttribute(int synIdx, list< vector<int> >& old, map< int, int >& m);
 static void clearTable();
 static bool isEmptyResult();
 
-static void evaluateWith();
-static void evaluateSuchThat();
-static void evaluatePattern();
+static void formatResult();
+
+static void evaluateSelectNode(QNode *q);
+static void evaluateWithNode(QNode *q);
+static void evaluateSuchThatNode(QNode *q);
+static void evaluatePatternNode(QNode *q);
 static void handleParent(QNode* query);
 static void handleParentT(QNode* query);
 static void handleFollows(QNode* query);
@@ -157,6 +161,14 @@ void initVarsForNext(QNode* leftArg, QNode* rightArg) {
 }
 
 void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, list< vector<int> >& result) {
+	if(table1.empty()) {
+		result = list< vector<int> > (table2.begin(), table2.end());
+		return;
+	}
+	if(table2.empty()) {
+		result = list< vector<int> > (table1.begin(), table1.end());
+		return;
+	}
 	result.clear();
 	vector<int> temp;
 	temp = table1.front();
@@ -176,34 +188,7 @@ void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, 
 			it2++;
 		}
 		it1++;
-	}
-	/*
-	result.assign(table1.size()+table2.size(),vector<int>());
-	for(unsigned k = 0; k < table1.size(); k++) { // for each attribute
-	if(result[k].size() == 0) {
-	result[k].push_back(table1[k][0]);
-	}
-	}
-	int currSz = table1.size();
-	for(unsigned k = 0; k < table2.size(); k++) {
-	if(result[currSz].size() == 0) {
-	result[currSz].push_back(table2[k][0]);
-	}
-	}
-
-	for(unsigned i = 1; i < table1[0].size(); i++) { // for each row in table 1
-	for(unsigned j = 1; j < table2[0].size(); j++) { // for each row in table 2
-	for(unsigned k = 0; k < table1.size(); k++) { // for each attribute
-	result[k].push_back(table1[k][i]);
-	}
-	currSz = table1.size();
-	for(unsigned k = 0; k < table2.size(); k++) {
-	result[currSz].push_back(table2[k][j]);
-	currSz ++;
-	}
-	}
-	}
-	*/
+	}	
 }
 
 vector<int> allEntitiesWithType(int type) {
@@ -239,57 +224,14 @@ void initTable() {
 
 	// Yes/No Question
 	booleanAnswer = true;
-
-	/*QNode* sel = qt->getResult()->getLeftChild();
-	QNode* suchthat = qt->getSuchThat()->getLeftChild();
-	QNode* pattern = qt->getPattern()->getLeftChild();
-
-	set<int> attribs;
-	attribs.insert(sel->getIntVal());
-
-	while(suchthat != NULL) {
-	QNode* leftArg = suchthat->getLeftChild();
-	QNode* rightArg = suchthat->getRightChild();
-	if(leftArg->getType() == QSYN) {
-	attribs.insert(leftArg->getIntVal());
-	}
-	if(rightArg->getType() == QSYN) {
-	attribs.insert(rightArg->getIntVal());
-	}
-	suchthat = suchthat->getRightSibling();
-	}
-
-	if(pattern != NULL) {
-	attribs.insert(pattern->getIntVal());
-	}
-
-	vector< vector<int> > result;
-	set<int>::iterator it;
-	int count = 0;
-	for(it = attribs.begin(); it != attribs.end(); it++) {
-	mapper.insert(pair<int,int>(*it,count++));
-	int entType = syn->getSyn(*it).second;
-	vector<int> allEnt = allEntitiesWithType(entType);
-	if(it == attribs.begin()) {
-	result.push_back(vector<int>());
-	result[0].push_back(*it);
-	for(unsigned i = 0; i < allEnt.size(); i++) {
-	result[0].push_back(allEnt[i]);
-	}
-	} else {
-	vector< vector<int> > newCol;
-	newCol.push_back(vector<int>());
-	newCol[0].push_back(*it);
-	for(unsigned i = 0; i < allEnt.size(); i++) {
-	newCol[0].push_back(allEnt[i]);
-	}
-	result = cartesianProduct(result,newCol);
-	}
-	}
-	table = result;*/
 }
 
-void addAttribute(int synIdx) {
+void initResultTable() {
+	resultTable.clear();
+	mapperResult.clear();
+}
+
+void addAttribute(int synIdx, list< vector<int> >& old, map< int, int >& m) {
 	int entType = syn->getSyn(synIdx).second;
 	vector<int> allEnt = allEntitiesWithType(entType);
 
@@ -302,15 +244,15 @@ void addAttribute(int synIdx) {
 		(*it).push_back(allEnt[i]);
 	}
 
-	if(table.size() == 0) {
-		table = newCol;
+	if(old.size() == 0) {
+		old = newCol;
 	} else {
 		list< vector<int> > result;
-		cartesianProduct(table,newCol,result);
-		table=result;
+		cartesianProduct(old,newCol,result);
+		old=result;
 	}
 
-	mapper.insert(pair<int,int>(synIdx,mapper.size()));
+	m.insert(pair<int,int>(synIdx,m.size()));
 }
 
 void clearTable() {
@@ -335,12 +277,12 @@ void evaluateWithNode(QNode* with){
 	QNode* rightArg = with->getRightChild();
 	if(leftArg->getType() == QSYN) {
 		if(mapper.count(leftArg->getIntVal()) == 0) {
-			addAttribute(leftArg->getIntVal());
+			addAttribute(leftArg->getIntVal(), table, mapper);
 		}
 	}
 	if(rightArg->getType() == QSYN) {
 		if(mapper.count(rightArg->getIntVal()) == 0) {
-			addAttribute(rightArg->getIntVal());
+			addAttribute(rightArg->getIntVal(), table, mapper);
 		}
 	}
 
@@ -484,13 +426,13 @@ void evaluateSuchThatNode(QNode* such){
 	QNode* rightArg = such->getRightChild();
 	if(leftArg->getType() == QSYN) {
 		if(mapper.count(leftArg->getIntVal()) == 0) {
-			addAttribute(leftArg->getIntVal());
+			addAttribute(leftArg->getIntVal(), table, mapper);
 		}
 	}
 
 	if(rightArg->getType() == QSYN) {
 		if(mapper.count(rightArg->getIntVal()) == 0) {
-			addAttribute(rightArg->getIntVal());
+			addAttribute(rightArg->getIntVal(), table, mapper);
 		}
 	}
 
@@ -528,7 +470,7 @@ void evaluatePatternNode(QNode* patt){
 	//cout << "pat" << endl;
 	if(!booleanAnswer) return;
 	if(mapper.count(patt->getIntVal()) == 0) {
-		addAttribute(patt->getIntVal());
+		addAttribute(patt->getIntVal(), table, mapper);
 	}
 	SynTable *synT = SynTable::getSynTable();
 	int type = synT->getSyn(patt->getIntVal()).second;
@@ -538,7 +480,7 @@ void evaluatePatternNode(QNode* patt){
 	int aIdx2;
 	if(type2==QSYN){
 		if(mapper.count(leftPatt->getIntVal()) == 0)
-			addAttribute(leftPatt->getIntVal());
+			addAttribute(leftPatt->getIntVal(), table, mapper);
 		aIdx2 = mapper[leftPatt->getIntVal()];
 	}
 	if (type == QASSIGN){
@@ -593,29 +535,35 @@ void evaluateSelectNode(QNode* sel){
 		int selIdx = sel->getLeftChild()->getIntVal();
 		int selType = syn->getSyn(selIdx).second;
 		if(mapper.count(selIdx) == 0) {
-			initTable();
-			addAttribute(selIdx);
-		}
-		int aSelIdx = mapper[selIdx];
+			addAttribute(selIdx, resultTable, mapperResult);
+		} else {
+			int aSelIdx = mapper[selIdx];
 
-		/*
-		for(ui i = 0; i < table.size(); i++) {
-		for(ui j = 0; j < table[i].size(); j++) {
-		cout << table[i][j] << " ";
-		}
-		cout << endl;
-		}
-		*/
+			set<int> unique;
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if( (selType == QCALL)&&(sel->getLeftChild()->getStrVal()=="procName")){
+					unique.insert(callst->getProcCalledByStmt((*it)[aSelIdx]));
+				} else
+					unique.insert((*it)[aSelIdx]);
+			}
 
-		set<int> unique;
-		for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-			if( (selType == QCALL)&&(sel->getLeftChild()->getStrVal()=="procName")){
-				unique.insert(callst->getProcCalledByStmt((*it)[aSelIdx]));
-			} else
-				unique.insert((*it)[aSelIdx]);
-		}
+			list< vector<int> > newCol, old;
+			
+			vector<int> aux;
+			aux.push_back(mapperResult.size());
+			newCol.push_back(aux);
+			for(set<int>::iterator it = unique.begin(); it != unique.end(); it++) {
+				aux.clear();
+				aux.push_back(*it);
+				newCol.push_back(aux);
+			}
+			
+			mapperResult.insert(pair<int,int>(selIdx, mapperResult.size()));
 
-		for(set<int>::iterator it = unique.begin(); it != unique.end(); it++) {
+			old = list< vector<int> >(resultTable.begin(), resultTable.end());
+			cartesianProduct(old, newCol, resultTable);			
+		}
+		/*for(set<int>::iterator it = unique.begin(); it != unique.end(); it++) {
 			if(selType == QVAR) {
 				resultString.push_back(var->getVarName(*it));
 			} 
@@ -630,17 +578,17 @@ void evaluateSelectNode(QNode* sel){
 				out << *it;
 				resultString.push_back(out.str());
 			}
-		}
+		}*/
 	}
 }
 
 void evaluateNode(QNode* node){
 	//cout<<"evaluate "<< node->getType() <<endl;
 	switch(node->getType()){
-	case QWITH: evaluateWithNode(node); break;
-	case QSYN:	evaluatePatternNode(node); break;
-	case QSELECT: evaluateSelectNode(node); break;
-	default: evaluateSuchThatNode(node);
+		case QWITH: evaluateWithNode(node); break;
+		case QSYN:	evaluatePatternNode(node); break;
+		case QSELECT: evaluateSelectNode(node); break;
+		default: evaluateSuchThatNode(node);
 	}
 }
 
@@ -648,6 +596,36 @@ void evaluateCluster(vector<QNode*> cluster){
 	for(unsigned i=0;i<cluster.size();i++){
 		//cout <<"evaluating cluster "<<endl;
 		evaluateNode(cluster[i]);
+	}
+}
+
+void formatResult() {
+	vector<QNode*> tuple = qt->getTuple();
+	int tmp = 0;
+	for(list<vector<int> >::iterator it = resultTable.begin(); it != resultTable.end(); it++) {
+		if(!tmp++) continue;
+		string ans = "";
+		for(int j = 0; (unsigned)j < tuple.size(); j++) {
+			if(j) ans += " ";
+			int selIdx = tuple[j]->getLeftChild()->getIntVal();
+			int selType = syn->getSyn(selIdx).second;
+			int aSelIdx = mapperResult[selIdx];
+			if(selType == QVAR) {
+				ans += var->getVarName((*it)[aSelIdx]);
+			} 
+			else if(selType == QPROC){
+				ans += pt->getProcName((*it)[aSelIdx]);
+			}
+			else if((selType == QCALL)&&(tuple[j]->getLeftChild()->getStrVal()=="procName")){
+				ans += pt->getProcName((*it)[aSelIdx]);
+			}
+			else {
+				stringstream out;
+				out << (*it)[aSelIdx];
+				ans += out.str();
+			}
+		}
+		resultString.push_back(ans);
 	}
 }
 
@@ -660,8 +638,11 @@ void processClauses(){
 		evaluateCluster(cluster);
 		cluster = qt->nextClauses();
 	}
-	if(!booleanAnswer)
+	if(!booleanAnswer) {
 		resultString.clear();
+	} else {
+		formatResult();
+	}
 	if (qt->isBoolean()){
 		if(booleanAnswer) {
 			resultString.push_back("true");
@@ -670,115 +651,6 @@ void processClauses(){
 			resultString.push_back("false");
 		}
 	}
-}
-
-void evaluateWith(){
-	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
-
-	while(with != NULL){
-		if(!booleanAnswer) return;
-		/*if (AbstractWrapper::GlobalStop) {
-		// do cleanup 
-		PQLParser::cleanUp();
-		return;
-		}*/
-		evaluateWithNode(with);
-		with = with->getRightSibling();
-	}
-}
-
-void evaluateSuchThat() {
-	QNode* such = qt->getSuchThat()->getLeftChild(); // ONLY 1 SUCH THAT
-	while(such != NULL){
-		if(!booleanAnswer) return;
-		/*if (AbstractWrapper::GlobalStop) {
-		// do cleanup 
-		PQLParser::cleanUp();
-		return;
-		}*/
-		evaluateSuchThatNode(such);
-		such = such->getRightSibling();
-	}
-}
-
-void evaluatePattern() {
-	QNode* patt = qt->getPattern()->getLeftChild();
-	while(patt != NULL) {
-		if(!booleanAnswer) return;
-		/*if (AbstractWrapper::GlobalStop) {
-		// do cleanup 
-		PQLParser::cleanUp();
-		return;
-		}*/
-
-		evaluatePatternNode(patt);
-
-		/*QNode *copy = new QNode();
-		QNode *left = patt->getLeftChild();
-		QNode *right = patt->getRightChild();
-		QNode *var = NULL;
-
-		if(right->getType() == QANY) {
-		if(right->getRightSibling() != NULL) {
-		var = right->getRightSibling();
-		}
-		}
-
-		copy->setLeftChild(patt);
-
-		if(mapper.count(patt->getIntVal()) == 0) {
-		addAttribute(patt->getIntVal());
-		}
-
-		copy->setRightChild(left);
-		handleModifies(copy);
-
-		if(right->getType() == QANY) {
-		if(right->getRightSibling() == NULL) {
-		copy->setLeftChild(NULL);
-		copy->setRightChild(NULL);
-		delete copy;
-		patt = patt->getRightSibling();
-		continue;
-		}
-		}
-		QNode *arg;
-		if(var != NULL) {
-		arg = new QNode(QSTRING);
-		if(var->getIntVal() != -1)
-		arg->setStrVal(VarTable::getVarTable()->getVarName(var->getIntVal()));
-		copy->setRightChild(arg);
-		} else {
-		copy->setRightChild(right);
-		}
-		handleUses(copy);
-
-		/*
-		if(patt->getRightChild()->getType() == QANY) {
-		if(patt->getRightChild()->getLeftChild() == NULL) {
-		copy->setRightChild(patt->getLeftChild());
-		return handleModifies(copy);
-		}
-		}
-
-		copy->setRightChild(patt->getLeftChild());
-		handleModifies(copy);
-
-		copy->setRightChild(patt->getRightChild());
-		handleUses(copy);
-		*/
-		/*
-		copy->setLeftChild(NULL);
-		copy->setRightChild(NULL);
-		delete copy;*/
-		patt = patt->getRightSibling();
-	}
-}
-
-void evaluateSelect(){
-	QNode* sel = qt->getResult()->getLeftChild();
-
-	evaluateSelectNode(sel);
 }
 
 void handleParent(QNode* query) {
@@ -1488,20 +1360,11 @@ vector<string> QueryEvaluator::evaluate() {
 	callst = CallsTable::getCallsTable();
 
 	initTable();
+	initResultTable();
 
 	resultString.clear();
 	
 	processClauses();
-	/*
-	evaluateSuchThat();
-	evaluatePattern();
-	evaluateWith();
-	evaluateSelect();
-	*/
-	/*for(ui i = 0; i < resultString.size(); i++) {
-	cout << resultString[i] << " ";
-	}
-	cout << endl;*/
 
 	PQLParser::cleanUp();
 	return resultString;

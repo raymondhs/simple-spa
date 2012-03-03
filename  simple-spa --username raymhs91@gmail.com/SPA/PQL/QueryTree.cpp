@@ -4,17 +4,13 @@
 #include <iostream>
 
 QueryTree::QueryTree(){
-	setResult(new QNode(QSELECT));
-	setSuchThat(new QNode(QSUCHTHAT));
-	setWith(new QNode(QWITH));
-	setPattern(new QNode(QPATTERNLIST));
 	isBooleanAnswer = false;
 }
 
 void QueryTree::addClause(QNode* clause) {
 	int syn;
 	
-	if(clause->getType() == QSELECT ) {
+	if(clause->getType() == QSELECT) {
 		if(clause->getLeftChild()->getType() == QBOOL) {
 			isBooleanAnswer = true;
 		} else {
@@ -22,6 +18,7 @@ void QueryTree::addClause(QNode* clause) {
 			if(dependencyGraph.size() <= (unsigned)syn)
 				dependencyGraph.resize(syn+1,vector<QNode*>());
 			dependencyGraph[syn].push_back(clause);
+			tuple.push_back(clause);
 		}
 	} else if(clause->getType() != QSYN && clause->getLeftChild()->getType() != QSYN &&
 			  clause->getRightChild()->getType() != QSYN) {
@@ -106,76 +103,12 @@ vector<QNode*> QueryTree::nextClauses() {
 	return clauseList;
 }
 
+vector<QNode*> QueryTree::getTuple() {
+	return tuple;
+}
+
 bool QueryTree::isBoolean() {
 	return isBooleanAnswer;
-}
-
-void QueryTree::addSuchThat(QNode* suchThat) {
-	if(this->suchThat->getLeftChild() == NULL) {
-		this->suchThat->setLeftChild(suchThat);
-	} else {
-		QNode* current = this->suchThat->getLeftChild();
-		while(current->getRightSibling() != NULL) {
-			current = current->getRightSibling();
-		}
-		current->setRightSibling(suchThat);
-	}
-}
-
-void QueryTree::addPattern(QNode* pattern) {
-	if(this->pattern->getLeftChild() == NULL) {
-		this->pattern->setLeftChild(pattern);
-	} else {
-		QNode* current = this->pattern->getLeftChild();
-		while(current->getRightSibling() != NULL) {
-			current = current->getRightSibling();
-		}
-		current->setRightSibling(pattern);
-	}
-}
-
-void QueryTree::addWith(QNode* with) {
-	if(this->with->getLeftChild() == NULL) {
-		this->with->setLeftChild(with);
-	} else {
-		QNode* current = this->with->getLeftChild();
-		while(current->getRightSibling() != NULL) {
-			current = current->getRightSibling();
-		}
-		current->setRightSibling(with);
-	}
-}
-
-void QueryTree::setResult(QNode* result){
-	this->result = result;
-}
-
-void QueryTree::setSuchThat(QNode* suchThat){
-	this->suchThat = suchThat;
-}
-
-void QueryTree::setWith(QNode* with){
-	this->with = with;
-}
-
-void QueryTree::setPattern(QNode* pattern){
-	this->pattern = pattern;
-}
-
-QNode* QueryTree::getResult(){
-	return this->result;
-}
-
-QNode* QueryTree::getSuchThat(){
-	return this->suchThat;
-}
-
-QNode* QueryTree::getWith(){
-	return this->with;
-}
-
-QNode* QueryTree::getPattern(){
-	return this->pattern;
 }
 
 QueryTree* QueryTree::getQueryTree(){
@@ -184,23 +117,19 @@ QueryTree* QueryTree::getQueryTree(){
 }
 
 void QueryTree::clearTree() {	
-	delete result;
+	/*delete result;
 	delete suchThat;
 	delete with;
-	delete pattern;
+	delete pattern;*/
 	isBooleanAnswer=false;
-	setResult(new QNode(QSELECT));
-	setSuchThat(new QNode(QSUCHTHAT));
-	setWith(new QNode(QWITH));
-	setPattern(new QNode(QPATTERNLIST));
-
+	tuple.clear();
 	dependencyGraph.clear();
 	booleanQueries.clear();
 }
 
 void QueryTree::destroy() {
-	delete result;
+	/*delete result;
 	delete suchThat;
 	delete with;
-	delete pattern;
+	delete pattern;*/
 }
