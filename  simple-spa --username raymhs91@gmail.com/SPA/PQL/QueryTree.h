@@ -12,6 +12,9 @@ private:
 	QNode *suchThat;
 	QNode *with;
 	QNode *pattern;
+	bool isBooleanAnswer;
+	vector<QNode*> booleanQueries;
+	vector< vector<QNode*> > dependencyGraph;
 	QueryTree();
 	QueryTree(const QueryTree &);
 	QueryTree& operator=(const QueryTree &);
@@ -22,6 +25,12 @@ public:
 	 * @return Reference to the query tree
 	 */
 	static QueryTree* getQueryTree();
+
+	void addClause(QNode* clause);
+
+	vector<QNode*> nextClauses();
+
+	bool isBoolean();
 
 	/**
 	 * Adds a new "such that" condition to query tree
