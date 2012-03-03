@@ -625,6 +625,21 @@ void evaluateSelectNode(QNode* sel){
 	}
 }
 
+void evaluateNode(QNode* node){
+	switch(node->getType()){
+	case QWITH: evaluateWithNode(node); break;
+	case QSYN:	evaluatePatternNode(node); break;
+	case QSELECT: evaluateSelectNode(node); break;
+	default: evaluateSuchThatNode(node);
+	}
+}
+
+void evaluateCluster(vector<QNode*> cluster){
+	for(unsigned i=0;booleanAnswer&&i<cluster.size();i++){
+		evaluateNode(cluster[i]);
+	}
+}
+
 void evaluateWith(){
 	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
 
@@ -1330,12 +1345,11 @@ vector<string> QueryEvaluator::evaluate() {
 
 	initTable();
 
+	resultString.clear();
+
 	evaluateSuchThat();
-
 	evaluatePattern();
-
 	evaluateWith();
-
 	evaluateSelect();
 
 	/*for(ui i = 0; i < resultString.size(); i++) {
