@@ -1483,6 +1483,8 @@ vector<string> QueryEvaluator::evaluate() {
 	ast = AST::getAST();
 	cfg = CFG::getCFG();
 	ct = ConstantTable::getConstantTable();
+	a = AffectsTable::getAffectsTable();
+	a->init();
 	callst = CallsTable::getCallsTable();
 
 	initTable();

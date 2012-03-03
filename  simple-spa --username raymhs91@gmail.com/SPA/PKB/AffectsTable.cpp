@@ -12,7 +12,8 @@
 
 using namespace std;
 
-AffectsTable::AffectsTable(){}
+AffectsTable::AffectsTable(){
+}
 
 AffectsTable* AffectsTable::getAffectsTable() {
 	static AffectsTable affectsTable;
@@ -36,11 +37,11 @@ int AffectsTable::getSize(){
 	return this->affectsTable.size();
 }
 
-void AffectsTable::fillTable(STMT_NO stmt){
-	if(StmtTable::getStmtTable()->getStmtNode(stmt)->getType()!=ASSIGN) return;
+void AffectsTable::fillTable(STMT_NO stmt){	
 	for(int i=this->affectsTable.size()-1; i<stmt; i++){
 		this->affectsTable.push_back(set<int>());
 	}
+	if(StmtTable::getStmtTable()->getStmtNode(stmt)->getType()!=ASSIGN) return;
 	int var = *(ModifiesTable::getModifiesTable()->getVarModifiedByStmt(stmt).begin());
 	//BFS
 	queue<GNode*> q;
@@ -75,6 +76,9 @@ void AffectsTable::fillTable(STMT_NO stmt){
 }
 
 void AffectsTable::fillTable2(STMT_NO stmt){
+	for(int i=this->affectedByTable.size()-1; i<stmt; i++){
+		this->affectedByTable.push_back(set<int>());
+	}
 	if(StmtTable::getStmtTable()->getStmtNode(stmt)->getType()!=ASSIGN) return;
 	queue<GNode*> q;
 	q.push(CFG::getCFG()->getNode(stmt));
@@ -92,9 +96,9 @@ void AffectsTable::fillTable2(STMT_NO stmt){
 			int type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
 			if (visited[idx-1] == false) {
 				visited[idx-1] = true;
-			if(!affectsEntryCreated[idx-1])
-				fillTable(idx);
-			q.push(v);
+				if(!affectsEntryCreated[idx-1])
+					fillTable(idx);
+				q.push(v);
 			}
 		}
 	}
