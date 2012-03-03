@@ -1268,7 +1268,7 @@ vector<string> QueryEvaluator::evaluate() {
 
 	vector<string> resultString;
 	
-	if (sel->getType() == QBOOL){
+	if (sel->getLeftChild()->getType() == QBOOL){
 		if(booleanAnswer) {
 			resultString.push_back("true");
 		}
@@ -1276,7 +1276,7 @@ vector<string> QueryEvaluator::evaluate() {
 			resultString.push_back("false");
 		}
 	} else if(booleanAnswer){
-		int selIdx = sel->getIntVal();
+		int selIdx = sel->getLeftChild()->getIntVal();
 		int selType = syn->getSyn(selIdx).second;
 		if(mapper.count(selIdx) == 0) {
 			initTable();
@@ -1295,7 +1295,7 @@ vector<string> QueryEvaluator::evaluate() {
 
 		set<int> unique;
 		for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-			if( (selType == QCALL)&&(sel->getStrVal()=="procName")){
+			if( (selType == QCALL)&&(sel->getLeftChild()->getStrVal()=="procName")){
 				unique.insert(callst->getProcCalledByStmt((*it)[aSelIdx]));
 			} else
 			unique.insert((*it)[aSelIdx]);
@@ -1308,7 +1308,7 @@ vector<string> QueryEvaluator::evaluate() {
 			else if(selType ==QPROC){
 				resultString.push_back(pt->getProcName(*it));
 			}
-			else if((selType == QCALL)&&(sel->getStrVal()=="procName")){
+			else if((selType == QCALL)&&(sel->getLeftChild()->getStrVal()=="procName")){
 				resultString.push_back(pt->getProcName(*it));
 			}
 			else {

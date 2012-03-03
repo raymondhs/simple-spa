@@ -850,23 +850,26 @@ QNode* selectClause() {
 			match(TNAME);
 			if (text=="."){
 				match(TDOT);
-				QNode* selNode = new QNode(QSYN);
+				QNode* selNode = new QNode(QSELECT);
+				selNode->setLeftChild(new QNode(QSYN));
 				int type = SynTable::getSynTable()->getSyn(synIdx).second;
 				attrName(type);
 				if((type==QCALL)&&(callAttrib==0)){
-					selNode->setStrVal("procName");
+					selNode->getLeftChild()->setStrVal("procName");
 				}
-				selNode->setIntVal(synIdx);
+				selNode->getLeftChild()->setIntVal(synIdx);
 				qt->getResult()->setLeftChild(selNode);
 			}else{
-				QNode* selNode = new QNode(QSYN);
-				selNode->setIntVal(synIdx);
+				QNode* selNode = new QNode(QSELECT);
+				selNode->setLeftChild(new QNode(QSYN));
+				selNode->getLeftChild()->setIntVal(synIdx);
 				qt->getResult()->setLeftChild(selNode);
 			}
 		}
 	}
 	else{
-		QNode* selNode = new QNode(QBOOL);
+		QNode* selNode = new QNode(QSELECT);
+		selNode->setLeftChild(new QNode(QBOOL));
 		qt->getResult()->setLeftChild(selNode);
 		match(TBOOL);
 	}
