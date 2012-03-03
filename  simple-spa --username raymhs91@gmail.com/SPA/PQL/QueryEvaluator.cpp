@@ -37,8 +37,9 @@ static CallsTable *callst;
 static list< vector<int> > table;
 static map< int, int > mapper;
 
-static vector< vector<int> > cartesianProduct(vector< vector<int> > table1, vector< vector<int> > table2);
+static void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, list< vector<int> >& result);
 static vector<int> allEntitiesWithType(int type);
+static vector<string> resultString;
 
 static void initVars(QNode* leftArg, QNode* rightArg);
 static void initVarsForCalls(QNode* leftArg, QNode* rightArg);
@@ -175,28 +176,28 @@ void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, 
 	/*
 	result.assign(table1.size()+table2.size(),vector<int>());
 	for(unsigned k = 0; k < table1.size(); k++) { // for each attribute
-		if(result[k].size() == 0) {
-			result[k].push_back(table1[k][0]);
-		}
+	if(result[k].size() == 0) {
+	result[k].push_back(table1[k][0]);
+	}
 	}
 	int currSz = table1.size();
 	for(unsigned k = 0; k < table2.size(); k++) {
-		if(result[currSz].size() == 0) {
-			result[currSz].push_back(table2[k][0]);
-		}
+	if(result[currSz].size() == 0) {
+	result[currSz].push_back(table2[k][0]);
+	}
 	}
 
 	for(unsigned i = 1; i < table1[0].size(); i++) { // for each row in table 1
-		for(unsigned j = 1; j < table2[0].size(); j++) { // for each row in table 2
-			for(unsigned k = 0; k < table1.size(); k++) { // for each attribute
-				result[k].push_back(table1[k][i]);
-			}
-			currSz = table1.size();
-			for(unsigned k = 0; k < table2.size(); k++) {
-				result[currSz].push_back(table2[k][j]);
-				currSz ++;
-			}
-		}
+	for(unsigned j = 1; j < table2[0].size(); j++) { // for each row in table 2
+	for(unsigned k = 0; k < table1.size(); k++) { // for each attribute
+	result[k].push_back(table1[k][i]);
+	}
+	currSz = table1.size();
+	for(unsigned k = 0; k < table2.size(); k++) {
+	result[currSz].push_back(table2[k][j]);
+	currSz ++;
+	}
+	}
 	}
 	*/
 }
@@ -204,26 +205,26 @@ void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, 
 vector<int> allEntitiesWithType(int type) {
 	vector<int> result;
 	switch(type) {
-		case QSTMT:
-			result = st->getAllStmt(); break;
-		case QASSIGN:
-			result = st->getAllAssign(); break;
-		case QWHILE:
-			result = st->getAllWhile(); break;
-		case QVAR:
-			result = var->getAllVar(); break;
-		case QPROC:
-			result = pt->getAllProc(); break;
-		case QCONST:
-			result = ct->getAllConstant(); break;
-		case QPROGLINE:
-			result = st->getAllProgline(); break;
-		case QIF:
-			result = st->getAllIf(); break;
-		case QCALL:
-			result = callst->getAllCall(); break;
-		default:
-			break;
+	case QSTMT:
+		result = st->getAllStmt(); break;
+	case QASSIGN:
+		result = st->getAllAssign(); break;
+	case QWHILE:
+		result = st->getAllWhile(); break;
+	case QVAR:
+		result = var->getAllVar(); break;
+	case QPROC:
+		result = pt->getAllProc(); break;
+	case QCONST:
+		result = ct->getAllConstant(); break;
+	case QPROGLINE:
+		result = st->getAllProgline(); break;
+	case QIF:
+		result = st->getAllIf(); break;
+	case QCALL:
+		result = callst->getAllCall(); break;
+	default:
+		break;
 	}
 	return result;
 }
@@ -243,43 +244,43 @@ void initTable() {
 	attribs.insert(sel->getIntVal());
 
 	while(suchthat != NULL) {
-		QNode* leftArg = suchthat->getLeftChild();
-		QNode* rightArg = suchthat->getRightChild();
-		if(leftArg->getType() == QSYN) {
-			attribs.insert(leftArg->getIntVal());
-		}
-		if(rightArg->getType() == QSYN) {
-			attribs.insert(rightArg->getIntVal());
-		}
-		suchthat = suchthat->getRightSibling();
+	QNode* leftArg = suchthat->getLeftChild();
+	QNode* rightArg = suchthat->getRightChild();
+	if(leftArg->getType() == QSYN) {
+	attribs.insert(leftArg->getIntVal());
+	}
+	if(rightArg->getType() == QSYN) {
+	attribs.insert(rightArg->getIntVal());
+	}
+	suchthat = suchthat->getRightSibling();
 	}
 
 	if(pattern != NULL) {
-		attribs.insert(pattern->getIntVal());
+	attribs.insert(pattern->getIntVal());
 	}
 
 	vector< vector<int> > result;
 	set<int>::iterator it;
 	int count = 0;
 	for(it = attribs.begin(); it != attribs.end(); it++) {
-		mapper.insert(pair<int,int>(*it,count++));
-		int entType = syn->getSyn(*it).second;
-		vector<int> allEnt = allEntitiesWithType(entType);
-		if(it == attribs.begin()) {
-			result.push_back(vector<int>());
-			result[0].push_back(*it);
-			for(unsigned i = 0; i < allEnt.size(); i++) {
-				result[0].push_back(allEnt[i]);
-			}
-		} else {
-			vector< vector<int> > newCol;
-			newCol.push_back(vector<int>());
-			newCol[0].push_back(*it);
-			for(unsigned i = 0; i < allEnt.size(); i++) {
-				newCol[0].push_back(allEnt[i]);
-			}
-			result = cartesianProduct(result,newCol);
-		}
+	mapper.insert(pair<int,int>(*it,count++));
+	int entType = syn->getSyn(*it).second;
+	vector<int> allEnt = allEntitiesWithType(entType);
+	if(it == attribs.begin()) {
+	result.push_back(vector<int>());
+	result[0].push_back(*it);
+	for(unsigned i = 0; i < allEnt.size(); i++) {
+	result[0].push_back(allEnt[i]);
+	}
+	} else {
+	vector< vector<int> > newCol;
+	newCol.push_back(vector<int>());
+	newCol[0].push_back(*it);
+	for(unsigned i = 0; i < allEnt.size(); i++) {
+	newCol[0].push_back(allEnt[i]);
+	}
+	result = cartesianProduct(result,newCol);
+	}
 	}
 	table = result;*/
 }
@@ -325,205 +326,318 @@ void deleteRow(list< vector<int> >::iterator it) {
 
 void evaluateWithNode(QNode* with){
 	QNode* leftArg = with->getLeftChild();
-		QNode* rightArg = with->getRightChild();
-		if(leftArg->getType() == QSYN) {
-			if(mapper.count(leftArg->getIntVal()) == 0) {
-				addAttribute(leftArg->getIntVal());
+	QNode* rightArg = with->getRightChild();
+	if(leftArg->getType() == QSYN) {
+		if(mapper.count(leftArg->getIntVal()) == 0) {
+			addAttribute(leftArg->getIntVal());
+		}
+	}
+	if(rightArg->getType() == QSYN) {
+		if(mapper.count(rightArg->getIntVal()) == 0) {
+			addAttribute(rightArg->getIntVal());
+		}
+	}
+
+	int synIdx1 = leftArg->getIntVal();
+	int synIdx2 = rightArg->getType();
+	int typeRight;
+	if(synIdx2 == QSYN){
+		synIdx2 = rightArg->getIntVal();
+		typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
+	} else
+		typeRight = rightArg->getType();
+
+	int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
+
+	if(typeLeft==QVAR){
+		if(typeRight==QSTRING){
+			int aIdx = mapper[synIdx1];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				string name=VarTable::getVarTable()->getVarName((*it)[aIdx]);
+				if(name!=rightArg->getStrVal()) deleteRow(it--);
+			}
+		} else if(typeRight==QVAR){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
+			}
+		} else if(typeRight==QPROC){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				string name1=VarTable::getVarTable()->getVarName((*it)[aIdx1]);
+				string name2=ProcTable::getProcTable()->getProcName((*it)[aIdx2]);				
+				if(name1!=name2) deleteRow(it--);
+			}
+		} else if(typeRight==QCALL) {
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				string name1=VarTable::getVarTable()->getVarName((*it)[aIdx1]);
+				int proc2 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx2]);
+				string name2=ProcTable::getProcTable()->getProcName(proc2);
+				if(name1!=name2) deleteRow(it--);
 			}
 		}
-		if(rightArg->getType() == QSYN) {
-			if(mapper.count(rightArg->getIntVal()) == 0) {
-				addAttribute(rightArg->getIntVal());
+	} else if(typeLeft==QPROC){
+		if(typeRight==QSTRING){
+			int aIdx = mapper[synIdx1];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				string name=ProcTable::getProcTable()->getProcName((*it)[aIdx]);
+				if(name!=rightArg->getStrVal()) {
+					deleteRow(it--);
+				}
+			}
+		} else if(typeRight==QVAR){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				string name1=ProcTable::getProcTable()->getProcName((*it)[aIdx1]);
+				string name2=VarTable::getVarTable()->getVarName((*it)[aIdx2]);
+				if(name1!=name2) deleteRow(it--);
+			}
+		} else if(typeRight==QPROC){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
+			}
+		} else if(typeRight==QCALL) {
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				string name1=ProcTable::getProcTable()->getProcName((*it)[aIdx1]);
+				int proc2 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx2]);
+				string name2=ProcTable::getProcTable()->getProcName(proc2);
+				if(name1!=name2) deleteRow(it--);
 			}
 		}
-
-		int synIdx1 = leftArg->getIntVal();
-		int synIdx2 = rightArg->getType();
-		int typeRight;
-		if(synIdx2 == QSYN){
-			synIdx2 = rightArg->getIntVal();
-			typeRight = SynTable::getSynTable()->getSyn(synIdx2).second;
-		} else
-			typeRight = rightArg->getType();
-	
-		int typeLeft = SynTable::getSynTable()->getSyn(synIdx1).second;
-
-		if(typeLeft==QVAR){
-			if(typeRight==QSTRING){
-				int aIdx = mapper[synIdx1];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					string name=VarTable::getVarTable()->getVarName((*it)[aIdx]);
-					if(name!=rightArg->getStrVal()) deleteRow(it--);
-				}
-			} else if(typeRight==QVAR){
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
-				}
-			} else if(typeRight==QPROC){
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					string name1=VarTable::getVarTable()->getVarName((*it)[aIdx1]);
-					string name2=ProcTable::getProcTable()->getProcName((*it)[aIdx2]);				
-					if(name1!=name2) deleteRow(it--);
-				}
-			} else if(typeRight==QCALL) {
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					string name1=VarTable::getVarTable()->getVarName((*it)[aIdx1]);
-					int proc2 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx2]);
-					string name2=ProcTable::getProcTable()->getProcName(proc2);
-					if(name1!=name2) deleteRow(it--);
-				}
+	} else if(typeLeft==QCALL){
+		if(typeRight==QSTRING){
+			int aIdx = mapper[synIdx1];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				int proc = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx]);
+				string name=ProcTable::getProcTable()->getProcName(proc);
+				if(name!=rightArg->getStrVal()) deleteRow(it--);
 			}
-		} else if(typeLeft==QPROC){
-			if(typeRight==QSTRING){
-				int aIdx = mapper[synIdx1];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					string name=ProcTable::getProcTable()->getProcName((*it)[aIdx]);
-					if(name!=rightArg->getStrVal()) {
-						deleteRow(it--);
-					}
-				}
-			} else if(typeRight==QVAR){
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					string name1=ProcTable::getProcTable()->getProcName((*it)[aIdx1]);
-					string name2=VarTable::getVarTable()->getVarName((*it)[aIdx2]);
-					if(name1!=name2) deleteRow(it--);
-				}
-			} else if(typeRight==QPROC){
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
-				}
-			} else if(typeRight==QCALL) {
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					string name1=ProcTable::getProcTable()->getProcName((*it)[aIdx1]);
-					int proc2 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx2]);
-					string name2=ProcTable::getProcTable()->getProcName(proc2);
-					if(name1!=name2) deleteRow(it--);
-				}
+		} else if(typeRight==QVAR){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				int proc = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx1]);
+				string name1=ProcTable::getProcTable()->getProcName(proc);
+				string name2=VarTable::getVarTable()->getVarName((*it)[aIdx2]);
+				if(name1!=name2) deleteRow(it--);
 			}
-		} else if(typeLeft==QCALL){
-			if(typeRight==QSTRING){
-				int aIdx = mapper[synIdx1];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					int proc = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx]);
-					string name=ProcTable::getProcTable()->getProcName(proc);
-					if(name!=rightArg->getStrVal()) deleteRow(it--);
-				}
-			} else if(typeRight==QVAR){
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					int proc = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx1]);
-					string name1=ProcTable::getProcTable()->getProcName(proc);
-					string name2=VarTable::getVarTable()->getVarName((*it)[aIdx2]);
-					if(name1!=name2) deleteRow(it--);
-				}
-			} else if(typeRight==QPROC){
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					int proc = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx1]);
-					string name1=ProcTable::getProcTable()->getProcName(proc);
-					string name2=ProcTable::getProcTable()->getProcName((*it)[aIdx2]);				
-					if(name1!=name2) deleteRow(it--);
-				}
-			} else if(typeRight==QCALL && (rightArg->getStrVal()=="procName")) {
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					int proc1 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx1]);
-					int proc2 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx2]);
-					if(proc1!=proc2) deleteRow(it--);
-				}
-			} else {
-				if(typeRight==QINT) {
-					int aIdx1 = mapper[synIdx1];
-					for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-						if((*it)[aIdx1]!=rightArg->getIntVal()) deleteRow(it--);
-					}
-				} else {
-					int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-					for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-						if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
-					}
-				}
+		} else if(typeRight==QPROC){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				int proc = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx1]);
+				string name1=ProcTable::getProcTable()->getProcName(proc);
+				string name2=ProcTable::getProcTable()->getProcName((*it)[aIdx2]);				
+				if(name1!=name2) deleteRow(it--);
 			}
-		} else if((typeLeft&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE))||typeLeft==QCONST){
-			if(typeRight==QINT){
+		} else if(typeRight==QCALL && (rightArg->getStrVal()=="procName")) {
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				int proc1 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx1]);
+				int proc2 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx2]);
+				if(proc1!=proc2) deleteRow(it--);
+			}
+		} else {
+			if(typeRight==QINT) {
 				int aIdx1 = mapper[synIdx1];
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 					if((*it)[aIdx1]!=rightArg->getIntVal()) deleteRow(it--);
 				}
-			} else if((typeRight&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE|QCALL))){
-				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
-				}
-			} else if(typeRight==QCONST){
+			} else {
 				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 					if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
 				}
 			}
-		} 
-}
-
-void evaluateWith(){
-	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
-	
-	while(with != NULL){
-		if(!booleanAnswer) return;
-		/*if (AbstractWrapper::GlobalStop) {
-			// do cleanup 
-			PQLParser::cleanUp();
-			return;
-		}*/
-		evaluateWithNode(with);
-		with = with->getRightSibling();
-	}
+		}
+	} else if((typeLeft&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE))||typeLeft==QCONST){
+		if(typeRight==QINT){
+			int aIdx1 = mapper[synIdx1];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if((*it)[aIdx1]!=rightArg->getIntVal()) deleteRow(it--);
+			}
+		} else if((typeRight&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE|QCALL))){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
+			}
+		} else if(typeRight==QCONST){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
+			}
+		}
+	} 
 }
 
 void evaluateSuchThatNode(QNode* such){
 	QNode* leftArg = such->getLeftChild();
-		QNode* rightArg = such->getRightChild();
-		if(leftArg->getType() == QSYN) {
-			if(mapper.count(leftArg->getIntVal()) == 0) {
-				addAttribute(leftArg->getIntVal());
+	QNode* rightArg = such->getRightChild();
+	if(leftArg->getType() == QSYN) {
+		if(mapper.count(leftArg->getIntVal()) == 0) {
+			addAttribute(leftArg->getIntVal());
+		}
+	}
+
+	if(rightArg->getType() == QSYN) {
+		if(mapper.count(rightArg->getIntVal()) == 0) {
+			addAttribute(rightArg->getIntVal());
+		}
+	}
+
+	switch(such->getType()) {
+	case QPARENT:
+		handleParent(such); break;
+	case QPARENTT:
+		handleParentT(such); break;
+	case QFOLLOWS:
+		handleFollows(such); break;
+	case QFOLLOWST:
+		handleFollowsT(such); break;
+	case QMODIFIES:
+		handleModifies(such); break;
+	case QUSES:
+		handleUses(such); break;
+	case QCALL:
+		handleCalls(such); break;
+	case QCALLT:
+		handleCallsT(such); break;
+	case QNEXT:
+		handleNext(such); break;
+	case QNEXTT:
+		handleNextT(such); break;
+	default:
+		break;
+	}
+}
+
+void evaluatePatternNode(QNode* patt){
+	if(mapper.count(patt->getIntVal()) == 0) {
+		addAttribute(patt->getIntVal());
+	}
+	SynTable *synT = SynTable::getSynTable();
+	int type = synT->getSyn(patt->getIntVal()).second;
+	int aIdx = mapper[patt->getIntVal()];
+	QNode *leftPatt = patt->getLeftChild();
+	int type2 = leftPatt->getType();
+	int aIdx2;
+	if(type2==QSYN){
+		if(mapper.count(leftPatt->getIntVal()) == 0)
+			addAttribute(leftPatt->getIntVal());
+		aIdx2 = mapper[leftPatt->getIntVal()];
+	}
+	if (type == QASSIGN){
+		if(type2 == QSYN){
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				TNode *assignNode = st->getStmtNode((*it)[aIdx2]);
+				if(*(ModifiesTable::getModifiesTable()->getVarModifiedByStmt((*it)[aIdx]).begin())!=(*it)[aIdx2]) deleteRow(it--);
+			}
+			leftPatt->setType(QANY);
+		}
+		for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+			TNode *assignNode = st->getStmtNode((*it)[aIdx]);
+			if(!(st->doesMatchPattern(assignNode,patt))) deleteRow(it--);
+		}
+	} else if (type == QWHILE){
+		if(type2==QANY && st->getAllWhile().size()==0) clearTable();
+		else if(type2 == QSYN){
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				TNode *whileNode = st->getStmtNode((*it)[aIdx]);
+				int varIdx = (*it)[aIdx2];
+				if(!(whileNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
+			}
+		} else {
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				TNode *whileNode = st->getStmtNode((*it)[aIdx]);
+				int varIdx = VarTable::getVarTable()->getVarIndex(patt->getLeftChild()->getStrVal());
+				if(!(whileNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
 			}
 		}
-
-		if(rightArg->getType() == QSYN) {
-			if(mapper.count(rightArg->getIntVal()) == 0) {
-				addAttribute(rightArg->getIntVal());
+	} else if (type == QIF){
+		if(type2==QANY && st->getAllIf().size()==0) clearTable();
+		else if(type2 == QSYN){
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+				int varIdx = (*it)[aIdx2];
+				if(!(ifNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
+			}
+		} else {
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+				int varIdx = VarTable::getVarTable()->getVarIndex(patt->getLeftChild()->getStrVal());
+				if(!(ifNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
 			}
 		}
+	}
+}
 
-		switch(such->getType()) {
-			case QPARENT:
-				handleParent(such); break;
-			case QPARENTT:
-				handleParentT(such); break;
-			case QFOLLOWS:
-				handleFollows(such); break;
-			case QFOLLOWST:
-				handleFollowsT(such); break;
-			case QMODIFIES:
-				handleModifies(such); break;
-			case QUSES:
-				handleUses(such); break;
-			case QCALL:
-				handleCalls(such); break;
-			case QCALLT:
-				handleCallsT(such); break;
-			case QNEXT:
-				handleNext(such); break;
-			case QNEXTT:
-				handleNextT(such); break;
-			default:
-				break;
+void evaluateSelectNode(QNode* sel){
+	if (sel->getLeftChild()->getType() == QBOOL){
+		if(booleanAnswer) {
+			resultString.push_back("true");
 		}
+		else{
+			resultString.push_back("false");
+		}
+	} else if(booleanAnswer){
+		int selIdx = sel->getLeftChild()->getIntVal();
+		int selType = syn->getSyn(selIdx).second;
+		if(mapper.count(selIdx) == 0) {
+			initTable();
+			addAttribute(selIdx);
+		}
+		int aSelIdx = mapper[selIdx];
+
+		/*
+		for(ui i = 0; i < table.size(); i++) {
+		for(ui j = 0; j < table[i].size(); j++) {
+		cout << table[i][j] << " ";
+		}
+		cout << endl;
+		}
+		*/
+
+		set<int> unique;
+		for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+			if( (selType == QCALL)&&(sel->getLeftChild()->getStrVal()=="procName")){
+				unique.insert(callst->getProcCalledByStmt((*it)[aSelIdx]));
+			} else
+				unique.insert((*it)[aSelIdx]);
+		}
+
+		for(set<int>::iterator it = unique.begin(); it != unique.end(); it++) {
+			if(selType == QVAR) {
+				resultString.push_back(var->getVarName(*it));
+			} 
+			else if(selType ==QPROC){
+				resultString.push_back(pt->getProcName(*it));
+			}
+			else if((selType == QCALL)&&(sel->getLeftChild()->getStrVal()=="procName")){
+				resultString.push_back(pt->getProcName(*it));
+			}
+			else {
+				stringstream out;
+				out << *it;
+				resultString.push_back(out.str());
+			}
+		}
+	}
+}
+
+void evaluateWith(){
+	QNode* with = qt->getWith()->getLeftChild(); // ONLY 1 WITH
+
+	while(with != NULL){
+		if(!booleanAnswer) return;
+		/*if (AbstractWrapper::GlobalStop) {
+		// do cleanup 
+		PQLParser::cleanUp();
+		return;
+		}*/
+		evaluateWithNode(with);
+		with = with->getRightSibling();
+	}
 }
 
 void evaluateSuchThat() {
@@ -531,73 +645,13 @@ void evaluateSuchThat() {
 	while(such != NULL){
 		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
-			// do cleanup 
-			PQLParser::cleanUp();
-			return;
+		// do cleanup 
+		PQLParser::cleanUp();
+		return;
 		}*/
 		evaluateSuchThatNode(such);
 		such = such->getRightSibling();
 	}
-}
-
-void evaluatePatternNode(QNode* patt){
-	if(mapper.count(patt->getIntVal()) == 0) {
-			addAttribute(patt->getIntVal());
-		}
-		SynTable *synT = SynTable::getSynTable();
-		int type = synT->getSyn(patt->getIntVal()).second;
-		int aIdx = mapper[patt->getIntVal()];
-		QNode *leftPatt = patt->getLeftChild();
-		int type2 = leftPatt->getType();
-		int aIdx2;
-		if(type2==QSYN){
-			if(mapper.count(leftPatt->getIntVal()) == 0)
-				addAttribute(leftPatt->getIntVal());
-			aIdx2 = mapper[leftPatt->getIntVal()];
-		}
-		if (type == QASSIGN){
-			if(type2 == QSYN){
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					TNode *assignNode = st->getStmtNode((*it)[aIdx2]);
-					if(*(ModifiesTable::getModifiesTable()->getVarModifiedByStmt((*it)[aIdx]).begin())!=(*it)[aIdx2]) deleteRow(it--);
-				}
-				leftPatt->setType(QANY);
-			}
-			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				TNode *assignNode = st->getStmtNode((*it)[aIdx]);
-				if(!(st->doesMatchPattern(assignNode,patt))) deleteRow(it--);
-			}
-		} else if (type == QWHILE){
-			if(type2==QANY && st->getAllWhile().size()==0) clearTable();
-			else if(type2 == QSYN){
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					TNode *whileNode = st->getStmtNode((*it)[aIdx]);
-					int varIdx = (*it)[aIdx2];
-					if(!(whileNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
-				}
-			} else {
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					TNode *whileNode = st->getStmtNode((*it)[aIdx]);
-					int varIdx = VarTable::getVarTable()->getVarIndex(patt->getLeftChild()->getStrVal());
-					if(!(whileNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
-				}
-			}
-		} else if (type == QIF){
-			if(type2==QANY && st->getAllIf().size()==0) clearTable();
-			else if(type2 == QSYN){
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
-					int varIdx = (*it)[aIdx2];
-					if(!(ifNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
-				}
-			} else {
-				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
-					int varIdx = VarTable::getVarTable()->getVarIndex(patt->getLeftChild()->getStrVal());
-					if(!(ifNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
-				}
-			}
-		}
 }
 
 void evaluatePattern() {
@@ -605,11 +659,11 @@ void evaluatePattern() {
 	while(patt != NULL) {
 		if(!booleanAnswer) return;
 		/*if (AbstractWrapper::GlobalStop) {
-			// do cleanup 
-			PQLParser::cleanUp();
-			return;
+		// do cleanup 
+		PQLParser::cleanUp();
+		return;
 		}*/
-		
+
 		evaluatePatternNode(patt);
 
 		/*QNode *copy = new QNode();
@@ -618,46 +672,46 @@ void evaluatePattern() {
 		QNode *var = NULL;
 
 		if(right->getType() == QANY) {
-			if(right->getRightSibling() != NULL) {
-				var = right->getRightSibling();
-			}
+		if(right->getRightSibling() != NULL) {
+		var = right->getRightSibling();
+		}
 		}
 
 		copy->setLeftChild(patt);
 
 		if(mapper.count(patt->getIntVal()) == 0) {
-			addAttribute(patt->getIntVal());
+		addAttribute(patt->getIntVal());
 		}
-			
+
 		copy->setRightChild(left);
 		handleModifies(copy);
 
 		if(right->getType() == QANY) {
-			if(right->getRightSibling() == NULL) {
-				copy->setLeftChild(NULL);
-				copy->setRightChild(NULL);
-				delete copy;
-				patt = patt->getRightSibling();
-				continue;
-			}
+		if(right->getRightSibling() == NULL) {
+		copy->setLeftChild(NULL);
+		copy->setRightChild(NULL);
+		delete copy;
+		patt = patt->getRightSibling();
+		continue;
+		}
 		}
 		QNode *arg;
 		if(var != NULL) {
-			arg = new QNode(QSTRING);
-			if(var->getIntVal() != -1)
-				arg->setStrVal(VarTable::getVarTable()->getVarName(var->getIntVal()));
-			copy->setRightChild(arg);
+		arg = new QNode(QSTRING);
+		if(var->getIntVal() != -1)
+		arg->setStrVal(VarTable::getVarTable()->getVarName(var->getIntVal()));
+		copy->setRightChild(arg);
 		} else {
-			copy->setRightChild(right);
+		copy->setRightChild(right);
 		}
 		handleUses(copy);
-		
+
 		/*
 		if(patt->getRightChild()->getType() == QANY) {
-			if(patt->getRightChild()->getLeftChild() == NULL) {
-				copy->setRightChild(patt->getLeftChild());
-				return handleModifies(copy);
-			}
+		if(patt->getRightChild()->getLeftChild() == NULL) {
+		copy->setRightChild(patt->getLeftChild());
+		return handleModifies(copy);
+		}
 		}
 
 		copy->setRightChild(patt->getLeftChild());
@@ -672,6 +726,12 @@ void evaluatePattern() {
 		delete copy;*/
 		patt = patt->getRightSibling();
 	}
+}
+
+void evaluateSelect(){
+	QNode* sel = qt->getResult()->getLeftChild();
+
+	evaluateSelectNode(sel);
 }
 
 void handleParent(QNode* query) {
@@ -1269,73 +1329,19 @@ vector<string> QueryEvaluator::evaluate() {
 	callst = CallsTable::getCallsTable();
 
 	initTable();
-	
+
 	evaluateSuchThat();
-	
+
 	evaluatePattern();
-	
+
 	evaluateWith();
-	
-	QNode* sel = qt->getResult()->getLeftChild();
 
-	vector<string> resultString;
-	
-	if (sel->getLeftChild()->getType() == QBOOL){
-		if(booleanAnswer) {
-			resultString.push_back("true");
-		}
-		else{
-			resultString.push_back("false");
-		}
-	} else if(booleanAnswer){
-		int selIdx = sel->getLeftChild()->getIntVal();
-		int selType = syn->getSyn(selIdx).second;
-		if(mapper.count(selIdx) == 0) {
-			initTable();
-			addAttribute(selIdx);
-		}
-		int aSelIdx = mapper[selIdx];
-	
-		/*
-		for(ui i = 0; i < table.size(); i++) {
-			for(ui j = 0; j < table[i].size(); j++) {
-				cout << table[i][j] << " ";
-			}
-			cout << endl;
-		}
-		*/
+	evaluateSelect();
 
-		set<int> unique;
-		for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-			if( (selType == QCALL)&&(sel->getLeftChild()->getStrVal()=="procName")){
-				unique.insert(callst->getProcCalledByStmt((*it)[aSelIdx]));
-			} else
-			unique.insert((*it)[aSelIdx]);
-		}
-
-		for(set<int>::iterator it = unique.begin(); it != unique.end(); it++) {
-			if(selType == QVAR) {
-				resultString.push_back(var->getVarName(*it));
-			} 
-			else if(selType ==QPROC){
-				resultString.push_back(pt->getProcName(*it));
-			}
-			else if((selType == QCALL)&&(sel->getLeftChild()->getStrVal()=="procName")){
-				resultString.push_back(pt->getProcName(*it));
-			}
-			else {
-				stringstream out;
-				out << *it;
-				resultString.push_back(out.str());
-			}
-		}
-	
-		/*for(ui i = 0; i < resultString.size(); i++) {
-			cout << resultString[i] << " ";
-		}
-		cout << endl;*/
-
+	/*for(ui i = 0; i < resultString.size(); i++) {
+	cout << resultString[i] << " ";
 	}
+	cout << endl;*/
 
 	PQLParser::cleanUp();
 	return resultString;
