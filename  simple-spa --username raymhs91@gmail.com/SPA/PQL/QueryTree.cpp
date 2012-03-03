@@ -1,6 +1,7 @@
 #include "QueryTree.h"
 #include "../Constants.h"
 #include <queue>
+#include <iostream>
 
 QueryTree::QueryTree(){
 	setResult(new QNode(QSELECT));
@@ -14,7 +15,7 @@ void QueryTree::addClause(QNode* clause) {
 	int syn;
 	
 	if(clause->getType() == QSELECT ) {
-		if(clause->getType() == QBOOL) {
+		if(clause->getLeftChild()->getType() == QBOOL) {
 			isBooleanAnswer = true;
 		} else {
 			syn = clause->getLeftChild()->getIntVal();
@@ -22,7 +23,7 @@ void QueryTree::addClause(QNode* clause) {
 				dependencyGraph.resize(syn+1,vector<QNode*>());
 			dependencyGraph[syn].push_back(clause);
 		}
-	} else if(clause->getLeftChild()->getType() != QSYN &&
+	} else if(clause->getType() != QSYN && clause->getLeftChild()->getType() != QSYN &&
 			  clause->getRightChild()->getType() != QSYN) {
 		booleanQueries.push_back(clause);
 	} else {
@@ -41,14 +42,13 @@ void QueryTree::addClause(QNode* clause) {
 		}
 		if(clause->getRightChild() != NULL &&
 		   clause->getRightChild()->getType() == QSYN) {
-			syn = clause->getLeftChild()->getIntVal();
+			syn = clause->getRightChild()->getIntVal();
 			if(dependencyGraph.size() <= (unsigned)syn)
 				dependencyGraph.resize(syn+1,vector<QNode*>());
 			dependencyGraph[syn].push_back(clause);
 		}
 	}
 }
-
 vector<QNode*> QueryTree::nextClauses() {
 	vector<QNode*> clauseList;
 	if(!booleanQueries.empty()) {
@@ -60,6 +60,7 @@ vector<QNode*> QueryTree::nextClauses() {
 		for(i = 0; (unsigned)i < dependencyGraph.size(); i++) {
 			if(!dependencyGraph[i].empty()) { isEmpty = false; break; }
 		}
+		//cout << "index " << i << endl;
 		if(isEmpty) return clauseList;
 		vector<int> synList;
 		vector<bool> vis(dependencyGraph.size(), false);
@@ -69,7 +70,7 @@ vector<QNode*> QueryTree::nextClauses() {
 			i = q.front(); q.pop();
 			vis[i] = true;
 			synList.push_back(i);
-			for(j = 0; (unsigned)j < dependencyGraph[i].size(); i++) {
+			for(j = 0; (unsigned)j < dependencyGraph[i].size(); j++) {
 				QNode* node = dependencyGraph[i][j];
 				if(node->getType() == QSYN) {
 					syn = node->getIntVal();
@@ -187,7 +188,7 @@ void QueryTree::clearTree() {
 	delete suchThat;
 	delete with;
 	delete pattern;
-
+	isBooleanAnswer=false;
 	setResult(new QNode(QSELECT));
 	setSuchThat(new QNode(QSUCHTHAT));
 	setWith(new QNode(QWITH));

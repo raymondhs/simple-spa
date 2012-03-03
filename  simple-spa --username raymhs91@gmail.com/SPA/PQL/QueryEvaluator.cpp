@@ -576,18 +576,12 @@ void evaluatePatternNode(QNode* patt){
 			}
 		}
 	}
+	//cout << "pat" << endl;
 }
 
 void evaluateSelectNode(QNode* sel){
 	//cout << "sel" << endl;
-	if (sel->getLeftChild()->getType() == QBOOL){
-		if(booleanAnswer) {
-			resultString.push_back("true");
-		}
-		else{
-			resultString.push_back("false");
-		}
-	} else if(booleanAnswer){
+	if(booleanAnswer){
 		int selIdx = sel->getLeftChild()->getIntVal();
 		int selType = syn->getSyn(selIdx).second;
 		if(mapper.count(selIdx) == 0) {
@@ -633,6 +627,7 @@ void evaluateSelectNode(QNode* sel){
 }
 
 void evaluateNode(QNode* node){
+	//cout<<"evaluate "<< node->getType() <<endl;
 	switch(node->getType()){
 	case QWITH: evaluateWithNode(node); break;
 	case QSYN:	evaluatePatternNode(node); break;
@@ -643,7 +638,7 @@ void evaluateNode(QNode* node){
 
 void evaluateCluster(vector<QNode*> cluster){
 	for(unsigned i=0;i<cluster.size();i++){
-		//cout <<"evaluating cluster "<<i<<endl;
+		//cout <<"evaluating cluster "<<endl;
 		evaluateNode(cluster[i]);
 	}
 }
@@ -651,10 +646,21 @@ void evaluateCluster(vector<QNode*> cluster){
 void processClauses(){
 	//cout<<"evaluating"<<endl;
 	vector<QNode*> cluster = qt->nextClauses();
-	while(cluster.size()!=0){
-		initTable();
+	while(cluster.size()!=0){		
+		table.clear();
+		mapper.clear();
 		evaluateCluster(cluster);
 		cluster = qt->nextClauses();
+	}
+	if(!booleanAnswer)
+		resultString.clear();
+	if (qt->isBoolean()){
+		if(booleanAnswer) {
+			resultString.push_back("true");
+		}
+		else{
+			resultString.push_back("false");
+		}
 	}
 }
 
