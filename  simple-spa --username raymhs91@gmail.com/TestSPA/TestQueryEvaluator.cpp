@@ -27137,3 +27137,839 @@ void TestQueryEvaluator::testNextT(){
 	cout<< "SUCCESS! testNextTransitive!! :D" <<endl;
 }
 
+void TestQueryEvaluator::testAffects(){
+	try {
+		PKBParser::parse("testcases/affects_source.txt");
+	} catch (exception& e) {
+		cout << "PKBParser: " << e.what() << endl;
+	}
+	cout<< "testAffects = ";
+	/* Test 1 */
+
+	query = declaration + "Select n1 such that Affects (1,6)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 1" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 2 */
+
+	query = declaration + "Select n1 such that Affects (6,1)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 2" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 3 */
+
+	query = declaration + "Select n1 such that Affects (8,6)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 3" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 4 */
+
+	query = declaration + "Select n1 such that Affects (6,9)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 4" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 5 */
+
+	query = declaration + "Select n1 such that Affects (8,9)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 5" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 6 */
+
+	query = declaration + "Select n1 such that Affects (3,4)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 6" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 7 */
+
+	query = declaration + "Select n1 such that Affects (4,3)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 7" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 8 */
+
+	query = declaration + "Select n1 such that Affects (7,9)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 8" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 9 */
+
+	query = declaration + "Select n1 such that Affects (3,9)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 9" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 10 */
+
+	query = declaration + "Select n1 such that Affects (3,12)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 10" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 11 */
+
+	query = declaration + "Select n1 such that Affects (4,9)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 11" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 12 */
+
+	query = declaration + "Select n1 such that Affects (4,12)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 12" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 13 */
+
+	query = declaration + "Select n1 such that Affects (12,12)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 13" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 14 */
+
+	query = declaration + "Select n1 such that Affects (9,10)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 14" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 15 */
+
+	query = declaration + "Select n1 such that Affects (13,15)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 15" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 16 */
+
+	query = declaration + "Select n1 such that Affects (18,19)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 16" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 17 */
+
+	query = declaration + "Select n1 such that Affects (16,18)";
+	PQLParser::parse(query);
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 17" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 18 */
+
+	query = declaration + "Select n1 such that Affects (22,21)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 18" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 19 */
+
+	query = declaration + "Select n1 such that Affects (23,22)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 19" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 20 */
+
+	query = declaration + "Select n1 such that Affects (22,22)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 20" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 21 */
+	
+	query = declaration + "Select n1 such that Affects (16,17)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+	result.push_back("6");
+	result.push_back("7");
+	result.push_back("8");
+	result.push_back("9");
+	result.push_back("10");
+	result.push_back("11");
+	result.push_back("12");
+	result.push_back("13");
+	result.push_back("14");
+	result.push_back("15");
+	result.push_back("16");
+	result.push_back("17");
+	result.push_back("18");
+	result.push_back("19");
+	result.push_back("20");
+	result.push_back("21");
+	result.push_back("22");
+	result.push_back("23");
+	result.push_back("24");
+	result.push_back("25");
+	result.push_back("26");
+	result.push_back("27");
+	result.push_back("28");
+	result.push_back("29");
+	result.push_back("30");
+	result.push_back("31");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 21" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 22 */
+/*
+	query = declaration + "Select n1 such that Affects (3, n1)";
+	PQLParser::parse(query);
+	result.push_back("3");
+	result.push_back("4");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 22" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 23 */
+/*
+	query = declaration + "Select n1 such that Affects (7, n1)";
+	PQLParser::parse(query);
+	result.push_back("9");
+	result.push_back("12");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 23" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 24 */
+/*
+	query = declaration + "Select n1 such that Affects (6, n1)";
+	PQLParser::parse(query);
+	result.push_back("1");
+	result.push_back("6");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 24" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 25 */
+/*
+	query = declaration + "Select n1 such that Affects (n1, 19)";
+	PQLParser::parse(query);
+	result.push_back("18");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 25" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+
+
+	/* Test 26 */
+/*
+	query = declaration + "Select n1 such that Affects (n1, 21)";
+	PQLParser::parse(query);
+	result.push_back("13");
+	result.push_back("22");
+
+	try {
+		ans = QueryEvaluator::evaluate();
+	} catch (exception&e) {
+		cout << e.what() << endl;
+		cout << "Test 26" << endl;
+	}
+
+	CPPUNIT_ASSERT(ans == result);
+	result.clear();
+*/
+	cout<< "SUCCESS! testAffects! :D" <<endl;
+}

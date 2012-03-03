@@ -16,6 +16,7 @@
 #include "../PKB/ConstantTable.h"
 #include "PQLParser.h"
 #include <list>
+#include "../PKB/AffectsTable.h"
 
 //#include "../../AbstractWrapper.h"
 
@@ -36,6 +37,7 @@ static ProcTable *pt;
 static CallsTable *callst;
 static list< vector<int> > table;
 static map< int, int > mapper;
+static AffectsTable *a;
 
 static void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, list< vector<int> >& result);
 static vector<int> allEntitiesWithType(int type);
@@ -63,6 +65,8 @@ static void handleCalls(QNode* query);
 static void handleCallsT(QNode* query);
 static void handleNext(QNode* query);
 static void handleNextT(QNode* query);
+static void handleAffects(QNode* query);
+static void handleAffectsT(QNode* query);
 
 static int leftType, rightType;
 static int synIdxLeft, synIdxRight;
@@ -511,6 +515,10 @@ void evaluateSuchThatNode(QNode* such){
 		handleNext(such); break;
 	case QNEXTT:
 		handleNextT(such); break;
+	case QAFFECT:
+		handleAffects(such); break;
+	case QAFFECTT:
+		handleAffectsT(such); break;
 	default:
 		break;
 	}
@@ -1352,6 +1360,116 @@ void handleNextT(QNode* query) {
 			}
 		}
 	}
+}
+
+void handleAffects(QNode* query) {
+	initVars(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
+
+	if(leftType == QINT) {
+		if(rightType == QINT) {
+			if(!(a->isAffects(constLeft,constRight))) clearTable();
+		} else if(rightType == QANY) {
+			if(a->getAffectedBy(constLeft).size() == 0) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(a->isAffects(constLeft,(*it)[aIdx]))) deleteRow(it--);
+			}
+		}
+	} else if(leftType == QANY) {
+		if(rightType == QINT) {
+			if(a->getAffectedBy(constRight).size() == 0) clearTable();
+		} else if(rightType == QANY) {
+			bool exist=false;
+			vector<STMT_NO> stmts = st->getAllAssign();
+			for(unsigned i=0;i< stmts.size();i++){
+				if(a->getAffects(stmts[i]).size()!=0){
+					exist = true;
+					break;
+				}
+			}
+			if(!exist)
+				clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(a->getAffectedBy((*it)[aIdx]).size() == 0) deleteRow(it--);
+			}
+		}
+	} else if(leftType == QSYN) {
+		if(rightType == QINT) {
+				int aIdx = mapper[synIdxLeft];			
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					if(!(a->isAffects((*it)[aIdx],constRight))) deleteRow(it--);
+				}
+			} else if(rightType == QANY) {
+				int aIdx = mapper[synIdxLeft];
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					if(a->getAffects((*it)[aIdx]).size() == 0) deleteRow(it--);
+				}
+			} else if(rightType == QSYN) {
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					if(!(a->isAffects((*it)[aIdx1],(*it)[aIdx2]))) deleteRow(it--);
+				}
+			}
+		} 
+}
+
+void handleAffectsT(QNode* query) {
+	initVars(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
+
+	if(leftType == QINT) {
+		if(rightType == QINT) {
+			if(!(a->isAffectsTransitive(constLeft,constRight))) clearTable();
+		} else if(rightType == QANY) {
+			if(a->getAffectedByTransitive(constLeft).size() == 0) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(a->isAffectsTransitive(constLeft,(*it)[aIdx]))) deleteRow(it--);
+			}
+		}
+	} else if(leftType == QANY) {
+		if(rightType == QINT) {
+			if(a->getAffectedByTransitive(constRight).size() == 0) clearTable();
+		} else if(rightType == QANY) {
+			bool exist=false;
+			vector<STMT_NO> stmts = st->getAllAssign();
+			for(unsigned i=0;i< stmts.size();i++){
+				if(a->getAffects(stmts[i]).size()!=0){
+					exist = true;
+					break;
+				}
+			}
+			if(!exist)
+				clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(a->getAffectedByTransitive((*it)[aIdx]).size() == 0) deleteRow(it--);
+			}
+		}
+	} else if(leftType == QSYN) {
+		if(rightType == QINT) {
+				int aIdx = mapper[synIdxLeft];			
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					if(!(a->isAffectsTransitive((*it)[aIdx],constRight))) deleteRow(it--);
+				}
+			} else if(rightType == QANY) {
+				int aIdx = mapper[synIdxLeft];
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					if(a->getAffectsTransitive((*it)[aIdx]).size() == 0) deleteRow(it--);
+				}
+			} else if(rightType == QSYN) {
+				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					if(!(a->isAffectsTransitive((*it)[aIdx1],(*it)[aIdx2]))) deleteRow(it--);
+				}
+			}
+		} 
 }
 
 vector<string> QueryEvaluator::evaluate() {

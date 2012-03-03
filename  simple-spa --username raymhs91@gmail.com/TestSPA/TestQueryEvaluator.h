@@ -35,6 +35,7 @@ CPPUNIT_TEST( testCalls );
 CPPUNIT_TEST( testCallsT );
 CPPUNIT_TEST( testNext );
 CPPUNIT_TEST( testNextT );
+//CPPUNIT_TEST( testAffects );
 CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -73,6 +74,7 @@ public:
 	void testCallsT();
 	void testNext();
 	void testNextT();
+	void testAffects();
 };
 #endif
 
