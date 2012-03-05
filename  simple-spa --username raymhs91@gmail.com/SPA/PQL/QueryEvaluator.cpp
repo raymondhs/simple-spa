@@ -659,6 +659,7 @@ void evaluateCluster(vector<QNode*> cluster){
 }
 
 void formatResult() {
+	set<string> unique;
 	vector<QNode*> tuple = qt->getTuple();
 	int tmp = 0;
 	for(list<vector<int> >::iterator it = resultTable.begin(); it != resultTable.end(); it++) {
@@ -684,8 +685,9 @@ void formatResult() {
 				ans += out.str();
 			}
 		}
-		resultString.push_back(ans);
+		unique.insert(ans);
 	}
+	resultString = vector<string>(unique.begin(), unique.end());
 }
 
 void processClauses(){
