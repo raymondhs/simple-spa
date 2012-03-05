@@ -23,7 +23,7 @@ int ProcTable::getSize(){
 }
 
 PROC_NAME ProcTable::getProcName(PROC_IDX index){
-	if(index<getSize()) 
+	if(index<getSize()&&index>=0) 
 		return this->idxToName[index];
 	else
 		return "OUT OF BOUNDS";

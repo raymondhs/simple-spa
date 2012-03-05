@@ -618,6 +618,7 @@ void evaluateSelectNodes(vector<QNode*> select) {
 			int selType = syn->getSyn(selIdx).second;
 			int aSelIdx = mapper[selIdx];
 			if( (selType == QCALL)&&(selVector[i]->getLeftChild()->getStrVal()=="procName")){
+				//cout << (*it)[aSelIdx];
 				tmp.push_back(callst->getProcCalledByStmt((*it)[aSelIdx]));
 			} else {
 				tmp.push_back((*it)[aSelIdx]);
