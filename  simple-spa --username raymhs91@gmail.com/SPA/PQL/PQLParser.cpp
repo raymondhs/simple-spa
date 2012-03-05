@@ -836,7 +836,6 @@ QNode* selectClause() {
 		declaration();
 	}
 	match(TSELECT);
-	cout<<text<<endl;
 	if (text=="<"){
 		//Select tuple
 		match(TLESSTHAN);
