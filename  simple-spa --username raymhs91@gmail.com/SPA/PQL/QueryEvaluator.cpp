@@ -659,7 +659,6 @@ void evaluateCluster(vector<QNode*> cluster){
 }
 
 void formatResult() {
-	set<string> unique;
 	vector<QNode*> tuple = qt->getTuple();
 	int tmp = 0;
 	set<vector<int>> res;
@@ -700,9 +699,8 @@ void formatResult() {
 				ans += out.str();
 			}
 		}
-		unique.insert(ans);
+		resultString.push_back(ans);
 	}
-	resultString = vector<string>(unique.begin(), unique.end());
 }
 
 void processClauses(){
@@ -1318,7 +1316,7 @@ void handleAffects(QNode* query) {
 		if(rightType == QINT) {
 			if(!(a->isAffects(constLeft,constRight))) clearTable();
 		} else if(rightType == QANY) {
-			if(a->getAffectedBy(constLeft).size() == 0) clearTable();
+			if(a->getAffects(constLeft).size() == 0) clearTable();
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
