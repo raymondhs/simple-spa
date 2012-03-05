@@ -617,12 +617,13 @@ void evaluateSelectNodes(vector<QNode*> select) {
 			int selIdx = selVector[i]->getLeftChild()->getIntVal();
 			int selType = syn->getSyn(selIdx).second;
 			int aSelIdx = mapper[selIdx];
-			if( (selType == QCALL)&&(selVector[i]->getLeftChild()->getStrVal()=="procName")){
+			/*if( (selType == QCALL)&&(selVector[i]->getLeftChild()->getStrVal()=="procName")){
 				//cout << (*it)[aSelIdx];
 				tmp.push_back(callst->getProcCalledByStmt((*it)[aSelIdx]));
 			} else {
 				tmp.push_back((*it)[aSelIdx]);
-			}
+			}*/
+			tmp.push_back((*it)[aSelIdx]);
 		}
 		unique.insert(tmp);
 	}
@@ -675,7 +676,7 @@ void formatResult() {
 				ans += pt->getProcName((*it)[aSelIdx]);
 			}
 			else if((selType == QCALL)&&(tuple[j]->getLeftChild()->getStrVal()=="procName")){
-				ans += pt->getProcName((*it)[aSelIdx]);
+				ans += pt->getProcName(callst->getProcCalledByStmt((*it)[aSelIdx]));
 			}
 			else {
 				stringstream out;
