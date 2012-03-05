@@ -583,6 +583,57 @@ void evaluateSelectNode(QNode* sel){
 	}
 }
 
+void evaluateSelectNodes(vector<QNode*> select) {
+	set<int> selSet;
+	vector<QNode*> selVector;
+	for(int i = 0; i < select.size(); i++) {
+		int selIdx = select[i]->getLeftChild()->getIntVal();
+		int selType = syn->getSyn(selIdx).second;
+		if(mapper.count(selIdx) == 0) {
+			addAttribute(selIdx, table, mapper);
+		}
+		selSet.insert(selIdx);
+	}
+
+	list< vector<int> > newTable;
+	newTable.push_back(vector<int>());
+	for(set<int>::iterator it = selSet.begin(); it != selSet.end(); it++) {
+		for(int i = 0; i < select.size(); i++) {
+			int selIdx = select[i]->getLeftChild()->getIntVal();
+			if(selIdx == (*it)) {
+				selVector.push_back(select[i]);
+				break;
+			}
+		}
+		mapperResult.insert(pair<int,int>(*it, mapperResult.size()));
+		newTable.begin()->push_back(*it);
+	}
+
+	set< vector<int> > unique;
+	
+	for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+		vector<int> tmp;
+		for(int i = 0; i < selVector.size(); i++) {
+			int selIdx = selVector[i]->getLeftChild()->getIntVal();
+			int selType = syn->getSyn(selIdx).second;
+			int aSelIdx = mapper[selIdx];
+			if( (selType == QCALL)&&(selVector[i]->getLeftChild()->getStrVal()=="procName")){
+				tmp.push_back(callst->getProcCalledByStmt((*it)[aSelIdx]));
+			} else {
+				tmp.push_back((*it)[aSelIdx]);
+			}
+		}
+		unique.insert(tmp);
+	}
+
+	for(set< vector<int> >::iterator it = unique.begin(); it != unique.end(); it++) {
+		newTable.push_back(*it);
+	}
+
+	list< vector<int> > old = list< vector<int> >(resultTable.begin(), resultTable.end());
+	cartesianProduct(old, newTable, resultTable);			
+}
+
 void evaluateNode(QNode* node){
 	//cout<<"evaluate "<< node->getType() <<endl;
 	switch(node->getType()){
@@ -596,7 +647,12 @@ void evaluateNode(QNode* node){
 void evaluateCluster(vector<QNode*> cluster){
 	for(unsigned i=0;i<cluster.size();i++){
 		//cout <<"evaluating cluster "<<endl;
-		evaluateNode(cluster[i]);
+		if(cluster[i]->getType() != QSELECT) {
+			evaluateNode(cluster[i]);
+		} else {
+			evaluateSelectNodes(vector<QNode*>(cluster.begin()+i, cluster.end()));
+			break;
+		}
 	}
 }
 
