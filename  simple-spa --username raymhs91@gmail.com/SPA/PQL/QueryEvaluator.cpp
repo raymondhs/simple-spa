@@ -1354,7 +1354,7 @@ void handleAffectsT(QNode* query) {
 		if(rightType == QINT) {
 			if(!(a->isAffectsTransitive(constLeft,constRight))) clearTable();
 		} else if(rightType == QANY) {
-			if(a->getAffectedByTransitive(constLeft).size() == 0) clearTable();
+			if(a->getAffectsTransitive(constLeft).size() == 0) clearTable();
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
