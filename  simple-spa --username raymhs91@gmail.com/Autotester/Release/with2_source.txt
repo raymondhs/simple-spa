@@ -1,3 +1,36 @@
+procedure Second {
+    while i {
+        while j {
+            x = 2 + x; }
+        x = 2 + x;
+        i = 1 + i; }
+    x = 0;
+    i = 5;
+    z = z + x + i;
+    y = 2 + z;
+    while j {
+        x = 2 + x; }
+	while a {
+		while b {
+			while c {
+				while d {
+					while e {
+						x = 1+x;
+						y = x+z; }
+					x = 2+x; }
+				while f {
+					z = z + z;
+					varA = 1; }
+				varB = varA + varB;
+				varA = x+z+y; }
+			varC = 12345;
+			varD = varC; }
+		while g {
+			varD = varA + varB + varC;
+			varE = 2; }
+		varF = 1; }
+	varG = 2;
+}
 procedure InsaneWhile {
 	while loop1 {
 		while loop2 {
@@ -6,12 +39,12 @@ procedure InsaneWhile {
 					while loop5 {
 						varLoop5 = 5;
 						while loop6 {
-							while x{
+							while loop7 {
 								while loop8 {
 									while loop9 {
 										while loop10 {
 											while lastLoop{
-												x= varLoop5; }
+												varLastLoop = varLoop5; }
 											varLoop10 = 10 + varLoop10; }
 										varLoop9 = 9 + varLoop9; }
 									varLoop8 = 8 + varLoop8; }

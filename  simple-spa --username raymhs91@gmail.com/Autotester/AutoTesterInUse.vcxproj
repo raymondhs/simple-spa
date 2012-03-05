@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\SPA\ParseException.cpp" />
+    <ClCompile Include="..\SPA\PKB\AffectsTable.cpp" />
     <ClCompile Include="..\SPA\PKB\AST.cpp" />
     <ClCompile Include="..\SPA\PKB\CallsTable.cpp" />
     <ClCompile Include="..\SPA\PKB\CFG.cpp" />

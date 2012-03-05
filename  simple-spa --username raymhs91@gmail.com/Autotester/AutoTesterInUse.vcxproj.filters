@@ -90,6 +90,9 @@
     <ClCompile Include="..\SPA\PKB\UsesTable.cpp">
       <Filter>Source Files\PKB</Filter>
     </ClCompile>
+    <ClCompile Include="..\SPA\PKB\AffectsTable.cpp">
+      <Filter>Source Files\PKB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractWrapper.h">
