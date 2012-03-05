@@ -72,7 +72,7 @@ bool issymbol(char c) {
 	return c == '+' || c == '-' || c == '*' 
 		|| c == '{' || c == '}' || c == '(' || c == ')'
 		|| c == ';' || c == '=' || c == '_' || c == '"'
-		|| c == ',' || c == '.';
+		|| c == ',' || c == '.' || c == '>' || c == '<';
 }
 
 int getToken() {
@@ -836,7 +836,7 @@ QNode* selectClause() {
 		declaration();
 	}
 	match(TSELECT);
-
+	cout<<text<<endl;
 	if (text=="<"){
 		//Select tuple
 		match(TLESSTHAN);
@@ -865,7 +865,7 @@ QNode* selectClause() {
 					qt->addClause(selNode);
 				}
 			}
-			match(TCOMMA);
+			if (text==",") match(TCOMMA);
 		}
 		match(TMORETHAN);
 	}
