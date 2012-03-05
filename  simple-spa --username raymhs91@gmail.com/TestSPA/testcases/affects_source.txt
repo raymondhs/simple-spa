@@ -1,0 +1,52 @@
+procedure Alpha {
+  while i {
+    while j {
+      x = 2 + x; }
+    x = 2 + x;
+    k = a + b;
+    i = 1 + i; }
+  x = 0;
+  i = 5;
+  z = k + x + i;
+  y = 2 + z;
+
+  while j {
+    x = 2 + x; }
+}
+
+procedure Beta{
+  i = i-1;
+  a = 1-j;
+  if i then {
+    k = k + 1;
+    l = k * l;
+  } else{
+    a = a * b * c + d + k;
+    b = a - 0 + 0 - 0 + 1 * b;
+  }
+  while i {
+    i = i + k;
+    k = 1 + 2 + 3 + 4;
+  }
+}
+
+procedure Gamma{
+  while i {
+    a = a + b + c + d;
+    while j {
+      x = x + 1;
+      if a then {
+	c = x + y;
+	b = c + d;
+      } else {
+	b = x + 1;
+	k = a * l;
+      }
+      while z {
+	d = k * l;
+      }
+    }
+    l = b + 2;
+  }
+  call Alpha;
+}
