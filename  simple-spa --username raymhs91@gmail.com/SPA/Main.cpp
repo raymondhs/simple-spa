@@ -58,7 +58,8 @@ void printResult(vector<string> result) {
 	if(result.size() == 0) cout << "none" << endl;
 	else {
 		for(unsigned i = 0; i < result.size(); i++) {
-			cout << result[i] << " ";
+			if(i) cout << ", ";
+			cout << result[i];
 		}
 		cout << endl;
 	}

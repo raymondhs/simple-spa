@@ -535,7 +535,8 @@ void evaluateSelectNode(QNode* sel){
 		int selIdx = sel->getLeftChild()->getIntVal();
 		int selType = syn->getSyn(selIdx).second;
 		if(mapper.count(selIdx) == 0) {
-			addAttribute(selIdx, resultTable, mapperResult);
+			if(mapperResult.count(selIdx) == 0)
+				addAttribute(selIdx, resultTable, mapperResult);
 		} else {
 			int aSelIdx = mapper[selIdx];
 
@@ -1242,7 +1243,7 @@ void handleAffects(QNode* query) {
 		if(rightType == QINT) {
 			if(!(a->isAffects(constLeft,constRight))) clearTable();
 		} else if(rightType == QANY) {
-			if(a->getAffects(constLeft).size() == 0) clearTable();
+			if(a->getAffectedBy(constLeft).size() == 0) clearTable();
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
