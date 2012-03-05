@@ -662,26 +662,41 @@ void formatResult() {
 	set<string> unique;
 	vector<QNode*> tuple = qt->getTuple();
 	int tmp = 0;
+	set<vector<int>> res;
 	for(list<vector<int> >::iterator it = resultTable.begin(); it != resultTable.end(); it++) {
 		if(!tmp++) continue;
+		vector<int> ans;
+		for(int j = 0; (unsigned)j < tuple.size(); j++) {
+			int selIdx = tuple[j]->getLeftChild()->getIntVal();
+			int selType = syn->getSyn(selIdx).second;
+			int aSelIdx = mapperResult[selIdx];
+			if((selType == QCALL)&&(tuple[j]->getLeftChild()->getStrVal()=="procName")){
+				ans.push_back(callst->getProcCalledByStmt((*it)[aSelIdx]));
+			}
+			else {
+				ans.push_back((*it)[aSelIdx]);
+			}
+		}
+		res.insert(ans);
+	}
+	for(set<vector<int> >::iterator it = res.begin(); it != res.end(); it++) {
 		string ans = "";
 		for(int j = 0; (unsigned)j < tuple.size(); j++) {
 			if(j) ans += " ";
 			int selIdx = tuple[j]->getLeftChild()->getIntVal();
 			int selType = syn->getSyn(selIdx).second;
-			int aSelIdx = mapperResult[selIdx];
 			if(selType == QVAR) {
-				ans += var->getVarName((*it)[aSelIdx]);
+				ans += var->getVarName((*it)[j]);
 			} 
 			else if(selType == QPROC){
-				ans += pt->getProcName((*it)[aSelIdx]);
+				ans += pt->getProcName((*it)[j]);
 			}
 			else if((selType == QCALL)&&(tuple[j]->getLeftChild()->getStrVal()=="procName")){
-				ans += pt->getProcName(callst->getProcCalledByStmt((*it)[aSelIdx]));
+				ans += pt->getProcName((*it)[j]);
 			}
 			else {
 				stringstream out;
-				out << (*it)[aSelIdx];
+				out << (*it)[j];
 				ans += out.str();
 			}
 		}
