@@ -496,7 +496,9 @@ void evaluatePatternNode(QNode* patt){
 			if(!(st->doesMatchPattern(assignNode,patt))) deleteRow(it--);
 		}
 	} else if (type == QWHILE){
-		if(type2==QANY && st->getAllWhile().size()==0) clearTable();
+		if(type2==QANY) {
+			if(st->getAllWhile().size()==0) clearTable();
+		}
 		else if(type2 == QSYN){
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 				TNode *whileNode = st->getStmtNode((*it)[aIdx]);
@@ -511,7 +513,9 @@ void evaluatePatternNode(QNode* patt){
 			}
 		}
 	} else if (type == QIF){
-		if(type2==QANY && st->getAllIf().size()==0) clearTable();
+		if(type2==QANY) {
+			if(st->getAllIf().size()==0) clearTable();
+		}
 		else if(type2 == QSYN){
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 				TNode *ifNode = st->getStmtNode((*it)[aIdx]);
