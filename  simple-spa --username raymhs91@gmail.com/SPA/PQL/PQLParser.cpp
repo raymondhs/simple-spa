@@ -688,6 +688,9 @@ int entity() {
 	if(text == "stmt") {
 		next_token = getToken();
 		return QSTMT;
+	} else if(text== "stmtLst"){
+			next_token=getToken();
+			return QSTMT;
 	} else if(text == "assign") {
 		next_token = getToken();
 		return QASSIGN;
