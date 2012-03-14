@@ -372,6 +372,7 @@ TNode* factor(STMT_NO stmtIdx) {
 }
 
 void checkCalls(){
+	TNode* stmt;
 	for(unsigned i=0 ; i<callerStmt.size(); i++){
 		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
 		if(procIdx==-1) {
@@ -393,14 +394,17 @@ void checkCalls(){
 
 		VAR_SET modified = ModifiesTable::getModifiesTable()->getVarModifiedByProc(procIdx);
 		set<int>::iterator modifiesIt;
-		for(modifiesIt = modified.begin(); modifiesIt != modified.end(); modifiesIt++) {
-			ModifiesTable::getModifiesTable()->insertStmt(callerStmt[i],*modifiesIt);
-		}
-
 		VAR_SET uses = UsesTable::getUsesTable()->getVarUsedByProc(procIdx);
 		set<int>::iterator usesIt;
-		for(usesIt = uses.begin(); usesIt != uses.end(); usesIt++) {
-			UsesTable::getUsesTable()->insertStmt(callerStmt[i],*usesIt);
+		stmt = StmtTable::getStmtTable()->getStmtNode(callerStmt[i]);
+		while(stmt!=NULL){
+			for(modifiesIt = modified.begin(); modifiesIt != modified.end(); modifiesIt++) {
+				ModifiesTable::getModifiesTable()->insertStmt(stmt->getAttrib(),*modifiesIt);
+			}
+			for(usesIt = uses.begin(); usesIt != uses.end(); usesIt++) {
+				UsesTable::getUsesTable()->insertStmt(stmt->getAttrib(),*usesIt);
+			}
+			stmt = stmt->getParent();
 		}
 	}
 }
