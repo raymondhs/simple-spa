@@ -35,6 +35,7 @@ TNode* StmtTable::getStmtNode(STMT_NO idx) {
 	return NULL;
 }
 
+
 std::vector<int> StmtTable::getAllStmt() {
 	vector<int> result;
 	for(int i = 0; i < getSize(); i++) {
@@ -74,6 +75,21 @@ std::vector<int> StmtTable::getAllIf() {
 	for(int i = 0; i < getSize(); i++) {
 		if(getStmtNode(i+1)->getType() == IF)
 			result.push_back(i+1);
+	}
+	return result;
+}
+
+std::vector<int> StmtTable::getAllStmtLst() {
+	//to be implemented
+	vector<int> result;
+	for(int i = 0; i < getSize(); i++) {
+		TNode *currNode = NULL;
+		if(getStmtNode(i+1)->getUpLink()->getType() == STMTLST){
+			if (currNode!=getStmtNode(i+1)->getUpLink()){
+				result.push_back(i+1);
+				currNode = getStmtNode(i+1)->getUpLink();
+			}
+		}
 	}
 	return result;
 }

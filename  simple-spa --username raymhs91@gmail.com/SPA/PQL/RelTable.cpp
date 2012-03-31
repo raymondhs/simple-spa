@@ -33,8 +33,11 @@ void RelTable::init() {
 	mapper.insert(pair<string, vector< vector<int> > >("Next*",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Affect",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Affects*",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("Contain",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("Contain*",vector< vector<int> >()));
 
 	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF|QCALL;
+	int allNode = PROCEDURE|STMTLST|STMT|ASSIGN|CALL|WHILE|IF|PLUS|MINUS|TIMES|VAR|CONST;
 	insertRow("Parent",allStmt,allStmt);
 	insertRow("Parent*",allStmt,allStmt);
 	insertRow("Follows",allStmt,allStmt);
@@ -49,6 +52,9 @@ void RelTable::init() {
 	insertRow("Next*",QPROGLINE,QPROGLINE);
 	insertRow("Affects",allStmt,allStmt);
 	insertRow("Affects*",allStmt,allStmt);
+	insertRow("Contains",allNode,allNode);
+	insertRow("Contains*",allNode,allNode);
+	
 }
 
 bool RelTable::validate(std::string relName, int arg1, int arg2) {

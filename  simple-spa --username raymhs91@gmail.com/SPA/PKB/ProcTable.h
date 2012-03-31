@@ -8,6 +8,7 @@
 #include <map>
 #include <vector>
 #include <set>
+#include "TNode.h"
 #include "../Constants.h"
 
 class ProcTable {
@@ -25,6 +26,14 @@ public:
 	 * @return Reference to procedure table
 	 */
 	static ProcTable* getProcTable();
+
+	/**
+	 * Gets the procedure node in the AST
+	 *
+	 * @param index index of a procedure
+	 * @return Reference to the AST procedure node of the procedure index
+	 */
+	static TNode* getProcNode(PROC_IDX index);
 
 	/**
 	 * Inserts a procedure into procedure table

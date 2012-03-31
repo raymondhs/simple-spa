@@ -690,7 +690,7 @@ int entity() {
 		return QSTMT;
 	} else if(text== "stmtLst"){
 			next_token=getToken();
-			return QSTMT;
+			return QSTMTLST;
 	} else if(text == "assign") {
 		next_token = getToken();
 		return QASSIGN;

@@ -3,10 +3,28 @@
  */
 #include "ProcTable.h"
 #include "../Constants.h"
+#include "AST.h"
+#include "TNode.h"
 
 using namespace std;
 
 ProcTable::ProcTable() {}
+
+TNode* ProcTable::getProcNode(PROC_IDX procIdx){
+	TNode* rootNode, *currProcNode, *procNode;
+	AST* ast;
+	rootNode = ast->getAST()->getRoot();
+	currProcNode = rootNode->getFirstChild();
+	while(currProcNode!=NULL){
+		if(procIdx==currProcNode->getAttrib()){
+			procNode = currProcNode;
+			break;
+		} else {
+			currProcNode = currProcNode->getRightSibling();
+		}
+	}
+	return procNode;
+}
 
 PROC_IDX ProcTable::insertProc(PROC_NAME procName){
 	int index = getProcIndex(procName);

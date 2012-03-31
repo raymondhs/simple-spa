@@ -84,6 +84,13 @@ public:
 	std::vector<int> getAllIf();
 
 	/**
+	 * Gets all stmt list in the program
+	 *
+	 * @return Vector of Statement list of the program represented by the first statement number of the statement list
+	 */
+	std::vector<int> getAllStmtLst();
+
+	/**
 	 * Determine whether a pattern matches a given assignment statement 
 	 *
 	 * @param stmt The assignment statement node to be compared against
