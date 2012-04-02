@@ -545,12 +545,12 @@ QNode* attrCompare(){
 	}
 
 	if (typeLeft==QVAR || ((typeLeft==QCALL)&&(callAttrib==0)) || typeLeft==QPROC){
-		if (typeRight==QCONST || typeRight == QSTMT || typeRight == QINT || typeRight == QPROGLINE || ((typeLeft==QCALL)&&(callAttrib==1))){
+		if (typeRight==QCONST || typeRight == QSTMT || typeRight == QSTMTLST || typeRight == QINT || typeRight == QPROGLINE || ((typeLeft==QCALL)&&(callAttrib==1))){
 			PQLParser::cleanUp();
 			throw ParseException("Error: Cannot compare string with integer.");
 		}
 	}
-	else if (typeLeft==QCONST || typeLeft==QSTMT || typeLeft == QPROGLINE || ((typeLeft==QCALL)&&(callAttrib==1))){
+	else if (typeLeft==QCONST || typeLeft==QSTMT || typeRight == QSTMTLST || typeLeft == QPROGLINE || ((typeLeft==QCALL)&&(callAttrib==1))){
 		if (typeRight==QVAR || typeRight == QCALL || ((typeRight==QCALL)&&(callAttrib==0)) || typeRight == QPROC || typeRight == QSTRING){
 			PQLParser::cleanUp();
 			throw ParseException("Error: Cannot compare integer with string.");
@@ -605,7 +605,7 @@ void attrName(int type){
 			}
 		} else isValid = false;
 	}
-	else if (type == QSTMT || type == QWHILE || type == QIF || type == QASSIGN){
+	else if (type == QSTMT || type == QWHILE || type == QIF || type == QASSIGN || type==QSTMTLST){
 		//cout << text << endl;
 		if(text=="stmt#"){
 			next_token=getToken();
