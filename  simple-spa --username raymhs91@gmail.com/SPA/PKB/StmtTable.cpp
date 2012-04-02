@@ -80,15 +80,10 @@ std::vector<int> StmtTable::getAllIf() {
 }
 
 std::vector<int> StmtTable::getAllStmtLst() {
-	//to be implemented
 	vector<int> result;
 	for(int i = 0; i < getSize(); i++) {
-		TNode *currNode = NULL;
-		if(getStmtNode(i+1)->getUpLink()->getType() == STMTLST){
-			if (currNode!=getStmtNode(i+1)->getUpLink()){
-				result.push_back(i+1);
-				currNode = getStmtNode(i+1)->getUpLink();
-			}
+		if (getStmtNode(i+1)->getUpLink()!= NULL){
+			result.push_back(i+1);
 		}
 	}
 	return result;

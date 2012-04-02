@@ -28,14 +28,6 @@ public:
 	static ProcTable* getProcTable();
 
 	/**
-	 * Gets the procedure node in the AST
-	 *
-	 * @param index index of a procedure
-	 * @return Reference to the AST procedure node of the procedure index
-	 */
-	static TNode* getProcNode(PROC_IDX index);
-
-	/**
 	 * Inserts a procedure into procedure table
 	 *
 	 * @param procName Procedure name to be inserted
