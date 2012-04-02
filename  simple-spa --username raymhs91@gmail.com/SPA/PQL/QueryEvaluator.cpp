@@ -196,6 +196,8 @@ vector<int> allEntitiesWithType(int type) {
 	switch(type) {
 	case QSTMT:
 		result = st->getAllStmt(); break;
+	case QSTMTLST:
+		result = st->getAllStmtLst(); break;
 	case QASSIGN:
 		result = st->getAllAssign(); break;
 	case QWHILE:
