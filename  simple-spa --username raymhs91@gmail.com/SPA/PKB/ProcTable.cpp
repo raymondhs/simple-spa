@@ -12,7 +12,7 @@ ProcTable::ProcTable() {}
 
 TNode* ProcTable::getProcNode(PROC_IDX procIdx){
 	TNode* rootNode, *currProcNode, *procNode;
-	AST* ast;
+	AST *ast;
 	rootNode = ast->getAST()->getRoot();
 	currProcNode = rootNode->getFirstChild();
 	while(currProcNode!=NULL){

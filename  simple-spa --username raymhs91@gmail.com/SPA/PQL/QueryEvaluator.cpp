@@ -592,7 +592,7 @@ void evaluateSelectNode(QNode* sel){
 void evaluateSelectNodes(vector<QNode*> select) {
 	set<int> selSet;
 	vector<QNode*> selVector;
-	for(int i = 0; i < select.size(); i++) {
+	for(int i = 0; (unsigned)i < select.size(); i++) {
 		int selIdx = select[i]->getLeftChild()->getIntVal();
 		int selType = syn->getSyn(selIdx).second;
 		if(mapper.count(selIdx) == 0) {
@@ -604,7 +604,7 @@ void evaluateSelectNodes(vector<QNode*> select) {
 	list< vector<int> > newTable;
 	newTable.push_back(vector<int>());
 	for(set<int>::iterator it = selSet.begin(); it != selSet.end(); it++) {
-		for(int i = 0; i < select.size(); i++) {
+		for(int i = 0; (unsigned)i < select.size(); i++) {
 			int selIdx = select[i]->getLeftChild()->getIntVal();
 			if(selIdx == (*it)) {
 				selVector.push_back(select[i]);
@@ -619,7 +619,7 @@ void evaluateSelectNodes(vector<QNode*> select) {
 	
 	for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 		vector<int> tmp;
-		for(int i = 0; i < selVector.size(); i++) {
+		for(int i = 0; (unsigned)i < selVector.size(); i++) {
 			int selIdx = selVector[i]->getLeftChild()->getIntVal();
 			int selType = syn->getSyn(selIdx).second;
 			int aSelIdx = mapper[selIdx];
