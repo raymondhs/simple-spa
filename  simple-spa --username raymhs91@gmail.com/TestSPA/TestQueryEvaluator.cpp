@@ -7621,6 +7621,10 @@ void TestQueryEvaluator::testModifiesP() {
 
 	query = declaration + "Select p such that Modifies(p, v1) and Uses(i1, v1) with v1.varName=\"j\"";
 	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
+	result.push_back("Gamma");
+	result.push_back("Caller");
 
 	try {
 		ans = QueryEvaluator::evaluate();
