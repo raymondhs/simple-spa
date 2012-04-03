@@ -96,6 +96,7 @@ vector<GNode*> GNode::getNextTransitive() {
 }
 
 vector<GNode*> GNode::getNextBIPTransitive() {
+	/*
 	vector<GNode*> nextBIPT;
 
 	// BFS		
@@ -121,7 +122,21 @@ vector<GNode*> GNode::getNextBIPTransitive() {
 		}
 	}
 
-	return nextBIPT;
+	return nextBIPT;*/
+	vector<GNode*> nextT = getNextTransitive();
+	set<GNode*> nextBIPT;		// to ensure that it is unique
+	for(unsigned i = 0; i<nextT.size();i++){	// check all the next transitive
+		nextBIPT.insert(nextT[i]);
+		if(StmtTable::getStmtTable()->getStmtNode(nextT[i]->getAttrib())->getType()==CALL){ // if it is a call statement
+			GNode* root = CFG::getCFG()->getCfgRoot(CallsTable::getCallsTable()->getProcCalledByStmt(nextT[i]->getAttrib()));
+			vector<GNode*> temp = root->getNextBIPTransitive();		// recursive from the root of the called statement
+			for(unsigned j = 0; i<temp.size();j++){
+				nextBIPT.insert(temp[i]);
+			}
+			nextBIPT.insert(root);		//finally insert the root
+		}
+	}
+	return vector<GNode*>(nextBIPT.begin(),nextBIPT.end());
 }
 
 vector<GNode*> GNode::getPrev() {
@@ -162,6 +177,7 @@ vector<GNode*> GNode::getPrevTransitive() {
 }
 
 vector<GNode*> GNode::getPrevBIPTransitive() {
+	/*
 	vector<GNode*> prevBIPT;
 
 	// BFS
@@ -188,6 +204,21 @@ vector<GNode*> GNode::getPrevBIPTransitive() {
 	}
 
 	return prevBIPT;
+	*/
+	vector<GNode*> prevT = getPrevTransitive();
+	set<GNode*> prevBIPT;			// same idea as nextBIPTransitive (see above)
+	for(unsigned i = 0; i<prevT.size();i++){
+		prevBIPT.insert(prevT[i]);
+		if(StmtTable::getStmtTable()->getStmtNode(prevT[i]->getAttrib())->getType()==CALL){
+			GNode* root = CFG::getCFG()->getCfgRoot(CallsTable::getCallsTable()->getProcCalledByStmt(prevT[i]->getAttrib()));
+			vector<GNode*> temp = root->getNextBIPTransitive();
+			for(unsigned j = 0; i<temp.size();j++){
+				prevBIPT.insert(temp[i]);
+			}
+			prevBIPT.insert(root);
+		}
+	}
+	return vector<GNode*>(prevBIPT.begin(),prevBIPT.end());
 }
 
 bool GNode::isNext(GNode* next) {

@@ -119,7 +119,9 @@ void AffectsBIPTable::fillTable(STMT_NO stmt){
 		GNode* u = q.front(); q.pop();
 		vector<GNode*> next = u->getNext();
 		vector<GNode*>::iterator it;
-
+		if(next.size()==0){
+			next = u->getNextBIP();
+		}
 		for (it = next.begin(); it < next.end(); it++) {
 			GNode* v = *it;
 			int idx = v->getAttrib();
