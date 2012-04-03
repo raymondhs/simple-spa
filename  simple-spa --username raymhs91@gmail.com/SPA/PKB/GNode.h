@@ -22,10 +22,16 @@ public:
 	int getAttrib();
 	std::vector<GNode*> getNext();
 	std::vector<GNode*> getNextTransitive();
+	std::vector<GNode*> getNextBIP();
+	std::vector<GNode*> getNextBIPTransitive();
 	std::vector<GNode*> getPrev();
 	std::vector<GNode*> getPrevTransitive();
+	std::vector<GNode*> getPrevBIP();
+	std::vector<GNode*> getPrevBIPTransitive();
 	bool isNext(GNode *next);
 	bool isNextTransitive(GNode *next);
+	bool isNextBIP(GNode *next);
+	bool isNextBIPTransitive(GNode *next);
 	bool operator == (const GNode& g);
 };
 

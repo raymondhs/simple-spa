@@ -15,6 +15,14 @@ GNode* CFG::getCfgRoot(PROC_IDX proc){
 	return cfgRoots[proc];
 }
 
+void CFG::addLast(vector<GNode*> last){
+	this->lastElements.push_back(last);
+}
+
+vector<GNode*> CFG::getLast(PROC_IDX proc){
+	return lastElements[proc];
+}
+
 void CFG::addNode(){
 	gNodeTable.push_back(new GNode(gNodeTable.size()+1));
 }
@@ -34,4 +42,5 @@ CFG* CFG::getCFG(){
 void CFG::clearTable(){
 	gNodeTable.clear();
 	cfgRoots.clear();
+	lastElements.clear();
 }

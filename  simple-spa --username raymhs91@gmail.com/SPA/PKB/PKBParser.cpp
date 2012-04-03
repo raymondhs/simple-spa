@@ -530,7 +530,7 @@ vector<GNode*> connectGNode(GNode* gNode){
 
 void buildCFG(){
 	for(int i=0; i<ProcTable::getProcTable()->getSize();i++){
-		connectGNode(CFG::getCFG()->getCfgRoot(i));
+		CFG::getCFG()->addLast(connectGNode(CFG::getCFG()->getCfgRoot(i)));
 	}
 }
 
