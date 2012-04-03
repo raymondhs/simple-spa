@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\SPA\PKB\AffectsBIPTable.cpp" />
     <ClCompile Include="..\SPA\PKB\AffectsTable.cpp" />
     <ClCompile Include="..\SPA\PKB\AST.cpp" />
     <ClCompile Include="..\SPA\PKB\CallsTable.cpp" />
@@ -42,6 +43,7 @@
   <ItemGroup>
     <ClInclude Include="..\SPA\Constants.h" />
     <ClInclude Include="..\SPA\ParseException.h" />
+    <ClInclude Include="..\SPA\PKB\AffectsBIPTable.h" />
     <ClInclude Include="..\SPA\PKB\AffectsTable.h" />
     <ClInclude Include="..\SPA\PKB\AST.h" />
     <ClInclude Include="..\SPA\PKB\CallsTable.h" />

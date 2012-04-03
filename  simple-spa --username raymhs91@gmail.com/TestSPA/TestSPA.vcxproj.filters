@@ -105,6 +105,9 @@
     <ClCompile Include="..\SPA\PKB\AffectsTable.cpp">
       <Filter>Source Files\lib\PKB</Filter>
     </ClCompile>
+    <ClCompile Include="..\SPA\PKB\AffectsBIPTable.cpp">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestAST.h">
@@ -189,6 +192,9 @@
       <Filter>Source Files\lib\PKB</Filter>
     </ClInclude>
     <ClInclude Include="..\SPA\PKB\AffectsTable.h">
+      <Filter>Source Files\lib\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\AffectsBIPTable.h">
       <Filter>Source Files\lib\PKB</Filter>
     </ClInclude>
   </ItemGroup>
