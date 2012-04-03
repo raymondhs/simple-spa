@@ -54,9 +54,9 @@ vector<GNode*> GNode::getNext() {
 vector<GNode*> GNode::getNextBIP() {
 	vector<GNode*> nextBIP;
 	TNode* current = StmtTable::getStmtTable()->getStmtNode(this->getAttrib());
-	if(current->getType()==CALL){
+	if(current->getType()==CALL){	// if it is a call statement
 		nextBIP.push_back(CFG::getCFG()->getCfgRoot(CallsTable::getCallsTable()->getProcCalledByStmt(this->getAttrib())));
-		return nextBIP;
+		return nextBIP;	// return the root of the called procedure
 	}
 	else
 	return this->next;
@@ -93,16 +93,16 @@ vector<GNode*> GNode::getNextTransitive() {
 
 vector<GNode*> GNode::getNextBIPTransitive() {
 	vector<GNode*> nextT = getNextTransitive();
-	set<GNode*> nextBIPT;
-	for(unsigned i = 0; i<nextT.size();i++){
+	set<GNode*> nextBIPT;		// to ensure that it is unique
+	for(unsigned i = 0; i<nextT.size();i++){	// check all the next transitive
 		nextBIPT.insert(nextT[i]);
-		if(StmtTable::getStmtTable()->getStmtNode(nextT[i]->getAttrib())->getType()==CALL){
+		if(StmtTable::getStmtTable()->getStmtNode(nextT[i]->getAttrib())->getType()==CALL){ // if it is a call statement
 			GNode* root = CFG::getCFG()->getCfgRoot(CallsTable::getCallsTable()->getProcCalledByStmt(nextT[i]->getAttrib()));
-			vector<GNode*> temp = root->getNextBIPTransitive();
+			vector<GNode*> temp = root->getNextBIPTransitive();		// recursive from the root of the called statement
 			for(unsigned j = 0; i<temp.size();j++){
 				nextBIPT.insert(temp[i]);
 			}
-			nextBIPT.insert(root);
+			nextBIPT.insert(root);		//finally insert the root
 		}
 	}
 	return vector<GNode*>(nextBIPT.begin(),nextBIPT.end());
@@ -115,12 +115,12 @@ vector<GNode*> GNode::getPrev() {
 vector<GNode*> GNode::getPrevBIP() {
 	vector<GNode*> prev = this->getPrev();
 	set<GNode*> prevBIP;
-	for(unsigned i = 0; i<prev.size();i++){
-		if(StmtTable::getStmtTable()->getStmtNode(prev[i]->getAttrib())->getType()==CALL){
+	for(unsigned i = 0; i<prev.size();i++){ // check for each prev statement
+		if(StmtTable::getStmtTable()->getStmtNode(prev[i]->getAttrib())->getType()==CALL){  // if it is a call statement
 			vector<GNode*> last = CFG::getCFG()->getLast(CallsTable::getCallsTable()->getProcCalledByStmt(prev[i]->getAttrib()));
 			for(unsigned j = 0; j<last.size();j++)
-				prevBIP.insert(last[j]);
-		} else prevBIP.insert(prev[i]);
+				prevBIP.insert(last[j]);	// insert the last elements of the procedure
+		} else prevBIP.insert(prev[i]);		// if it is not, insert it
 	}
 	return vector<GNode*>(prevBIP.begin(),prevBIP.end());
 }
@@ -156,7 +156,7 @@ vector<GNode*> GNode::getPrevTransitive() {
 
 vector<GNode*> GNode::getPrevBIPTransitive() {
 	vector<GNode*> prevT = getPrevTransitive();
-	set<GNode*> prevBIPT;
+	set<GNode*> prevBIPT;			// same idea as nextBIPTransitive (see above)
 	for(unsigned i = 0; i<prevT.size();i++){
 		prevBIPT.insert(prevT[i]);
 		if(StmtTable::getStmtTable()->getStmtNode(prevT[i]->getAttrib())->getType()==CALL){
