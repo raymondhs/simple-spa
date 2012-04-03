@@ -146,6 +146,7 @@ TNode* program(){
 		prevProc = currProc;
 		prevProc->setRightSibling(procedure());
 	}
+	buildCFG();
 	checkCalls();
 	return program;
 }
@@ -384,6 +385,14 @@ void checkCalls(){
 		}
 		CallsTable::getCallsTable()->insertStmt(callerStmt[i],procIdx);
 		CallsTable::getCallsTable()->insertProc(callerProc[i],procIdx);
+		//update the next BIP
+		GNode* caller = CFG::getCFG()->getNode(callerStmt[i]);
+		caller->setNextBIP(CFG::getCFG()->getCfgRoot(procIdx));
+		vector<GNode*> last = CFG::getCFG()->getLast(procIdx);
+		if(caller->getNext().size()!=0)
+			for(unsigned j=0;j<last.size();j++){
+				last[j]->setNextBIP(caller->getNext()[0]);
+			}
 	}
 	// update Modifies and Uses for procedure
 	for(int i = 0; i<ProcTable::getProcTable()->getSize();i++)
@@ -576,7 +585,6 @@ void PKBParser::parse(string fileName){
 		PKBParser::cleanUp();
 		throw ParseException("Error in reading file.");
 	}
-	buildCFG();
 	AffectsTable::getAffectsTable()->init();
 }
 

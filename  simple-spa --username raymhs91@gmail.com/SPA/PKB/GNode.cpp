@@ -37,10 +37,21 @@ void GNode::setAttrib(int attrib) {
 void GNode::setNext(GNode *node) {
 	this->next.push_back(node);
 	if(node!=NULL) node->setPrevious(this);
+	if(StmtTable::getStmtTable()->getStmtNode(this->getAttrib())->getType()!=CALL)
+		setNextBIP(node);
 }
 
 void GNode::setPrevious(GNode *node) {
 	this->previous.push_back(node);
+}
+
+void GNode::setNextBIP(GNode *node) {
+	this->nextBIP.push_back(node);
+	if(node!=NULL) node->setPrevious(this);
+}
+
+void GNode::setPreviousBIP(GNode *node) {
+	this->previousBIP.push_back(node);
 }
 
 int GNode::getAttrib() {
@@ -52,14 +63,7 @@ vector<GNode*> GNode::getNext() {
 }
 
 vector<GNode*> GNode::getNextBIP() {
-	vector<GNode*> nextBIP;
-	TNode* current = StmtTable::getStmtTable()->getStmtNode(this->getAttrib());
-	if(current->getType()==CALL){	// if it is a call statement
-		nextBIP.push_back(CFG::getCFG()->getCfgRoot(CallsTable::getCallsTable()->getProcCalledByStmt(this->getAttrib())));
-		return nextBIP;	// return the root of the called procedure
-	}
-	else
-	return this->next;
+	return this->nextBIP;
 }
 
 vector<GNode*> GNode::getNextTransitive() {
@@ -92,20 +96,32 @@ vector<GNode*> GNode::getNextTransitive() {
 }
 
 vector<GNode*> GNode::getNextBIPTransitive() {
-	vector<GNode*> nextT = getNextTransitive();
-	set<GNode*> nextBIPT;		// to ensure that it is unique
-	for(unsigned i = 0; i<nextT.size();i++){	// check all the next transitive
-		nextBIPT.insert(nextT[i]);
-		if(StmtTable::getStmtTable()->getStmtNode(nextT[i]->getAttrib())->getType()==CALL){ // if it is a call statement
-			GNode* root = CFG::getCFG()->getCfgRoot(CallsTable::getCallsTable()->getProcCalledByStmt(nextT[i]->getAttrib()));
-			vector<GNode*> temp = root->getNextBIPTransitive();		// recursive from the root of the called statement
-			for(unsigned j = 0; i<temp.size();j++){
-				nextBIPT.insert(temp[i]);
+	vector<GNode*> nextBIPT;
+
+	// BFS		
+	queue<GNode*> q;
+	q.push(this);
+
+	vector<bool> visited(StmtTable::getStmtTable()->getSize(), false);
+	visited[this->getAttrib()-1] = 0;
+
+	while (!q.empty()) {
+		GNode* u = q.front(); q.pop();
+		vector<GNode*> next = u->getNextBIP();
+		vector<GNode*>::iterator it;
+
+		for (it = next.begin(); it < next.end(); it++) {
+			GNode* v = *it;
+			int idx = v->getAttrib();
+			if (visited[idx-1] == false) {
+				visited[idx-1] = true;
+				q.push(v);
+				nextBIPT.push_back(v);
 			}
-			nextBIPT.insert(root);		//finally insert the root
 		}
 	}
-	return vector<GNode*>(nextBIPT.begin(),nextBIPT.end());
+
+	return nextBIPT;
 }
 
 vector<GNode*> GNode::getPrev() {
@@ -113,16 +129,7 @@ vector<GNode*> GNode::getPrev() {
 }
 
 vector<GNode*> GNode::getPrevBIP() {
-	vector<GNode*> prev = this->getPrev();
-	set<GNode*> prevBIP;
-	for(unsigned i = 0; i<prev.size();i++){ // check for each prev statement
-		if(StmtTable::getStmtTable()->getStmtNode(prev[i]->getAttrib())->getType()==CALL){  // if it is a call statement
-			vector<GNode*> last = CFG::getCFG()->getLast(CallsTable::getCallsTable()->getProcCalledByStmt(prev[i]->getAttrib()));
-			for(unsigned j = 0; j<last.size();j++)
-				prevBIP.insert(last[j]);	// insert the last elements of the procedure
-		} else prevBIP.insert(prev[i]);		// if it is not, insert it
-	}
-	return vector<GNode*>(prevBIP.begin(),prevBIP.end());
+	return this->previousBIP;
 }
 
 vector<GNode*> GNode::getPrevTransitive() {
@@ -155,20 +162,32 @@ vector<GNode*> GNode::getPrevTransitive() {
 }
 
 vector<GNode*> GNode::getPrevBIPTransitive() {
-	vector<GNode*> prevT = getPrevTransitive();
-	set<GNode*> prevBIPT;			// same idea as nextBIPTransitive (see above)
-	for(unsigned i = 0; i<prevT.size();i++){
-		prevBIPT.insert(prevT[i]);
-		if(StmtTable::getStmtTable()->getStmtNode(prevT[i]->getAttrib())->getType()==CALL){
-			GNode* root = CFG::getCFG()->getCfgRoot(CallsTable::getCallsTable()->getProcCalledByStmt(prevT[i]->getAttrib()));
-			vector<GNode*> temp = root->getNextBIPTransitive();
-			for(unsigned j = 0; i<temp.size();j++){
-				prevBIPT.insert(temp[i]);
+	vector<GNode*> prevBIPT;
+
+	// BFS
+	queue<GNode*> q;
+	q.push(this);
+
+	vector<bool> visited(StmtTable::getStmtTable()->getSize(), false);
+	visited[this->getAttrib()-1] = 0;
+
+	while (!q.empty()) {
+		GNode* u = q.front(); q.pop();
+		vector<GNode*> prev = u->getPrevBIP();
+		vector<GNode*>::iterator it;
+
+		for (it = prev.begin(); it < prev.end(); it++) {
+			GNode* v = *it;
+			int idx = v->getAttrib();
+			if (visited[idx-1] == false) {
+				visited[idx-1] = true;
+				q.push(v);
+				prevBIPT.push_back(v);
 			}
-			prevBIPT.insert(root);
 		}
 	}
-	return vector<GNode*>(prevBIPT.begin(),prevBIPT.end());
+
+	return prevBIPT;
 }
 
 bool GNode::isNext(GNode* next) {

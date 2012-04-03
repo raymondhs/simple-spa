@@ -11,6 +11,8 @@ private:
 	int attrib;
 	std::vector<GNode*> next;
 	std::vector<GNode*> previous;
+	std::vector<GNode*> nextBIP;
+	std::vector<GNode*> previousBIP;
 	void init();
 public:
 	GNode();
@@ -19,6 +21,8 @@ public:
 	void setAttrib(int attrib);
 	void setNext(GNode *node);
 	void setPrevious(GNode *node);
+	void setNextBIP(GNode *node);
+	void setPreviousBIP(GNode *node);
 	int getAttrib();
 	std::vector<GNode*> getNext();
 	std::vector<GNode*> getNextTransitive();
