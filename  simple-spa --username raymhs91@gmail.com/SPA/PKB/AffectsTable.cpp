@@ -96,8 +96,10 @@ void AffectsTable::fillTable2(STMT_NO stmt){
 			int type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
 			if (visited[idx-1] == false) {
 				visited[idx-1] = true;
-				if(!affectsEntryCreated[idx-1])
+				if(!affectsEntryCreated[idx-1]){
 					fillTable(idx);
+					affectsEntryCreated[idx-1]=true;
+				}
 				q.push(v);
 			}
 		}
