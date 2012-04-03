@@ -194,6 +194,22 @@ QNode* entRef() {
 	return ent;
 }
 
+QNode* stmtLstRef() {
+	QNode* stmtLst = new QNode();
+	if(next_token == TUNDERSCORE) {
+		next_token = getToken();
+		stmtLst->setType(QANY);
+	} else if(next_token == TNAME) {
+		stmtLst->setIntVal(getSynIdx(text));
+		stmtLst->setType(QSYN);
+		next_token = getToken();
+	} else {
+		PQLParser::cleanUp();
+		throw ParseException("Syntax error: Invalid query.");
+	}
+	return stmtLst;
+}
+
 QNode* lineRef(){
 	QNode* progLine = new QNode();
 	if(next_token == TUNDERSCORE) {
@@ -765,7 +781,7 @@ void suchthatCond() {
 }
 
 QNode* pattern() {
-	QNode *node, *left, *right;
+	QNode *node, *left, *middle, *right;
 
 	next_token = getToken();
 
@@ -794,13 +810,23 @@ QNode* pattern() {
 			throw ParseException("Error: Expecting underscore/variable in the first argument");
 		}
 		match(TCOMMA);
-		match(TUNDERSCORE);
+		middle = stmtLstRef();
+		if ((middle->getType() == QSYN && SynTable::getSynTable()->getSyn(middle->getIntVal()).second != QSTMTLST)) {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Expecting underscore/stmtLst in the second argument");
+		}
 		match(TCOMMA);
-		match(TUNDERSCORE);
+		right = stmtLstRef();
+		if ((right->getType() == QSYN && SynTable::getSynTable()->getSyn(right->getIntVal()).second != QSTMTLST)) {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Expecting underscore/stmtLst in the third argument");
+		}
 		match(TRPARENT);
 		node = new QNode(QSYN);
 		node->setIntVal(getSynIdx(temp));
 		node->setLeftChild(left);
+		node->getLeftChild()->setRightSibling(middle);
+		node->getLeftChild()->getRightSibling()->setRightSibling(right);
 		return node;
 	} else if (getSynType(temp) == QWHILE){
 		match(TLPARENT);
@@ -810,11 +836,16 @@ QNode* pattern() {
 			throw ParseException("Error: Expecting underscore/variable in the first argument");
 		}
 		match(TCOMMA);
-		match(TUNDERSCORE);
+		right=stmtLstRef();
+		if ((right->getType() == QSYN && SynTable::getSynTable()->getSyn(right->getIntVal()).second != QSTMTLST)) {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Expecting underscore/stmtLst in the second argument");
+		}
 		match(TRPARENT);
 		node = new QNode(QSYN);
 		node->setIntVal(getSynIdx(temp));
 		node->setLeftChild(left);
+		node->setRightChild(right);
 		return node;
 	} else {
 		PQLParser::cleanUp();
