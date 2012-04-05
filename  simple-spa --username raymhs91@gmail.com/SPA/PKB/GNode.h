@@ -4,6 +4,7 @@
 #pragma once
 
 #include <vector>
+#include "../Constants.h"
 
 class GNode
 {
@@ -14,6 +15,7 @@ private:
 	std::vector<GNode*> nextBIP;
 	std::vector<GNode*> previousBIP;
 	void init();
+	std::vector<GNode*> branchIn(PROC_IDX proc);
 public:
 	GNode();
 	GNode(int attrib);
