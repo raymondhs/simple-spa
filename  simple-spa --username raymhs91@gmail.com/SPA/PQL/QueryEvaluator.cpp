@@ -556,8 +556,60 @@ void evaluatePatternNode(QNode* patt){
 			}
 		}
 	} else if (type == QIF){
+		QNode *middlePatt = patt->getLeftChild()->getRightSibling();
+		int type3 = middlePatt->getType();
+		int aIdx3;
+		QNode *rightPatt = patt->getLeftChild()->getRightSibling()->getRightSibling();
+		int type4 = rightPatt->getType();
+		int aIdx4;
+
+		if(type3==QSYN){
+			if(mapper.count(middlePatt->getIntVal()) == 0)
+				addAttribute(middlePatt->getIntVal(), table, mapper);
+		aIdx3 = mapper[middlePatt->getIntVal()];
+		}
+		if(type4==QSYN){
+			if(mapper.count(rightPatt->getIntVal()) == 0)
+				addAttribute(rightPatt->getIntVal(), table, mapper);
+		aIdx4 = mapper[rightPatt->getIntVal()];
+		}
+
 		if(type2==QANY) {
-			if(st->getAllIf().size()==0) clearTable();
+			if(type3==QANY && type4==QANY){
+				//pattern if(_,_,_);
+				if(st->getAllIf().size()==0) clearTable();
+			}
+			else if (type3==QSYN && type4==QANY){
+				//pattern if(_,i1,_)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					int ifIdx = (*it)[aIdx];
+					int thenStmtLstIdx = (*it)[aIdx3];
+					if(thenStmtLstIdx != ifIdx+1) deleteRow(it--);
+				}
+			}
+			else if (type3==QANY && type4==QSYN){
+				//pattern if(_,_,i1)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
+					int elseStmtLstIdx = (*it)[aIdx4];
+					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+				}
+			}
+			else{
+				//pattern if(_,i1,i2)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					int ifIdx = (*it)[aIdx];
+					int stmtLstIdx = (*it)[aIdx3];
+					if(stmtLstIdx != ifIdx+1) deleteRow(it--);
+				}
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
+					int elseStmtLstIdx = (*it)[aIdx4];
+					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+				}
+			}
 		}
 		else if(type2 == QSYN){
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
@@ -565,11 +617,74 @@ void evaluatePatternNode(QNode* patt){
 				int varIdx = (*it)[aIdx2];
 				if(!(ifNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
 			}
+			if (type3==QSYN && type4==QANY){
+				//pattern if(v,i1,_)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					int ifIdx = (*it)[aIdx];
+					int stmtLstIdx = (*it)[aIdx3];
+					if(stmtLstIdx != ifIdx+1) deleteRow(it--);
+				}
+			}
+			else if (type3==QANY && type4==QSYN){
+				//pattern if(v,_,i2)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
+					int elseStmtLstIdx = (*it)[aIdx4];
+					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+				}
+			}
+			else{
+				//pattern if(v,i1,i2)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					int ifIdx = (*it)[aIdx];
+					int stmtLstIdx = (*it)[aIdx3];
+					if(stmtLstIdx != ifIdx+1) deleteRow(it--);
+				}
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
+					int elseStmtLstIdx = (*it)[aIdx4];
+					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+				}
+			}
 		} else {
+			//type2==string value
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 				TNode *ifNode = st->getStmtNode((*it)[aIdx]);
 				int varIdx = VarTable::getVarTable()->getVarIndex(patt->getLeftChild()->getStrVal());
 				if(!(ifNode->getFirstChild()->getAttrib() == varIdx)) deleteRow(it--);
+			}
+			if (type3==QSYN && type4==QANY){
+				//pattern if("var",i1,_)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					int ifIdx = (*it)[aIdx];
+					int stmtLstIdx = (*it)[aIdx3];
+					if(stmtLstIdx != ifIdx+1) deleteRow(it--);
+				}
+			}
+			else if (type3==QANY && type4==QSYN){
+				//pattern if("var",_,i2)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
+					int elseStmtLstIdx = (*it)[aIdx4];
+					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+				}
+			}
+			else{
+				//pattern if("var",i1,i2)
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					int ifIdx = (*it)[aIdx];
+					int stmtLstIdx = (*it)[aIdx3];
+					if(stmtLstIdx != ifIdx+1) deleteRow(it--);
+				}
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
+					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
+					int elseStmtLstIdx = (*it)[aIdx4];
+					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+				}
 			}
 		}
 	}

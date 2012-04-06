@@ -21,6 +21,8 @@ static int getToken();
 static void match(int token);
 static QNode* stmtRef();
 static QNode* entRef();
+static QNode* stmtLstRef();
+static QNode* nodeRef();
 static QNode* relRef();
 static QNode* lineRef();
 
@@ -208,6 +210,23 @@ QNode* stmtLstRef() {
 		throw ParseException("Syntax error: Invalid query.");
 	}
 	return stmtLst;
+}
+
+QNode* nodeRef() {
+	QNode* node = new QNode();
+	if(next_token == TINTEGER) {
+		node->setIntVal(atoi(text.c_str()));
+		next_token = getToken();
+		node->setType(QINT);
+	} else if(next_token == TNAME) {
+		node->setIntVal(getSynIdx(text));
+		node->setType(QSYN);
+		next_token = getToken();
+	} else {
+		PQLParser::cleanUp();
+		throw ParseException("Syntax error: Invalid query.");
+	}
+	return node;
 }
 
 QNode* lineRef(){
