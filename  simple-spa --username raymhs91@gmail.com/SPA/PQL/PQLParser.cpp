@@ -253,6 +253,7 @@ QNode* relRef() {
 	string relName = "", temp;
 	int arg1, arg2, tok;
 	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF|QCALL;
+	int allNode = QPROGLINE|QPROC|QSTMTLST|QSTMT|QASSIGN|QCALL|QWHILE|QIF|QPLUS|QMINUS|QTIMES|QVAR|QCONST;
 	QNode *rel, *arg1node, *arg2node;
 	if(text == "Modifies" || text == "Uses") {
 		arg1 = allStmt;
@@ -469,6 +470,51 @@ QNode* relRef() {
 		temp = text;
 		tok = next_token;
 		arg2node = stmtRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg2 = getSynType(temp);
+		}
+
+		match(TRPARENT);
+
+		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+		}
+
+		rel = new QNode(t);
+		rel->setLeftChild(arg1node);
+		rel->setRightChild(arg2node);
+	} else if(text == "Contains") {
+		QNodeType t;
+		arg1 = allNode;
+		arg2 = allNode;
+		relName = text;
+		if(relName == "Contains") { t = QCONTAINS; }
+		next_token = getToken();
+		if(text == "*") {
+			relName += "*";
+			if(relName == "Contains*") { t = QCONTAINST; }
+			next_token = getToken();
+		} else if(text == "(") {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Syntax error: Invalid query.");
+		}
+		match(TLPARENT);
+
+		temp = text;
+		tok = next_token;
+		arg1node = nodeRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg1 = getSynType(temp);
+		}
+
+		match(TCOMMA);
+
+		temp = text;
+		tok = next_token;
+		arg2node = nodeRef();
 		if(tok != TUNDERSCORE && tok != TINTEGER) {
 			arg2 = getSynType(temp);
 		}
@@ -752,6 +798,15 @@ int entity() {
 	} else if(text == "if") {
 		next_token = getToken();
 		return QIF;
+	} else if(text == "plus") {
+		next_token = getToken();
+		return QPLUS;
+	} else if(text == "minus") {
+		next_token = getToken();
+		return QMINUS;
+	} else if(text == "times") {
+		next_token = getToken();
+		return QTIMES;
 	} else {
 		PQLParser::cleanUp();
 		throw ParseException("Syntax error: Invalid query.");

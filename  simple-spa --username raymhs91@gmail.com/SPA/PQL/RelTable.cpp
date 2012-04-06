@@ -38,7 +38,7 @@ void RelTable::init() {
 	mapper.insert(pair<string, vector< vector<int> > >("Sibling",vector< vector<int> >()));
 
 	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF|QCALL;
-	int allNode = PROCEDURE|STMTLST|STMT|ASSIGN|CALL|WHILE|IF|PLUS|MINUS|TIMES|VAR|CONST;
+	int allNode = QPROGLINE|QPROC|QSTMTLST|QSTMT|QASSIGN|QCALL|QWHILE|QIF|QPLUS|QMINUS|QTIMES|QVAR|QCONST;
 	insertRow("Parent",allStmt,allStmt);
 	insertRow("Parent*",allStmt,allStmt);
 	insertRow("Follows",allStmt,allStmt);
