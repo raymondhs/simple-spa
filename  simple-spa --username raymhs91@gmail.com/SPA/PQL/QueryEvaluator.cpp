@@ -71,6 +71,11 @@ static void handleNext(QNode* query);
 static void handleNextT(QNode* query);
 static void handleAffects(QNode* query);
 static void handleAffectsT(QNode* query);
+static void handleContains(QNode* query);
+static void handleContainsT(QNode* query);
+static void handleSibling(QNode* query);
+
+
 
 static int leftType, rightType;
 static int synIdxLeft, synIdxRight;
@@ -463,6 +468,12 @@ void evaluateSuchThatNode(QNode* such){
 		handleAffects(such); break;
 	case QAFFECTT:
 		handleAffectsT(such); break;
+	case QCONTAINS:
+		handleContains(such); break;
+	case QCONTAINST:
+		handleContainsT(such); break;
+	case QSIBLING:
+		handleSibling(such); break;
 	default:
 		break;
 	}
@@ -1578,6 +1589,18 @@ void handleAffectsT(QNode* query) {
 				}
 			}
 		} 
+}
+
+void handleContains(QNode* query) {
+
+}
+
+void handleContainsT(QNode* query) {
+
+}
+
+void handleSibling(QNode* query) {
+
 }
 
 vector<string> QueryEvaluator::evaluate() {
