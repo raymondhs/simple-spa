@@ -134,7 +134,7 @@ vector<GNode*> GNode::getNextBIPTransitive() {
 				visited[idx-1] = true;
 				if(type==CALL){
 					vector<GNode*> temp = branchIn(CallsTable::getCallsTable()->getProcCalledByStmt(idx));
-					for(unsigned j = 0; i<temp.size();j++){
+					for(unsigned i = 0; i<temp.size();i++){
 						nextBIPT.insert(temp[i]);
 					}
 				}
@@ -199,6 +199,7 @@ vector<GNode*> GNode::getPrevBIPTransitive() {
 			prev = u->getPrevBIP();
 			for (it = prev.begin(); it < prev.end(); it++){
 				GNode* v = *it;
+				int idx = v->getAttrib();
 				if (visited[idx-1] == false) {
 					visited[idx-1] = true;
 					q.push(v);
@@ -215,7 +216,7 @@ vector<GNode*> GNode::getPrevBIPTransitive() {
 				visited[idx-1] = true;
 				if(type==CALL){
 					vector<GNode*> temp = branchIn(CallsTable::getCallsTable()->getProcCalledByStmt(idx));
-					for(unsigned j = 0; i<temp.size();j++){
+					for(unsigned i = 0; i<temp.size();i++){
 						prevBIPT.insert(temp[i]);
 					}
 				}
