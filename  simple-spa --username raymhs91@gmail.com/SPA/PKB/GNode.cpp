@@ -27,6 +27,12 @@ GNode::~GNode() {
 	}
 
 	next.clear();
+
+	for (unsigned i=0; i<next.size(); i++) {
+		delete nextBIP[i];
+	}
+
+	nextBIP.clear();
 }
 
 void GNode::setAttrib(int attrib) {
