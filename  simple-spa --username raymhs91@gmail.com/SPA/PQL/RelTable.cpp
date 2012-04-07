@@ -51,8 +51,12 @@ void RelTable::init() {
 	insertRow("Calls*",QPROC,QPROC);
 	insertRow("Next",QPROGLINE,QPROGLINE);
 	insertRow("Next*",QPROGLINE,QPROGLINE);
+	insertRow("NextBip",QPROGLINE,QPROGLINE);
+	insertRow("NextBip*",QPROGLINE,QPROGLINE);
 	insertRow("Affects",allStmt,allStmt);
 	insertRow("Affects*",allStmt,allStmt);
+	insertRow("AffectsBip",allStmt,allStmt);
+	insertRow("AffectsBip*",allStmt,allStmt);
 	insertRow("Contains",allNode,allNode);
 	insertRow("Contains*",allNode,allNode);
 	insertRow("Sibling",allNode,allNode);

@@ -573,10 +573,10 @@ void evaluatePatternNode(QNode* patt){
 			}
 		}
 	} else if (type == QIF){
-		QNode *middlePatt = patt->getLeftChild()->getRightSibling();
+		QNode *middlePatt = patt->getRightChild();
 		int type3 = middlePatt->getType();
 		int aIdx3;
-		QNode *rightPatt = patt->getLeftChild()->getRightSibling()->getRightSibling();
+		QNode *rightPatt = patt->getRightChild()->getRightSibling();
 		int type4 = rightPatt->getType();
 		int aIdx4;
 
@@ -610,7 +610,9 @@ void evaluatePatternNode(QNode* patt){
 					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
 					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
 					int elseStmtLstIdx = (*it)[aIdx4];
-					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) {
+						deleteRow(it--);
+					}
 				}
 			}
 			else{
@@ -618,13 +620,17 @@ void evaluatePatternNode(QNode* patt){
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 					int ifIdx = (*it)[aIdx];
 					int stmtLstIdx = (*it)[aIdx3];
-					if(stmtLstIdx != ifIdx+1) deleteRow(it--);
+					if(stmtLstIdx != ifIdx+1) {
+						deleteRow(it--);
+					}
 				}
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
 					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
 					int elseStmtLstIdx = (*it)[aIdx4];
-					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+					if(!(elseStmtLstIdx==elseNode->getFirstChild()->getAttrib())){
+						deleteRow(it--);
+					}
 				}
 			}
 		}
@@ -648,10 +654,10 @@ void evaluatePatternNode(QNode* patt){
 					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
 					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
 					int elseStmtLstIdx = (*it)[aIdx4];
-					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+					if(!(elseStmtLstIdx==elseNode->getFirstChild()->getAttrib())) deleteRow(it--);
 				}
 			}
-			else{
+			else if (type3==QSYN && type4==QSYN){
 				//pattern if(v,i1,i2)
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 					int ifIdx = (*it)[aIdx];
@@ -662,7 +668,7 @@ void evaluatePatternNode(QNode* patt){
 					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
 					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
 					int elseStmtLstIdx = (*it)[aIdx4];
-					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+					if(!(elseStmtLstIdx==elseNode->getFirstChild()->getAttrib())) deleteRow(it--);
 				}
 			}
 		} else {
@@ -686,10 +692,10 @@ void evaluatePatternNode(QNode* patt){
 					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
 					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
 					int elseStmtLstIdx = (*it)[aIdx4];
-					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+					if(!(elseStmtLstIdx==elseNode->getFirstChild()->getAttrib())) deleteRow(it--);
 				}
 			}
-			else{
+			else if (type3==QSYN && type4==QSYN){
 				//pattern if("var",i1,i2)
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 					int ifIdx = (*it)[aIdx];
@@ -700,7 +706,7 @@ void evaluatePatternNode(QNode* patt){
 					TNode *ifNode = st->getStmtNode((*it)[aIdx]);
 					TNode *elseNode = ifNode->getFirstChild()->getRightSibling()->getRightSibling();
 					int elseStmtLstIdx = (*it)[aIdx4];
-					if(elseStmtLstIdx!=elseNode->getFirstChild()->getAttrib()) deleteRow(it--);
+					if(!(elseStmtLstIdx==elseNode->getFirstChild()->getAttrib())) deleteRow(it--);
 				}
 			}
 		}
@@ -1822,15 +1828,26 @@ void handleAffectsBIPT(QNode* query) {
 }
 
 void handleContains(QNode* query) {
+	initVars(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
 
+	if (leftType==QSYN){
+		int entLeftType = SynTable::getSynTable()->getSyn(synIdxLeft).second;
+		if (rightType==QSYN){
+			int entRightType = SynTable::getSynTable()->getSyn(synIdxRight).second;
+			TNode *currNode= ast->getRoot();
+		}
+	}
 }
 
 void handleContainsT(QNode* query) {
-
+	initVars(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
 }
 
 void handleSibling(QNode* query) {
-
+	initVars(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
 }
 
 vector<string> QueryEvaluator::evaluate() {

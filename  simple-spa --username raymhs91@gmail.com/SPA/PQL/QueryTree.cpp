@@ -44,6 +44,14 @@ void QueryTree::addClause(QNode* clause) {
 				dependencyGraph.resize(syn+1,vector<QNode*>());
 			dependencyGraph[syn].push_back(clause);
 		}
+		if(clause->getRightChild() != NULL &&
+			clause->getRightChild()->getRightSibling() != NULL &&
+			clause->getRightChild()->getRightSibling()->getType() == QSYN) {
+				syn = clause->getRightChild()->getRightSibling()->getIntVal();
+			if(dependencyGraph.size() <= (unsigned)syn)
+				dependencyGraph.resize(syn+1,vector<QNode*>());
+			dependencyGraph[syn].push_back(clause);
+		}
 	}
 }
 vector<QNode*> QueryTree::nextClauses() {
@@ -79,6 +87,10 @@ vector<QNode*> QueryTree::nextClauses() {
 				}
 				if(node->getRightChild() != NULL && node->getRightChild()->getType() == QSYN) {
 					syn = node->getRightChild()->getIntVal();
+					if(!vis[syn]) q.push(syn);
+				}
+				if(node->getRightChild() !=NULL && node->getRightChild()->getRightSibling() != NULL && node->getRightChild()->getRightSibling()->getType() == QSYN) {
+					syn = node->getRightChild()->getRightSibling()->getIntVal();
 					if(!vis[syn]) q.push(syn);
 				}
 			}

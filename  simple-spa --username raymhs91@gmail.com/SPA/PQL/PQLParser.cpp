@@ -393,6 +393,53 @@ QNode* relRef() {
 		rel->setLeftChild(arg1node);
 		rel->setRightChild(arg2node);
 
+	} else if(text=="NextBip"){
+		QNodeType t;
+		arg1 = QPROGLINE;
+		arg2 = QPROGLINE;
+		relName = text;
+		if(relName == "NextBip") { t = QNEXTBIP; }
+		next_token = getToken();
+		if(text == "*") {
+			relName += "*";
+			if(relName == "NextBip*") { t = QNEXTBIPT; }
+			next_token = getToken();
+		} else if(text == "(") {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Syntax error: Invalid query.");
+		}
+		match(TLPARENT);
+
+		temp = text;
+		tok = next_token;
+		arg1node = lineRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg1 = getSynType(temp);
+		}
+
+
+		match(TCOMMA);
+
+		temp = text;
+		tok = next_token;
+		arg2node = lineRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg2 = getSynType(temp);
+		}
+
+		match(TRPARENT);
+
+		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+		}
+
+		rel = new QNode(t);
+		rel->setLeftChild(arg1node);
+		rel->setRightChild(arg2node);
+
 	} else if(text=="Next"){
 		QNodeType t;
 		arg1 = QPROGLINE;
@@ -439,7 +486,51 @@ QNode* relRef() {
 		rel = new QNode(t);
 		rel->setLeftChild(arg1node);
 		rel->setRightChild(arg2node);
+	} else if(text == "AffectsBip") {
+		QNodeType t;
+		arg1 = allStmt;
+		arg2 = allStmt;
+		relName = text;
+		if(relName == "AffectsBip") { t = QAFFECTBIP; }
+		next_token = getToken();
+		if(text == "*") {
+			relName += "*";
+			if(relName == "AffectsBip*") { t = QAFFECTBIPT; }
+			next_token = getToken();
+		} else if(text == "(") {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Syntax error: Invalid query.");
+		}
+		match(TLPARENT);
 
+		temp = text;
+		tok = next_token;
+		arg1node = stmtRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg1 = getSynType(temp);
+		}
+
+		match(TCOMMA);
+
+		temp = text;
+		tok = next_token;
+		arg2node = stmtRef();
+		if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg2 = getSynType(temp);
+		}
+
+		match(TRPARENT);
+
+		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+		}
+
+		rel = new QNode(t);
+		rel->setLeftChild(arg1node);
+		rel->setRightChild(arg2node);
 	} else if(text == "Affects") {
 		QNodeType t;
 		arg1 = allStmt;
@@ -899,8 +990,8 @@ QNode* pattern() {
 		node = new QNode(QSYN);
 		node->setIntVal(getSynIdx(temp));
 		node->setLeftChild(left);
-		node->getLeftChild()->setRightSibling(middle);
-		node->getLeftChild()->getRightSibling()->setRightSibling(right);
+		node->setRightChild(middle);
+		node->getRightChild()->setRightSibling(right);
 		return node;
 	} else if (getSynType(temp) == QWHILE){
 		match(TLPARENT);
