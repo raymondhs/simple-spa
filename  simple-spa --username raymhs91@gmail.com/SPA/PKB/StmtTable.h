@@ -49,6 +49,14 @@ public:
 	TNode* getStmtNode(STMT_NO idx);
 
 	/**
+	 * Gets the statementList node based on statement number
+	 *
+	 * @param idx Statement number
+	 * @return Reference to the statementList node
+	 */
+	TNode* getStmtLstNode(STMT_NO idx);
+
+	/**
 	 * Gets all statements in the program
 	 *
 	 * @return Vector of all statement numbers in the program

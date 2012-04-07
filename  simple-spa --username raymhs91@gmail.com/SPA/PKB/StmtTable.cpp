@@ -35,6 +35,13 @@ TNode* StmtTable::getStmtNode(STMT_NO idx) {
 	return NULL;
 }
 
+TNode* StmtTable::getStmtLstNode(STMT_NO idx) {
+	if((unsigned)idx >= 1 && (unsigned)idx <= idxToRef.size()) {
+		return idxToRef[idx-1]->getUpLink();
+	}
+	return NULL;
+}
+
 
 std::vector<int> StmtTable::getAllStmt() {
 	vector<int> result;

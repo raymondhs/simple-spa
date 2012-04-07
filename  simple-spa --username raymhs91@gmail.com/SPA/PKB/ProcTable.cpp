@@ -39,6 +39,15 @@ PROC_IDX ProcTable::getProcIndex(PROC_NAME procName){
 		return -1;
 }
 
+TNode* ProcTable::getProcNode(int idx){
+	TNode* procNode = AST::getAST()->getRoot()->getFirstChild();
+	while(procNode!=NULL){
+		if(procNode->getAttrib()==idx) return procNode;
+		procNode=procNode->getRightSibling();
+	}
+	return NULL;
+}
+
 ProcTable* ProcTable::getProcTable(){
 	static ProcTable procTable;
 	return &procTable;

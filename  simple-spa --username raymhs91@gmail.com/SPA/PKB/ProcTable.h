@@ -59,6 +59,14 @@ public:
 	PROC_IDX getProcIndex(PROC_NAME procName);
 
 	/**
+	 * Gets the reference to AST Procedure node
+	 *
+	 * @param idx procedure index
+	 * @return AST reference
+	 */
+	TNode* getProcNode(int idx);
+
+	/**
 	 * Gets all procedures in the program
 	 *
 	 * @return Vector of procedures indices in the program

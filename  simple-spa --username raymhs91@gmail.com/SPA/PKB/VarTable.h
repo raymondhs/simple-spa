@@ -8,6 +8,7 @@
 #include <map>
 #include <vector>
 #include "../Constants.h"
+#include "TNode.h"
 
 class VarTable {
 
@@ -57,6 +58,13 @@ public:
 	 */
 	VAR_IDX getVarIndex(std::string varName);
 
+	/**
+	 * return all AST Node reference that has attribute value
+	 *
+	 * @param value variable index
+	 */
+	std::vector<TNode*> getVarNode(int value);
+	
 	/**
 	 * Gets all variables in the program
 	 *

@@ -474,6 +474,14 @@ void evaluateSuchThatNode(QNode* such){
 		handleAffects(such); break;
 	case QAFFECTT:
 		handleAffectsT(such); break;
+	case QNEXTBIP:
+		handleNext(such); break;
+	case QNEXTBIPT:
+		handleNextT(such); break;
+	case QAFFECTBIP:
+		handleAffects(such); break;
+	case QAFFECTBIPT:
+		handleAffectsT(such); break;
 	case QCONTAINS:
 		handleContains(such); break;
 	case QCONTAINST:
@@ -1831,11 +1839,23 @@ void handleContains(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
 
-	if (leftType==QSYN){
-		int entLeftType = SynTable::getSynTable()->getSyn(synIdxLeft).second;
-		if (rightType==QSYN){
-			int entRightType = SynTable::getSynTable()->getSyn(synIdxRight).second;
-			TNode *currNode= ast->getRoot();
+	if(leftType == QSYN) {
+		int aIdx = mapper[synIdxLeft];
+		int leftEntType = syn->getSyn(synIdxLeft).second;
+		if(rightType == QINT){
+		}
+		else if(rightType ==QSYN){
+			int aIdx2 = mapper[synIdxRight];
+			int rightEntType = syn->getSyn(synIdxRight).second;
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(ast->contains((QNodeType)leftEntType,aIdx,(QNodeType)rightEntType,aIdx2))) deleteRow(it--);
+			}
+		}
+	}
+	else if(leftType == QINT){
+		if(rightType == QINT){
+		}
+		else if(rightType ==QSYN){
 		}
 	}
 }

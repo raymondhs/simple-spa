@@ -30,6 +30,13 @@ public:
 	void addConstant(TNode* constant);
 
 	/**
+	 * return all AST Node reference that has attribute value
+	 *
+	 * @param value constant value
+	 */
+	std::vector<TNode*> getConstNodes(int value);
+
+	/**
 	 * Gets all constants in the program
 	 *
 	 * @return Vector of all constants in the program

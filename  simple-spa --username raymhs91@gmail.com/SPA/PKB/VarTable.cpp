@@ -2,8 +2,13 @@
  * @author: Peter
  */
 #include "VarTable.h"
+#include "StmtTable.h"
+#include "../Constants.h"
+#include "TNode.h"
 
 using namespace std;
+
+static void DFS(TNode *root, int val, vector<TNode *> &result);
 
 VarTable::VarTable(){}
 
@@ -31,6 +36,25 @@ int VarTable::getVarIndex(string varName){
 		return iter->second;
 	else
 		return -1;
+}
+
+void DFS(TNode *root, int val, vector<TNode *> &result) {
+	if(root == NULL) return;
+	if(root->getType() == VAR && root->getAttrib() == val) {
+		result.push_back(root);
+	}
+	DFS(root->getFirstChild(), val, result);
+	DFS(root->getRightSibling(), val, result);
+}
+
+vector<TNode*> VarTable::getVarNode(int v){
+	vector<TNode*> result;
+	vector<int> stmts = StmtTable::getStmtTable()->getAllStmt();
+	for(int i = 0; i < stmts.size(); i++) {
+		TNode *stmt = StmtTable::getStmtTable()->getStmtNode(stmts[i]);
+		DFS(stmt, v, result);
+	}
+	return result;
 }
 
 VarTable* VarTable::getVarTable(){

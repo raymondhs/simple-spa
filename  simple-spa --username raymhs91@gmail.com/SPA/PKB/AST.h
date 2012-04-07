@@ -8,6 +8,9 @@
 #include <string>
 #include "../PKB/TNode.h"
 #include "../PQL/QNode.h"
+#include "../Constants.h"
+
+using namespace std;
 
 class AST {
 private:
@@ -42,4 +45,11 @@ public:
 	 * Deletes this AST
 	 */
 	void destroy();
+
+	/**
+	 * returns true if node 1 contains node 2
+	 *
+	 * @return boolean
+	 */
+	bool contains(QNodeType t1, int v1, QNodeType t2, int v2);
 };
