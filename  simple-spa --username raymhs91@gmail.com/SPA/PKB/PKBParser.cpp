@@ -16,6 +16,7 @@
 #include "CallsTable.h"
 #include "CFG.h"
 #include "AffectsTable.h"
+#include "AffectsBIPTable.h"
 
 using namespace std;
 
@@ -586,6 +587,7 @@ void PKBParser::parse(string fileName){
 		throw ParseException("Error in reading file.");
 	}
 	AffectsTable::getAffectsTable()->init();
+	AffectsBIPTable::getAffectsBIPTable()->init();
 }
 
 void PKBParser::cleanUp() {
@@ -600,6 +602,7 @@ void PKBParser::cleanUp() {
 	calledProc.clear();
 	CallsTable::getCallsTable()->clearTable();
 	AffectsTable::getAffectsTable()->clearTable();
+	AffectsBIPTable::getAffectsBIPTable()->clearTable();
 	CFG::getCFG()->clearTable();
 }
 
