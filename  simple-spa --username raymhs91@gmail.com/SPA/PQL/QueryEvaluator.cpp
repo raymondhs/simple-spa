@@ -71,6 +71,8 @@ static void handleCalls(QNode* query);
 static void handleCallsT(QNode* query);
 static void handleNext(QNode* query);
 static void handleNextT(QNode* query);
+static void handleNextBIP(QNode* query);
+static void handleNextBIPT(QNode* query);
 static void handleAffects(QNode* query);
 static void handleAffectsT(QNode* query);
 static void handleAffectsBIP(QNode* query);
@@ -1480,6 +1482,120 @@ void handleNextT(QNode* query) {
 				GNode* l1 = cfg->getNode((*it)[aIdx1]);
 				GNode* l2 = cfg->getNode((*it)[aIdx2]);
 				if(!(l1->isNextTransitive(l2))) deleteRow(it--);
+			}
+		}
+	}
+}
+
+void handleNextBIP(QNode* query) {
+	initVarsForNext(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
+
+	if(leftType == QINT) {
+		if(rightType == QINT) {
+			if(!(line1->isNextBIP(line2))) clearTable();
+		} else if(rightType == QANY) {
+			if(line1->getNextBIP().size() == 0) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* lineNode = cfg->getNode((*it)[aIdx]);
+				if(!(line1->isNextBIP(lineNode))) deleteRow(it--);
+			}
+		}
+	} else if(leftType == QANY) {
+		if(rightType == QINT) {
+			if(line2->getPrevBIP().size() == 0) clearTable();
+		} else if(rightType == QANY) {
+			bool found = false;
+			for(ui i = 0; i < st->getAllProgline().size(); i++) {
+				GNode* lineNode = cfg->getNode(i+1);
+				if(lineNode->getNextBIP().size() > 0) { found = true; break; }
+			}
+			if(!found) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* lineNode = cfg->getNode((*it)[aIdx]);
+				if(lineNode->getPrevBIP().size() == 0) deleteRow(it--);
+			}
+		}
+	} else if(leftType == QSYN) {
+		if(rightType == QINT) {
+			int aIdx = mapper[synIdxLeft];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* lineNode = cfg->getNode((*it)[aIdx]);
+				if(!(lineNode->isNextBIP(line2))) deleteRow(it--);
+			}
+		} else if(rightType == QANY) {
+			int aIdx = mapper[synIdxLeft];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* lineNode = cfg->getNode((*it)[aIdx]);
+				if(lineNode->getNextBIP().size() == 0) deleteRow(it--);
+			}
+		} else if(rightType == QSYN) {
+			int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* l1 = cfg->getNode((*it)[aIdx1]);
+				GNode* l2 = cfg->getNode((*it)[aIdx2]);
+				if(!(l1->isNextBIP(l2))) deleteRow(it--);
+			}
+		}
+	}
+}
+
+void handleNextBIPT(QNode* query) {
+	initVarsForNext(query->getLeftChild(),query->getRightChild());
+	if(!valid) { clearTable(); return; }
+
+	if(leftType == QINT) {
+		if(rightType == QINT) {
+			if(!(line1->isNextBIPTransitive(line2))) clearTable();
+		} else if(rightType == QANY) {
+			if(line1->getNextBIP().size() == 0) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* lineNode = cfg->getNode((*it)[aIdx]);
+				if(!(line1->isNextBIPTransitive(lineNode))) deleteRow(it--);
+			}
+		}
+	} else if(leftType == QANY) {
+		if(rightType == QINT) {
+			if(line2->getPrevBIP().size() == 0) clearTable();
+		} else if(rightType == QANY) {
+			bool found = false;
+			for(ui i = 0; i < st->getAllProgline().size(); i++) {
+				GNode* lineNode = cfg->getNode(i+1);
+				if(lineNode->getNextBIP().size() > 0) { found = true; break; }
+			}
+			if(!found) clearTable();
+		} else if(rightType == QSYN) {
+			int aIdx = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* lineNode = cfg->getNode((*it)[aIdx]);
+				if(lineNode->getPrevBIP().size() == 0) deleteRow(it--);
+			}
+		}
+	} else if(leftType == QSYN) {
+		if(rightType == QINT) {
+			int aIdx = mapper[synIdxLeft];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* lineNode = cfg->getNode((*it)[aIdx]);
+				if(!(lineNode->isNextBIPTransitive(line2))) deleteRow(it--);
+			}
+		} else if(rightType == QANY) {
+			int aIdx = mapper[synIdxLeft];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* lineNode = cfg->getNode((*it)[aIdx]);
+				if(lineNode->getNextBIP().size() == 0) deleteRow(it--);
+			}
+		} else if(rightType == QSYN) {
+			int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				GNode* l1 = cfg->getNode((*it)[aIdx1]);
+				GNode* l2 = cfg->getNode((*it)[aIdx2]);
+				if(!(l1->isNextBIPTransitive(l2))) deleteRow(it--);
 			}
 		}
 	}
