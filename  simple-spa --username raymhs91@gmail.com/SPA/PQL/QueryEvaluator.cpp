@@ -1847,6 +1847,7 @@ void handleContains(QNode* query) {
 		else if(rightType ==QSYN){
 			int aIdx2 = mapper[synIdxRight];
 			int rightEntType = syn->getSyn(synIdxRight).second;
+			//out << "test1 "<< rightEntType <<" test 2 "<< (QNodeType)rightEntType << endl; 
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 				if(!(ast->contains((QNodeType)leftEntType,aIdx,(QNodeType)rightEntType,aIdx2))) deleteRow(it--);
 			}

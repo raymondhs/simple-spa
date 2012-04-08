@@ -31,8 +31,10 @@ void RelTable::init() {
 	mapper.insert(pair<string, vector< vector<int> > >("Calls*",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Next",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Next*",vector< vector<int> >()));
-	mapper.insert(pair<string, vector< vector<int> > >("Affect",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("Affects",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Affects*",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("AffectsBip",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("AffectsBip*",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Contain",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Contain*",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Sibling",vector< vector<int> >()));

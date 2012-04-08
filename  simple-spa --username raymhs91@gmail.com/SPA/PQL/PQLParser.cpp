@@ -1040,9 +1040,13 @@ QNode* selectClause() {
 		match(TLESSTHAN);
 		while(text!=">"){
 			int synIdx = SynTable::getSynTable()->getSynIdx(text);
+			int synType = SynTable::getSynTable()->getSyn(synIdx).second;
 			if(synIdx == -1) {		
 				PQLParser::cleanUp();
 				throw ParseException("Error: Undeclared variable: " + text);
+			} else if(synType==QPLUS || synType==QTIMES || synType == QMINUS){ 
+				PQLParser::cleanUp();
+				throw ParseException("Error: Cannot select synonym " + text +" of type AST Node plus/minus/times.");
 			} else {
 				match(TNAME);
 				if (text=="."){
@@ -1070,9 +1074,13 @@ QNode* selectClause() {
 	else if (text!="BOOLEAN" && text != "<"){
 		//Select QSYN
 		int synIdx = SynTable::getSynTable()->getSynIdx(text);
+		int synType = SynTable::getSynTable()->getSyn(synIdx).second;
 		if(synIdx == -1) {		
 			PQLParser::cleanUp();
 			throw ParseException("Error: Undeclared variable: " + text);
+		} else if(synType==QPLUS || synType==QTIMES || synType == QMINUS){ 
+			PQLParser::cleanUp();
+			throw ParseException("Error: Cannot select synonym " + text +" of type AST Node plus/minus/times.");
 		} else {
 			match(TNAME);
 			if (text=="."){
