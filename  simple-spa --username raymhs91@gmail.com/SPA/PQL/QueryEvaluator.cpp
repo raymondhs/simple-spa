@@ -475,13 +475,13 @@ void evaluateSuchThatNode(QNode* such){
 	case QAFFECTT:
 		handleAffectsT(such); break;
 	case QNEXTBIP:
-		handleNext(such); break;
+		handleNextBIP(such); break;
 	case QNEXTBIPT:
-		handleNextT(such); break;
+		handleNextBIPT(such); break;
 	case QAFFECTBIP:
-		handleAffects(such); break;
+		handleAffectsBIP(such); break;
 	case QAFFECTBIPT:
-		handleAffectsT(such); break;
+		handleAffectsBIPT(such); break;
 	case QCONTAINS:
 		handleContains(such); break;
 	case QCONTAINST:
