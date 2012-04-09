@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\SPA\ParseException.cpp" />
+    <ClCompile Include="..\SPA\PKB\AffectsBIPTable.cpp" />
     <ClCompile Include="..\SPA\PKB\AffectsTable.cpp" />
     <ClCompile Include="..\SPA\PKB\AST.cpp" />
     <ClCompile Include="..\SPA\PKB\CallsTable.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="..\SPA\Constants.h" />
     <ClInclude Include="..\SPA\ParseException.h" />
+    <ClInclude Include="..\SPA\PKB\AffectsTable.h" />
     <ClInclude Include="..\SPA\PKB\AST.h" />
     <ClInclude Include="..\SPA\PKB\CallsTable.h" />
     <ClInclude Include="..\SPA\PKB\CFG.h" />

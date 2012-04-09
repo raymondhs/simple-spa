@@ -50,7 +50,7 @@ void DFS(TNode *root, int val, vector<TNode *> &result) {
 vector<TNode*> VarTable::getVarNode(int v){
 	vector<TNode*> result;
 	vector<int> stmts = StmtTable::getStmtTable()->getAllStmt();
-	for(int i = 0; i < stmts.size(); i++) {
+	for(int i = 0; (unsigned)i < stmts.size(); i++) {
 		TNode *stmt = StmtTable::getStmtTable()->getStmtNode(stmts[i]);
 		DFS(stmt, v, result);
 	}

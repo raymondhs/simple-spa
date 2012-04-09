@@ -113,7 +113,6 @@
   <ItemGroup>
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ParseException.h" />
-    <ClInclude Include="PKB\AffectsBIPTable.h" />
     <ClInclude Include="PKB\AffectsTable.h" />
     <ClInclude Include="PKB\AST.h" />
     <ClInclude Include="PKB\CallsTable.h" />

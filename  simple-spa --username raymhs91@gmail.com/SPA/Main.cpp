@@ -13,7 +13,7 @@ void printExit();
 int main() {
 	string fileName = "../TestSPA/testcases/testQuery.txt";
 	cout << "################################" << endl;
-	cout << "#     SPA Prototype v1.0.0     #" << endl;
+	cout << "#          SPA v1.0.4          #" << endl;
 	cout << "#            Team 3            #" << endl;
 	cout << "################################" << endl;
 	cout << endl;

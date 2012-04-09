@@ -51,10 +51,16 @@
     <ClCompile Include="..\SPA\PQL\RelTable.cpp">
       <Filter>Source Files\PQL</Filter>
     </ClCompile>
-    <ClCompile Include="..\SPA\PKB\AST.cpp">
+    <ClCompile Include="..\SPA\PKB\AffectsBIPTable.cpp">
       <Filter>Source Files\PKB</Filter>
     </ClCompile>
     <ClCompile Include="..\SPA\PKB\VarTable.cpp">
+      <Filter>Source Files\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\AffectsTable.cpp">
+      <Filter>Source Files\PKB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SPA\PKB\AST.cpp">
       <Filter>Source Files\PKB</Filter>
     </ClCompile>
     <ClCompile Include="..\SPA\PKB\CallsTable.cpp">
@@ -90,9 +96,6 @@
     <ClCompile Include="..\SPA\PKB\UsesTable.cpp">
       <Filter>Source Files\PKB</Filter>
     </ClCompile>
-    <ClCompile Include="..\SPA\PKB\AffectsTable.cpp">
-      <Filter>Source Files\PKB</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractWrapper.h">
@@ -101,10 +104,31 @@
     <ClInclude Include="TestWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\SPA\PKB\AST.h">
+    <ClInclude Include="..\SPA\PQL\PQLParser.h">
+      <Filter>Header Files\SPA\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\SynTable.h">
+      <Filter>Header Files\SPA\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\QNode.h">
+      <Filter>Header Files\SPA\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\QueryEvaluator.h">
+      <Filter>Header Files\SPA\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\QueryTree.h">
+      <Filter>Header Files\SPA\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PQL\RelTable.h">
+      <Filter>Header Files\SPA\PQL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\AffectsTable.h">
       <Filter>Header Files\SPA\PKB</Filter>
     </ClInclude>
     <ClInclude Include="..\SPA\PKB\VarTable.h">
+      <Filter>Header Files\SPA\PKB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SPA\PKB\AST.h">
       <Filter>Header Files\SPA\PKB</Filter>
     </ClInclude>
     <ClInclude Include="..\SPA\PKB\CallsTable.h">
@@ -142,24 +166,6 @@
     </ClInclude>
     <ClInclude Include="..\SPA\PKB\UsesTable.h">
       <Filter>Header Files\SPA\PKB</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SPA\PQL\PQLParser.h">
-      <Filter>Header Files\SPA\PQL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SPA\PQL\SynTable.h">
-      <Filter>Header Files\SPA\PQL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SPA\PQL\QNode.h">
-      <Filter>Header Files\SPA\PQL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SPA\PQL\QueryEvaluator.h">
-      <Filter>Header Files\SPA\PQL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SPA\PQL\QueryTree.h">
-      <Filter>Header Files\SPA\PQL</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SPA\PQL\RelTable.h">
-      <Filter>Header Files\SPA\PQL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

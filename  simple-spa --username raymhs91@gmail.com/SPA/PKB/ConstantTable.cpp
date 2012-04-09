@@ -38,7 +38,7 @@ void DFS(TNode *root, int val, vector<TNode *> &result) {
 vector<TNode*> ConstantTable::getConstNodes(int v){
 	vector<TNode*> result;
 	vector<int> assigns = StmtTable::getStmtTable()->getAllAssign();
-	for(int i = 0; i < assigns.size(); i++) {
+	for(int i = 0; (unsigned)i < assigns.size(); i++) {
 		TNode *assign = StmtTable::getStmtTable()->getStmtNode(assigns[i]);
 		DFS(assign, v, result);
 	}
