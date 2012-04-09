@@ -11,11 +11,13 @@
 using namespace std;
 
 static vector<TNode*> getNode(QNodeType type, int value);
+/*static bool isOp(NodeType t);
 static bool notOpHasChildNotOp(vector<TNode*> n1, vector<TNode*> n2);
 static bool notOpHasChildOp(vector<TNode*> n1, NodeType type2);
 static bool opHasChildNotOp(NodeType type1, vector<TNode*> n2);
 static bool opHasChildOp(NodeType type1, NodeType type2);
-static bool checkDFS(TNode *root, NodeType type1, NodeType type2);
+static bool checkDFS(TNode *root, NodeType type1, NodeType type2);*/
+static void checkTree(TNode* root, NodeType type, vector<int>& result);
 
 AST::AST() {}
 
@@ -35,10 +37,12 @@ AST* AST::getAST(){
 void AST::destroy() {
 	delete root;
 }
-
+#include <iostream>
 vector<TNode*> getNode(QNodeType type, int value) {
 	vector<TNode *> result;
+	vector<int> tmp;
 	switch(type) {
+		case QPROGLINE:
 		case QSTMT:
 		case QASSIGN:
 		case QWHILE:
@@ -52,35 +56,83 @@ vector<TNode*> getNode(QNodeType type, int value) {
 			result = ConstantTable::getConstantTable()->getConstNodes(value); break;
 		case QVAR:
 			result = VarTable::getVarTable()->getVarNode(value); break;
+		case QPLUS:
+			tmp = AST::getAST()->getAllPlus();
+			for(unsigned i = 0; i < tmp.size(); i++) {
+				result.push_back((TNode *)(tmp[i]));
+			}
+			break;
+		case QMINUS:
+			tmp = AST::getAST()->getAllMinus();
+			for(unsigned i = 0; i < tmp.size(); i++) {
+				result.push_back((TNode *)(tmp[i]));
+			}
+			break;
+		case QTIMES:
+			tmp = AST::getAST()->getAllTimes();
+			for(unsigned i = 0; i < tmp.size(); i++) {
+				result.push_back((TNode *)(tmp[i]));
+			}
+			break;
 	}
 	return result;
 }
 
+
+
 bool AST::contains(QNodeType t1, int v1, QNodeType t2, int v2) {
 	vector<TNode*> n1, n2;
-	NodeType type1, type2;
-	if(t1 != QPLUS && t1 != QMINUS && t1 != QTIMES) n1 = getNode(t1, v1);
-	else {
-		if(t1 == QPLUS) type1 = PLUS;
-		else if(t1 ==QMINUS) type1 = MINUS;
-		else if(t1 ==QTIMES) type1 = TIMES;
-	}
-	if(t2 != QPLUS && t2 != QMINUS && t2 != QTIMES) n2 = getNode(t2, v2);
-	else {
-		if(t2 == QPLUS) type2 = PLUS;
-		else if(t2 ==QMINUS) type2 = MINUS;
-		else if(t2 ==QTIMES) type2 = TIMES;
+	
+	n1 = getNode(t1, v1);
+	n2 = getNode(t2, v2);
+
+	int i,j;
+	for (i=0;(unsigned)i<n1.size();i++){
+		for (j=0;(unsigned)j<n2.size();j++){
+			TNode *cur = n2[j];
+			while(cur->getLeftSibling()) cur = cur->getLeftSibling();
+			if (cur->getUpLink()==n1[i]) return true;
+		}
 	}
 
-	if(n1.size() == 0 && n2.size() == 0) {
-		return opHasChildOp(type1, type2);
-	} else if(n1.size() == 0) {
-		return opHasChildNotOp(type1, n2);
-	} else if(n2.size() == 0) {
-		return notOpHasChildOp(n1, type2);
-	} else {
-		return notOpHasChildNotOp(n1, n2);
+	return false;
+}
+
+vector <int> AST::getAllPlus(){
+	TNode* root = AST::getAST()->getRoot();
+	vector<int> result;
+	checkTree(root,PLUS,result);
+	return result;
+}
+
+vector <int> AST::getAllMinus(){
+	TNode* root = AST::getAST()->getRoot();
+	vector<int> result;
+	checkTree(root,MINUS,result);
+	return result;
+}
+
+vector <int> AST::getAllTimes(){
+	TNode* root = AST::getAST()->getRoot();
+	vector<int> result;
+	checkTree(root,TIMES,result);
+	return result;
+}
+
+void checkTree(TNode* root, NodeType type, vector<int>& result){
+	if(root ==NULL) return;
+	checkTree(root->getFirstChild(),type,result);
+	checkTree(root->getRightSibling(),type,result);
+	while(root!=NULL){
+		if(root->getType()==type){
+			result.push_back((int)root);
+		}
+		root=root->getRightSibling();
 	}
+}
+
+/*bool isOp(NodeType t) {
+	return t == PLUS || t == MINUS || t == TIMES;
 }
 
 bool notOpHasChildNotOp(vector<TNode*> n1, vector<TNode*> n2){
@@ -130,4 +182,4 @@ bool checkDFS(TNode *root, NodeType type1, NodeType type2) {
 		temp=temp->getRightSibling();
 	}
 	return checkDFS(root->getFirstChild(), type1, type2) || checkDFS(root->getRightSibling(), type1, type2);
-}
+}*/

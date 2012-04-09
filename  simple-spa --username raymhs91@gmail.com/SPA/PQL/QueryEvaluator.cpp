@@ -225,6 +225,12 @@ vector<int> allEntitiesWithType(int type) {
 		result = st->getAllIf(); break;
 	case QCALL:
 		result = callst->getAllCall(); break;
+	case QPLUS:
+		result = ast->getAllPlus(); break;
+	case QMINUS:
+		result = ast->getAllMinus(); break;
+	case QTIMES:
+		result = ast->getAllTimes(); break;
 	default:
 		break;
 	}
@@ -433,10 +439,10 @@ void evaluateWithNode(QNode* with){
 }
 
 void evaluateSuchThatNode(QNode* such){
-	//cout << "such" << endl;
 	if(!booleanAnswer) return;
 	QNode* leftArg = such->getLeftChild();
 	QNode* rightArg = such->getRightChild();
+
 	if(leftArg->getType() == QSYN) {
 		if(mapper.count(leftArg->getIntVal()) == 0) {
 			addAttribute(leftArg->getIntVal(), table, mapper);
@@ -1843,20 +1849,30 @@ void handleContains(QNode* query) {
 		int aIdx = mapper[synIdxLeft];
 		int leftEntType = syn->getSyn(synIdxLeft).second;
 		if(rightType == QINT){
-		}
-		else if(rightType ==QSYN){
-			int aIdx2 = mapper[synIdxRight];
-			int rightEntType = syn->getSyn(synIdxRight).second;
-			//out << "test1 "<< rightEntType <<" test 2 "<< (QNodeType)rightEntType << endl; 
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				if(!(ast->contains((QNodeType)leftEntType,aIdx,(QNodeType)rightEntType,aIdx2))) deleteRow(it--);
+				if(!(ast->contains((QNodeType)leftEntType,(*it)[aIdx],QSTMT,query->getRightChild()->getIntVal()))) deleteRow(it--);
+			}
+		}
+		else if(rightType == QSYN){
+			int rightEntType = syn->getSyn(synIdxRight).second;
+			int aIdx2 = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(ast->contains((QNodeType)leftEntType,(*it)[aIdx],(QNodeType)rightEntType,(*it)[aIdx2]))) deleteRow(it--);
 			}
 		}
 	}
 	else if(leftType == QINT){
 		if(rightType == QINT){
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(ast->contains(QSTMT,query->getLeftChild()->getIntVal(),QSTMT,query->getRightChild()->getIntVal()))) deleteRow(it--);
+			}
 		}
 		else if(rightType ==QSYN){
+			int aIdx2 = mapper[synIdxRight];
+			int rightEntType = syn->getSyn(synIdxRight).second;
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(ast->contains(QSTMT,query->getLeftChild()->getIntVal(),(QNodeType)rightEntType,(*it)[aIdx2]))) deleteRow(it--);
+			}
 		}
 	}
 }

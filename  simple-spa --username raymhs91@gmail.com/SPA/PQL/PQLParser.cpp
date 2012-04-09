@@ -597,19 +597,26 @@ QNode* relRef() {
 		temp = text;
 		tok = next_token;
 		arg1node = nodeRef();
-		if(tok != TUNDERSCORE && tok != TINTEGER) {
-			arg1 = getSynType(temp);
+		if(tok != TUNDERSCORE && tok == TINTEGER){
+			arg1 = QSTMT;
 		}
-
+		else if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg1 = getSynType(temp);
+			if (arg1==QPROGLINE) arg1=QSTMT;
+		}
+		if(arg1 == QASSIGN) cout << "QASSIGNasdas ";
 		match(TCOMMA);
 
 		temp = text;
 		tok = next_token;
 		arg2node = nodeRef();
-		if(tok != TUNDERSCORE && tok != TINTEGER) {
+		if(tok != TUNDERSCORE && tok == TINTEGER){
+			arg2 = QSTMT;
+		} else if(tok != TUNDERSCORE && tok != TINTEGER) {
 			arg2 = getSynType(temp);
+			if (arg2==QPROGLINE) arg2=QSTMT;
 		}
-
+		if(arg2 == QSTMT) cout << "QSTMTdasdas\n";
 		match(TRPARENT);
 
 		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {

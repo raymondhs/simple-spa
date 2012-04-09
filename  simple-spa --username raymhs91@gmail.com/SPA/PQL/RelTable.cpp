@@ -35,12 +35,11 @@ void RelTable::init() {
 	mapper.insert(pair<string, vector< vector<int> > >("Affects*",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("AffectsBip",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("AffectsBip*",vector< vector<int> >()));
-	mapper.insert(pair<string, vector< vector<int> > >("Contain",vector< vector<int> >()));
-	mapper.insert(pair<string, vector< vector<int> > >("Contain*",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("Contains",vector< vector<int> >()));
+	mapper.insert(pair<string, vector< vector<int> > >("Contains*",vector< vector<int> >()));
 	mapper.insert(pair<string, vector< vector<int> > >("Sibling",vector< vector<int> >()));
 
 	int allStmt = QSTMT|QASSIGN|QWHILE|QPROGLINE|QIF|QCALL;
-	int allNode = QPROGLINE|QPROC|QSTMTLST|QSTMT|QASSIGN|QCALL|QWHILE|QIF|QPLUS|QMINUS|QTIMES|QVAR|QCONST;
 	insertRow("Parent",allStmt,allStmt);
 	insertRow("Parent*",allStmt,allStmt);
 	insertRow("Follows",allStmt,allStmt);
@@ -59,10 +58,27 @@ void RelTable::init() {
 	insertRow("Affects*",allStmt,allStmt);
 	insertRow("AffectsBip",allStmt,allStmt);
 	insertRow("AffectsBip*",allStmt,allStmt);
-	insertRow("Contains",allNode,allNode);
-	insertRow("Contains*",allNode,allNode);
-	insertRow("Sibling",allNode,allNode);
-	
+	int allNode = QSTMTLST|QSTMT|QASSIGN|QCALL|QWHILE|QIF|QPLUS|QMINUS|QTIMES|QVAR|QCONST;
+	int allStmtNode = QSTMT|QASSIGN|QCALL|QWHILE|QIF;
+	int allOpNode = QPLUS|QMINUS|QTIMES;
+	insertRow("Contains",QPROC,QSTMTLST|QSTMT);
+	insertRow("Contains",QSTMTLST,allStmtNode);
+	insertRow("Contains",QSTMT,allNode);
+	insertRow("Contains",QASSIGN,allOpNode|QVAR|QCONST);
+	insertRow("Contains",QWHILE|QIF,QSTMTLST|QVAR|QSTMT);
+	insertRow("Contains",allOpNode,allOpNode|QVAR|QCONST);
+	insertRow("Contains*",QPROC,allNode);
+	insertRow("Contains*",QSTMTLST,allNode);
+	insertRow("Contains*",QSTMT,allNode);
+	insertRow("Contains*",QASSIGN,allOpNode|QVAR|QCONST);
+	insertRow("Contains*",QWHILE|QIF,allNode);
+	insertRow("Contains*",allOpNode,allOpNode|QVAR|QCONST);
+	insertRow("Sibling",QPROC,QPROC);
+	insertRow("Sibling",QSTMTLST,QSTMTLST|QVAR|QSTMT);
+	insertRow("Sibling",allStmtNode,allStmtNode);
+	insertRow("Sibling",allOpNode,allOpNode|QVAR|QCONST);
+	insertRow("Sibling",QVAR,allOpNode|QVAR|QCONST|QSTMTLST);
+	insertRow("Sibling",QCONST,allOpNode|QVAR|QCONST);
 }
 
 bool RelTable::validate(std::string relName, int arg1, int arg2) {
@@ -71,7 +87,9 @@ bool RelTable::validate(std::string relName, int arg1, int arg2) {
 	vector < vector<int> >::iterator it;
 	for(it = list.begin(); it < list.end(); it++) {
 		if(( ( (*it)[0] & arg1 ) != 0)
-		&& ( ( (*it)[1] & arg2 ) != 0)) return true;
+		&& ( ( (*it)[1] & arg2 ) != 0)) {
+			return true;
+		}
 	}
 	return false;
 }

@@ -52,4 +52,26 @@ public:
 	 * @return boolean
 	 */
 	bool contains(QNodeType t1, int v1, QNodeType t2, int v2);
+
+	/**
+	 * returns the adress of all plus node in the ast
+	 *
+	 * @return the adress of all plus node in the ast
+	 */
+	vector<int> getAllPlus();
+
+	/**
+	 * returns the adress of all minus node in the ast
+	 *
+	 * @return the adress of all minus node in the ast
+	 */
+	vector<int> getAllMinus();
+
+	/**
+	 * returns the adress of all times node in the ast
+	 *
+	 * @return the adress of all times node in the ast
+	 */
+	vector<int> getAllTimes();
+
 };
