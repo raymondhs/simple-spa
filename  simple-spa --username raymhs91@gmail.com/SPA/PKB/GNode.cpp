@@ -4,6 +4,7 @@
 #include "../PKB/StmtTable.h"
 #include "../PKB/CallsTable.h"
 #include "../PKB/TNode.h"
+#include <iostream>
 
 using namespace std;
 
@@ -124,22 +125,33 @@ vector<GNode*> GNode::getNextBIPTransitive() {
 
 	vector<bool> visited(StmtTable::getStmtTable()->getSize(), false);
 
+	int idx = this->getAttrib();
+	int type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
+	if(type==CALL){
+					vector<GNode*> temp = branchIn(CallsTable::getCallsTable()->getProcCalledByStmt(idx));
+					//cout<<idx<<endl;
+					for(unsigned i = 0; i<temp.size();i++){
+						nextBIPT.insert(temp[i]);
+					}
+				}
+
 	while (!q.empty()) {
 		GNode* u = q.front(); q.pop();
 		vector<GNode*> next = u->getNext();
 		vector<GNode*>::iterator it;
 
-		if(next.size()){
+		if(!next.size()){
 			next = u->getNextBIP();	
 		}
 		for (it = next.begin(); it < next.end(); it++) {
 			GNode* v = *it;
-			int idx = v->getAttrib();
-			int type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
+			idx = v->getAttrib();
+			type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
 			if (visited[idx-1] == false) {
 				visited[idx-1] = true;
 				if(type==CALL){
 					vector<GNode*> temp = branchIn(CallsTable::getCallsTable()->getProcCalledByStmt(idx));
+					//cout<<idx<<endl;
 					for(unsigned i = 0; i<temp.size();i++){
 						nextBIPT.insert(temp[i]);
 					}
@@ -201,7 +213,7 @@ vector<GNode*> GNode::getPrevBIPTransitive() {
 		vector<GNode*> prev = u->getPrev();
 		vector<GNode*>::iterator it;
 
-		if(prev.size()){
+		if(!prev.size()){
 			prev = u->getPrevBIP();
 			for (it = prev.begin(); it < prev.end(); it++){
 				GNode* v = *it;
