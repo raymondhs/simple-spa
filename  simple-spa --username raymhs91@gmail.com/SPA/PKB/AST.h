@@ -54,6 +54,20 @@ public:
 	bool contains(QNodeType t1, int v1, QNodeType t2, int v2);
 
 	/**
+	 * returns true if node 1 contains transitive node 2
+	 *
+	 * @return boolean
+	 */
+	bool containsT(QNodeType t1, int v1, QNodeType t2, int v2);
+
+	/**
+	 * returns true if node 1 sibling node 2
+	 *
+	 * @return boolean
+	 */
+	bool sibling(QNodeType t1, int v1, QNodeType t2, int v2);
+
+	/**
 	 * returns the adress of all plus node in the ast
 	 *
 	 * @return the adress of all plus node in the ast

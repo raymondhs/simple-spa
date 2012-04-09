@@ -11,6 +11,7 @@
 using namespace std;
 
 static vector<TNode*> getNode(QNodeType type, int value);
+static bool DFS_contains(TNode *root, TNode *target);
 /*static bool isOp(NodeType t);
 static bool notOpHasChildNotOp(vector<TNode*> n1, vector<TNode*> n2);
 static bool notOpHasChildOp(vector<TNode*> n1, NodeType type2);
@@ -92,6 +93,48 @@ bool AST::contains(QNodeType t1, int v1, QNodeType t2, int v2) {
 			TNode *cur = n2[j];
 			while(cur->getLeftSibling()) cur = cur->getLeftSibling();
 			if (cur->getUpLink()==n1[i]) return true;
+		}
+	}
+
+	return false;
+}
+
+bool AST::containsT(QNodeType t1, int v1, QNodeType t2, int v2) {
+	vector<TNode*> n1, n2;
+	
+	n1 = getNode(t1, v1);
+	n2 = getNode(t2, v2);
+
+	int i,j;
+	for (i=0;(unsigned)i<n1.size();i++){
+		for (j=0;(unsigned)j<n2.size();j++){
+			TNode *root = n1[i], *target = n2[j];
+			if(DFS_contains(root, target)) return true;
+		}
+	}
+	return false;
+}
+
+bool DFS_contains(TNode *root, TNode *target) {
+	if(root == NULL) return false;
+	if(root == target) return true;
+	return DFS_contains(root->getFirstChild(), target)
+		|| DFS_contains(root->getLeftSibling(), target);
+}
+
+bool AST::sibling(QNodeType t1, int v1, QNodeType t2, int v2) {
+	vector<TNode*> n1, n2;
+	
+	n1 = getNode(t1, v1);
+	n2 = getNode(t2, v2);
+
+	int i,j;
+	for (i=0;(unsigned)i<n1.size();i++){
+		for (j=0;(unsigned)j<n2.size();j++){
+			TNode *cur1 = n1[i], *cur2 = n2[j];
+			while(cur1->getLeftSibling()) { cur1 = cur1->getLeftSibling(); }
+			while(cur2->getLeftSibling()) { cur2 = cur2->getLeftSibling(); }
+			if(cur1 == cur2) return true;
 		}
 	}
 
