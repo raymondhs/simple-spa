@@ -80,8 +80,8 @@ vector<GNode*> GNode::branchIn(PROC_IDX proc){
 		nextBIPT.insert(nextT[i]);
 		if(StmtTable::getStmtTable()->getStmtNode(nextT[i]->getAttrib())->getType()==CALL){ // if it is a call statement
 			vector<GNode*> temp = branchIn(CallsTable::getCallsTable()->getProcCalledByStmt(nextT[i]->getAttrib()));	// recursive from the root of the called statement
-			for(unsigned j = 0; i<temp.size();j++){
-				nextBIPT.insert(temp[i]);
+			for(unsigned j = 0; j<temp.size();j++){
+				nextBIPT.insert(temp[j]);
 			}
 		}
 	}
