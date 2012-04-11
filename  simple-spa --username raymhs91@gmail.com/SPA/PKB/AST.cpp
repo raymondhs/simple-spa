@@ -7,6 +7,7 @@
 #include "ProcTable.h"
 #include "ConstantTable.h"
 #include "VarTable.h"
+#include "CallsTable.h"
 
 using namespace std;
 
@@ -48,6 +49,7 @@ vector<TNode*> getNode(QNodeType type, int value) {
 		case QASSIGN:
 		case QWHILE:
 		case QIF:
+		case QCALL:
 			result.push_back(StmtTable::getStmtTable()->getStmtNode(value)); break;
 		case QPROC:
 			result.push_back(ProcTable::getProcTable()->getProcNode(value)); break;
