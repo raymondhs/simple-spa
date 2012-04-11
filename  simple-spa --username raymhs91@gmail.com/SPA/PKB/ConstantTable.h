@@ -44,6 +44,13 @@ public:
 	std::vector<int> getAllConstant();
 
 	/**
+	 * Gets all constant nodes in the program
+	 *
+	 * @return Vector of all constant nodes in the program
+	 */
+	std::vector<TNode*> getAllConstantNodes();
+
+	/**
 	 * Clears the constant table
 	 */
 	void clearTable();

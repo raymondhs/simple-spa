@@ -45,3 +45,15 @@ vector<TNode*> ConstantTable::getConstNodes(int v) {
 std::vector<int> ConstantTable::getAllConstant() {
 	return std::vector<int> (constantsList.begin(),constantsList.end());
 }
+
+std::vector<TNode*> ConstantTable::getAllConstantNodes() {
+	vector<TNode*> result;
+	for(set<int>::iterator it = constantsList.begin(); it != constantsList.end(); it++) {
+		vector<TNode*> nodes;
+		DFS(AST::getAST()->getRoot(), *it, nodes);
+		for(unsigned j = 0; j < nodes.size(); j++) {
+			result.push_back(nodes[j]);
+		}
+	}
+	return result;
+}
