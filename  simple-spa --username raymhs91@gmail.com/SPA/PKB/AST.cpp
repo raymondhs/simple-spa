@@ -56,9 +56,7 @@ vector<TNode*> getNode(QNodeType type, int value) {
 		case QSTMTLST:
 			result.push_back(StmtTable::getStmtTable()->getStmtLstNode(value)); break;
 		case QCONST:
-			result = ConstantTable::getConstantTable()->getConstNodes(value); break;
 		case QVAR:
-			result = VarTable::getVarTable()->getVarNode(value); break;
 		case QPLUS:
 		case QMINUS:
 		case QTIMES:

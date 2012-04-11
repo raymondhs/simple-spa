@@ -234,7 +234,10 @@ vector<int> allEntitiesWithType(int type) {
 	case QPROC:
 		result = pt->getAllProc(); break;
 	case QCONST:
-		result = ct->getAllConstant(); break;
+		temp = ct->getAllConstantNodes();
+		for(unsigned i=0;i<temp.size();i++)
+			result.push_back((int)temp[i]);
+		break;
 	case QPROGLINE:
 		result = st->getAllProgline(); break;
 	case QIF:
@@ -427,6 +430,11 @@ void evaluateWithNode(QNode* with){
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 					if((*it)[aIdx1]!=rightArg->getIntVal()) deleteRow(it--);
 				}
+			} else if(typeRight==QCONST){
+				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+					if(((TNode*)(*it)[aIdx1])->getAttrib()!=(*it)[aIdx2]) deleteRow(it--);
+				}
 			} else {
 				int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
@@ -434,7 +442,7 @@ void evaluateWithNode(QNode* with){
 				}
 			}
 		}
-	} else if((typeLeft&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE))||typeLeft==QCONST){
+	} else if((typeLeft&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE))){
 		if(typeRight==QINT){
 			int aIdx1 = mapper[synIdx1];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
@@ -448,10 +456,27 @@ void evaluateWithNode(QNode* with){
 		} else if(typeRight==QCONST){
 			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				if((*it)[aIdx1]!=(*it)[aIdx2]) deleteRow(it--);
+				if((*it)[aIdx1]!=((TNode*)(*it)[aIdx2])->getAttrib()) deleteRow(it--);
 			}
 		}
-	} 
+	} else if(typeLeft==QCONST){
+		if(typeRight==QINT){
+			int aIdx1 = mapper[synIdx1];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(((TNode*)(*it)[aIdx1])->getAttrib()!=rightArg->getIntVal()) deleteRow(it--);
+			}
+		} else if((typeRight&(QSTMT|QASSIGN|QWHILE|QIF|QPROGLINE|QCALL))){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(((TNode*)(*it)[aIdx1])->getAttrib()!=(*it)[aIdx2]) deleteRow(it--);
+			}
+		} else if(typeRight==QCONST){
+			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(((TNode*)(*it)[aIdx1])->getAttrib()!=((TNode*)(*it)[aIdx2])->getAttrib()) deleteRow(it--);
+			}
+		}
+	}
 }
 
 void evaluateSuchThatNode(QNode* such){
@@ -887,7 +912,7 @@ void formatResult() {
 			if((selType == QCALL)&&(tuple[j]->getLeftChild()->getStrVal()=="procName")){
 				ans.push_back(callst->getProcCalledByStmt((*it)[aSelIdx]));
 			}
-			else if(selType == QVAR){
+			else if(selType==QVAR||selType==QCONST){
 				ans.push_back(((TNode*)(*it)[aSelIdx])->getAttrib());
 			}else{
 				ans.push_back((*it)[aSelIdx]);
