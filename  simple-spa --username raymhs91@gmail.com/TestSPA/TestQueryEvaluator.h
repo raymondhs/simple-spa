@@ -37,6 +37,8 @@ CPPUNIT_TEST( testNext );
 CPPUNIT_TEST( testNextT );
 CPPUNIT_TEST( testAffects );
 CPPUNIT_TEST( testAffectsT );
+CPPUNIT_TEST( testContains );
+CPPUNIT_TEST( testContainsT );
 CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -77,6 +79,8 @@ public:
 	void testNextT();
 	void testAffects();
 	void testAffectsT();
+	void testContains();
+	void testContainsT();
 };
 #endif
 
