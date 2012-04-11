@@ -27136,8 +27136,6 @@ void TestQueryEvaluator::testNextT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
-
 	cout<< "SUCCESS! testNextTransitive!! :D" <<endl;
 }
 
@@ -41573,7 +41571,7 @@ void TestQueryEvaluator::testContains(){
 
 	
 	/* Test 3 */
-/*
+
 	query = declaration + "Select n1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("1");
@@ -41621,7 +41619,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 4 */
 
@@ -41892,7 +41889,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 12 */
-/*
+
 	query = declaration + "Select n1 such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 
@@ -41905,7 +41902,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
+
 	 /* Test 13 */
 
 	query = declaration + "Select n1 such that Contains (1,n1)";
@@ -41986,7 +41983,7 @@ void TestQueryEvaluator::testContains(){
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
 
-	 	/* Test 16 */
+	 /* Test 16 */
 
 	query = declaration + "Select n1 such that Contains (19,add)";
 	PQLParser::parse(query);
@@ -42171,7 +42168,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 21 */
-/*
+
 	query = declaration + "Select s1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("1");
@@ -42219,7 +42216,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 22 */
 
@@ -42456,7 +42452,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 30 */
-/*
+
 	query = declaration + "Select s1 such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 
@@ -42469,7 +42465,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
+
 
 	/* Test 31 */
 
@@ -42707,7 +42703,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 39 */
-/*
+
 	query = declaration + "Select a1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("3");
@@ -42745,7 +42741,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 40 */
 
@@ -42953,7 +42948,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 48 */
-/*
+
 	query = declaration + "Select a1 such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 
@@ -42966,7 +42961,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
+
 
 	/* Test 49 */
 
@@ -43130,7 +43125,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 57 */
-/*
+
 	query = declaration + "Select c1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("0");
@@ -43150,7 +43145,6 @@ void TestQueryEvaluator::testContains(){
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
 
-*/
 	/* Test 58 */
 
 	query = declaration + "Select c1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,i1) and Contains (i1,stmtLst2) and Contains (stmtLst2,w1)";
@@ -43266,7 +43260,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 64 */
-/*
+
 	query = declaration + "Select c1 such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 
@@ -43279,7 +43273,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
+
 
 	/* Test 65 */
 
@@ -43430,7 +43424,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 73 */
-/*
+
 	query = declaration + "Select i1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("15");
@@ -43445,7 +43439,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 74 */
 
@@ -43584,7 +43577,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 82 */
-/*
+
 	query = declaration + "Select i1 such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 
@@ -43597,7 +43590,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
+
 
 	/* Test 83 */
 
@@ -43741,7 +43734,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 91 */
-/*
+
 	query = declaration + "Select w1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("1");
@@ -43761,7 +43754,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 92 */
 
@@ -43915,7 +43907,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 100 */
-/*
+
 	query = declaration + "Select w1 such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 
@@ -43928,7 +43920,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
+
 
 	/* Test 101 */
 
@@ -44075,7 +44067,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 109 */
-/*
+
 	query = declaration + "Select ca1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("35");
@@ -44089,7 +44081,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 110 */
 
@@ -44224,7 +44215,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 118 */
-/*
+
 	query = declaration + "Select ca1 such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 
@@ -44237,7 +44228,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
+
 
 	/* Test 119 */
 
@@ -44355,7 +44346,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 126 */
-/*
+
 	query = declaration + "Select v1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("i");
@@ -44379,7 +44370,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 127 */
 
@@ -44724,7 +44714,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 144 */
-/*
+
 	query = declaration + "Select p1 such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("Gamma");
@@ -44738,7 +44728,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 145 */
 
@@ -44876,7 +44865,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 153 */
-/*
+
 	query = declaration + "Select p1 such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 
@@ -44889,7 +44878,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
+
 
 	/* Test 154 */
 
@@ -45028,7 +45017,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 162 */
-/*
+
 	query = declaration + "Select BOOLEAN such that Contains (p1,stmtLst1) and Contains (stmtLst1,ca1)";
 	PQLParser::parse(query);
 	result.push_back("true");
@@ -45042,7 +45031,6 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
 	/* Test 163 */
 
@@ -45177,7 +45165,7 @@ void TestQueryEvaluator::testContains(){
 
 
 	/* Test 171 */
-/*
+
 	query = declaration + "Select BOOLEAN such that Contains (18,add) and Contains (add,v1) with v1.varName=\"c\"";
 	PQLParser::parse(query);
 	result.push_back("false");
@@ -45191,9 +45179,7 @@ void TestQueryEvaluator::testContains(){
 
 	 CPPUNIT_ASSERT(ans == result);
 	 result.clear();
-*/
 
-	 	
 
 	/* Test 172 */
 
@@ -45308,7 +45294,7 @@ void TestQueryEvaluator::testContainsT(){
 	cout<< "testContainsT = ";
 	/* Test 1 */
 
-	query = declaration + "Select n1 such that Contains* (p1,a1) and Contains* (a1,add)";
+	query = declaration + "Select n1 such that Contains* (p1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -45356,10 +45342,9 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
 	/* Test 2 */
 
-	query = declaration + "Select n1 such that Contains* (p1,a1) and Modifies (a1,v1) with v1.varName=\"i\"";
+	query = declaration + "Select n1 such that Contains* (p1,a1) and Modifies (a1,v1) with v1.varName=\"l\"";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -45681,7 +45666,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 9 */
 
-	query = declaration + "Select n1 such that Contains* (p1,a1) and Contains*(a1,times)";
+	query = declaration + "Select n1 such that Contains* (p1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -45933,7 +45918,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 15 */
 
-	query = declaration + "Select n1 such that Contains* (1,\"x\")";
+	query = declaration + "Select n1 such that Contains* (1,v1) with v1.varName=\"x\"";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -45981,8 +45966,7 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
-	/* Test 16 */
+		/* Test 16 */
 
 	query = declaration + "Select n1 such that Contains* (19,add)";
 	PQLParser::parse(query);
@@ -46474,7 +46458,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 27 */
 
-	query = declaration + "Select s1 such that Contains* (p1,a1) and Contains*(a1,times)";
+	query = declaration + "Select s1 such that Contains* (p1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -46725,7 +46709,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 33 */
 
-	query = declaration + "Select s1 such that Contains* (1,\"x\")";
+	query = declaration + "Select s1 such that Contains* (1,v1) with v1.varName=\"x\"";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -46937,8 +46921,10 @@ void TestQueryEvaluator::testContainsT(){
 
 	query = declaration + "Select a1 such that Contains* (p1,a1) and Modifies (a1,v1) with v1.varName=\"i\"";
 	PQLParser::parse(query);
-	result.push_back("17");
-	result.push_back("34");
+	result.push_back("6");
+	result.push_back("8");
+	result.push_back("13");
+	result.push_back("21");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -47171,10 +47157,9 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
+		/* Test 45 */
 
-	/* Test 45 */
-
-	query = declaration + "Select a1 such that Contains* (p1,a1) and Contains*(a1,times)";
+	query = declaration + "Select a1 such that Contains* (p1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
 	result.push_back("17");
 	result.push_back("18");
@@ -47400,7 +47385,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 51 */
 	
-	query = declaration + "Select a1 such that Contains* (1,\"x\")";
+	query = declaration + "Select a1 such that Contains* (1,v1) with v1.varName=\"x\"";
 	PQLParser::parse(query);
 	result.push_back("3");
 	result.push_back("4");
@@ -47500,8 +47485,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	query = declaration + "Select a1 such that Contains* (w1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
-	result.push_back("23");
-	result.push_back("25");
+	result.push_back("31");
 	result.push_back("33");
 
 	try {
@@ -47600,7 +47584,13 @@ void TestQueryEvaluator::testContainsT(){
 
 	query = declaration + "Select c1 such that Contains* (p1,w1) and Contains* (w1,i1)";
 	PQLParser::parse(query);
-	
+	result.push_back("0");
+	result.push_back("1");
+	result.push_back("2");
+	result.push_back("3");
+	result.push_back("4");
+	result.push_back("5");
+
 	try {
 		ans = QueryEvaluator::evaluate();
 	} catch (exception&e) {
@@ -47635,7 +47625,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 61 */
 
-	query = declaration + "Select c1 such that Contains* (p1,a1) and Contains*(a1,times)";
+	query = declaration + "Select c1 such that Contains* (p1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
 	result.push_back("0");
 	result.push_back("1");
@@ -47676,8 +47666,7 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
-	/* Test 63 */
+		/* Test 63 */
 
 	query = declaration + "Select c1 such that Contains* (10,v1) with v1.varName=\"z\"";
 	PQLParser::parse(query);
@@ -47743,7 +47732,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 66 */
 
-	query = declaration + "Select c1 such that Contains* (1,\"x\")";
+	query = declaration + "Select c1 such that Contains* (1,v1) with v1.varName=\"x\"";
 	PQLParser::parse(query);
 	result.push_back("0");
 	result.push_back("1");
@@ -48074,7 +48063,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 84 */
 
-	query = declaration + "Select i1 such that Contains* (1,\"x\")";
+	query = declaration + "Select i1 such that Contains* (1,v1) with v1.varName=\"x\"";
 	PQLParser::parse(query);
 	result.push_back("15");
 	result.push_back("27");
@@ -48186,8 +48175,7 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
-	/* Test 90 */
+		/* Test 90 */
 
 	query = declaration + "Select w1 such that Contains* (p1,ca1)";
 	PQLParser::parse(query);
@@ -48209,7 +48197,8 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-	/* Test 91 */
+
+		/* Test 91 */
 	
 	query = declaration + "Select w1 such that Contains* (p1,i1) and Contains* (i1,w1)";
 	PQLParser::parse(query);
@@ -48307,10 +48296,9 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
 	/* Test 96 */
 
-	query = declaration + "Select w1 such that Contains* (p1,a1) and Contains*(a1,times)";
+	query = declaration + "Select w1 such that Contains* (p1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -48375,7 +48363,7 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
-
+	
 	/* Test 99 */
 
 	query = declaration + "Select w1 such that Contains* (18,add) and Contains* (add,v1) with v1.varName=\"c\"";
@@ -48401,7 +48389,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 100 */
 
-	query = declaration + "Select w1 such that Contains* (w1,v1) with v1.varName=\"i\" and Contains* (w1,c1) with c1.value=4";
+	query = declaration + "Select w1 such that Contains* (w1,v1) and Contains* (w1,c1) with v1.varName=\"i\" and c1.value=4";
 	PQLParser::parse(query);
 	result.push_back("20");
 
@@ -48414,7 +48402,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
+	
 	/* Test 101 */
 
 	query = declaration + "Select w1 such that Contains* (w1,a1) and Contains* (a1,v1) with v1.varName=\"k\"";
@@ -48437,7 +48425,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 102 */
 
-	query = declaration + "Select w1 such that Contains* (1,\"x\")";
+	query = declaration + "Select w1 such that Contains* (1,v1) with v1.varName=\"x\"";
 	PQLParser::parse(query);
 	result.push_back("1");
 	result.push_back("2");
@@ -48456,7 +48444,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
+	
 	/* Test 103 */
 
 	query = declaration + "Select w1 such that Contains* (19,add)";
@@ -48500,10 +48488,6 @@ void TestQueryEvaluator::testContainsT(){
 
 	query = declaration + "Select w1 such that Contains* (w1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
-	result.push_back("1");
-	result.push_back("2");
-	result.push_back("11");
-	result.push_back("20");
 	result.push_back("23");
 	result.push_back("25");
 	result.push_back("32");
@@ -48601,8 +48585,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
-
-
+	
 	/* Test 111 */
 
 	query = declaration + "Select ca1 such that Contains* (p1,w1) and Contains* (w1,w2)";
@@ -48758,7 +48741,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 120 */
 
-	query = declaration + "Select ca1 such that Contains* (1,\"x\")";
+	query = declaration + "Select ca1 such that Contains* (1,v1) with v1.varName=\"x\"";
 	PQLParser::parse(query);
 	result.push_back("35");
 
@@ -49082,7 +49065,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 134 */
 
-	query = declaration + "Select v1 such that Contains* (1,\"x\")";
+	query = declaration + "Select v1 such that Contains* (1,v1)";
 	PQLParser::parse(query);
 	result.push_back("i");
 	result.push_back("j");
@@ -49090,11 +49073,6 @@ void TestQueryEvaluator::testContainsT(){
 	result.push_back("k");
 	result.push_back("a");
 	result.push_back("b");
-	result.push_back("z");
-	result.push_back("y");
-	result.push_back("l");
-	result.push_back("c");
-	result.push_back("d");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -49179,7 +49157,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 138 */
 
-	query = declaration + "Select v1 such that Contains* (\"Alpha\",v1)";
+	query = declaration + "Select v1 such that Contains* (p1,v1) with p1.procName=\"Alpha\"";
 	PQLParser::parse(query);
 	result.push_back("i");
 	result.push_back("j");
@@ -49275,8 +49253,8 @@ void TestQueryEvaluator::testContainsT(){
 
 	query = declaration + "Select p1 such that Contains* (p1,a1) and Modifies (a1,v1) with v1.varName=\"i\"";
 	PQLParser::parse(query);
+	result.push_back("Alpha");
 	result.push_back("Beta");
-	result.push_back("Gamma");
 
 	try {
 		ans = QueryEvaluator::evaluate();
@@ -49508,7 +49486,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 155 */
 
-	query = declaration + "Select p1 such that Contains* (1,\"x\")";
+	query = declaration + "Select p1 such that Contains* (1,v1) with v1.varName=\"x\"";
 	PQLParser::parse(query);
 	result.push_back("Alpha");
 	result.push_back("Beta");
@@ -49564,6 +49542,8 @@ void TestQueryEvaluator::testContainsT(){
 
 	query = declaration + "Select p1 such that Contains* (w1,a1) and Contains* (a1,times)";
 	PQLParser::parse(query);
+	result.push_back("Alpha");
+	result.push_back("Beta");
 	result.push_back("Gamma");
 
 	try {
@@ -49815,7 +49795,7 @@ void TestQueryEvaluator::testContainsT(){
 
 	/* Test 173 */
 
-	query = declaration + "Select BOOLEAN such that Contains* (1,\"b\")";
+	query = declaration + "Select BOOLEAN such that Contains* (1,v1) with v1.varName=\"b\"";
 	PQLParser::parse(query);
 	result.push_back("true");
 
@@ -49880,6 +49860,663 @@ void TestQueryEvaluator::testContainsT(){
 	CPPUNIT_ASSERT(ans == result);
 	result.clear();
 
+
+
 	cout<< "SUCCESS! testContainsT! :D" <<endl;
 }
 
+void TestQueryEvaluator::testSibling(){
+try {
+		PKBParser::parse("testcases/affects_source.txt");
+	} catch (exception& e) {
+		cout << "PKBParser: " << e.what() << endl;
+	}
+	cout<< "testSibling = ";
+
+/* Test 1 */
+
+query = declaration + "Select n1 such that Sibling(p1,p2)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 1" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 2 */
+
+query = declaration + "Select n1 such that Sibling(w1,w2)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 2" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 3 */
+/*
+query = declaration + "Select n1 such that Sibling(23,n1)";
+PQLParser::parse(query);
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 3" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 4 */
+
+query = declaration + "Select n1 such that Sibling(13,s1)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 4" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 5 */
+
+query = declaration + "Select n1 such that Sibling(w1,ca1)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 5" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 6 */
+
+query = declaration + "Select n1 such that Sibling(v1,stmtLst1) and Sibling(stmtLst1,stmtLst2)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 6" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 7 */
+
+query = declaration + "Select n1 such that Sibling(v1,add)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 7" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 8 */
+
+query = declaration + "Select n1 such that Sibling(v1,c1)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 8" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 9 */
+
+query = declaration + "Select n1 such that Sibling(i1,w1)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 9" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 10 */
+
+query = declaration + "Select n1 such that Sibling(s1,ca1)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 10" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 11 */
+
+query = declaration + "Select n1 such that Sibling(c1,minus)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 11" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 12 */
+
+query = declaration + "Select n1 such that Contains(a1,v1) and Sibling(v1,v2) with v1.varName=\"a\" and v2.varName=\"b\"";
+PQLParser::parse(query);
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 12" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 13 */
+
+query = declaration + "Select n1 such that Sibling(i1,a1) and Contains(a1,minus)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 13" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+
+/* Test 14 */
+
+query = declaration + "Select n1 such that Contains*(a1,add) and Contains(add,minus) and Sibling(minus,c1)";
+PQLParser::parse(query);
+result.push_back("1");
+result.push_back("2");
+result.push_back("3");
+result.push_back("4");
+result.push_back("5");
+result.push_back("6");
+result.push_back("7");
+result.push_back("8");
+result.push_back("9");
+result.push_back("10");
+result.push_back("11");
+result.push_back("12");
+result.push_back("13");
+result.push_back("14");
+result.push_back("15");
+result.push_back("16");
+result.push_back("17");
+result.push_back("18");
+result.push_back("19");
+result.push_back("20");
+result.push_back("21");
+result.push_back("22");
+result.push_back("23");
+result.push_back("24");
+result.push_back("25");
+result.push_back("26");
+result.push_back("27");
+result.push_back("28");
+result.push_back("29");
+result.push_back("30");
+result.push_back("31");
+result.push_back("32");
+result.push_back("33");
+result.push_back("34");
+result.push_back("35");
+
+try {
+  ans = QueryEvaluator::evaluate();
+ } catch (exception&e) {
+  cout << e.what() << endl;
+ cout << "Test 14" << endl;
+}
+
+ CPPUNIT_ASSERT(ans == result);
+ result.clear();
+
+ cout<< "SUCCESS! testSibling!! :D" <<endl;
+
+}

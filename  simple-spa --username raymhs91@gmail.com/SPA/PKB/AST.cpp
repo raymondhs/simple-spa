@@ -67,14 +67,13 @@ vector<TNode*> getNode(QNodeType type, int value) {
 	return result;
 }
 
-
+#include <iostream>
 
 bool AST::contains(QNodeType t1, int v1, QNodeType t2, int v2) {
 	vector<TNode*> n1, n2;
 	
 	n1 = getNode(t1, v1);
 	n2 = getNode(t2, v2);
-
 	int i,j;
 	for (i=0;(unsigned)i<n1.size();i++){
 		for (j=0;(unsigned)j<n2.size();j++){
@@ -92,7 +91,8 @@ bool AST::containsT(QNodeType t1, int v1, QNodeType t2, int v2) {
 	
 	n1 = getNode(t1, v1);
 	n2 = getNode(t2, v2);
-
+	cout << "n1 size = " <<n1.size()<<endl;
+	cout << "n2 size = " <<n2.size()<<endl;
 	int i,j;
 	for (i=0;(unsigned)i<n1.size();i++){
 		for (j=0;(unsigned)j<n2.size();j++){
