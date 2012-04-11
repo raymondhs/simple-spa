@@ -218,12 +218,9 @@ public:
 	 */
 	bool isFollowsTransitive(TNode* successor);
 
-
+	
 	/**
 	 * Overriding object equality function
 	 */
-	bool operator == (const TNode& t);
-
-	// to be implemented:
-	// call, if, minus, times nodes
+	//bool operator == (const TNode& t);	
 };

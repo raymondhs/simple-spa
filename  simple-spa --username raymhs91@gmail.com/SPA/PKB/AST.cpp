@@ -126,7 +126,7 @@ bool DFS_contains(TNode *root, TNode *target) {
 
 bool AST::sibling(QNodeType t1, int v1, QNodeType t2, int v2) {
 	vector<TNode*> n1, n2;
-	
+
 	n1 = getNode(t1, v1);
 	n2 = getNode(t2, v2);
 
@@ -134,6 +134,7 @@ bool AST::sibling(QNodeType t1, int v1, QNodeType t2, int v2) {
 	for (i=0;(unsigned)i<n1.size();i++){
 		for (j=0;(unsigned)j<n2.size();j++){
 			TNode *cur1 = n1[i], *cur2 = n2[j];
+			if(cur1 == cur2) continue;
 			while(cur1->getLeftSibling()) { cur1 = cur1->getLeftSibling(); }
 			while(cur2->getLeftSibling()) { cur2 = cur2->getLeftSibling(); }
 			if(cur1 == cur2) return true;
@@ -165,15 +166,12 @@ vector <int> AST::getAllTimes(){
 }
 
 void checkTree(TNode* root, NodeType type, vector<int>& result){
-	if(root ==NULL) return;
+	if(root == NULL) return;
+	if(root->getType()==type){
+		result.push_back((int)root);
+	}
 	checkTree(root->getFirstChild(),type,result);
 	checkTree(root->getRightSibling(),type,result);
-	while(root!=NULL){
-		if(root->getType()==type){
-			result.push_back((int)root);
-		}
-		root=root->getRightSibling();
-	}
 }
 
 /*bool isOp(NodeType t) {

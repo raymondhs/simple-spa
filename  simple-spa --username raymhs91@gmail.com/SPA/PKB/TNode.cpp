@@ -205,7 +205,8 @@ bool TNode::isFollowsTransitive(TNode* successor) {
 	}
 	return false;
 }
-
+/*
 bool TNode::operator == (const TNode& t) {
 	return this->type == t.type && this->attrib == t.attrib;
 }
+*/

@@ -38,7 +38,7 @@ CPPUNIT_TEST( testNextT );
 CPPUNIT_TEST( testAffects );
 CPPUNIT_TEST( testAffectsT );
 CPPUNIT_TEST( testContains );
-CPPUNIT_TEST( testContainsT );
+//CPPUNIT_TEST( testContainsT );
 CPPUNIT_TEST_SUITE_END();
 
 private:

@@ -104,6 +104,18 @@ static bool valid;
 // to answer boolean queries, and fast termination
 static bool booleanAnswer;
 
+//////////////////////////////////////////////////////////////////////////////////////////
+void printTable() {
+	for(list< vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+		vector<int> row = (*it);
+		for(unsigned i = 0; i < row.size(); i++) {
+			cout << row[i] << " ";
+		}
+		cout << endl;
+	}
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+
 void initVars(QNode* leftArg, QNode* rightArg) {
 	valid = true;
 
@@ -1842,6 +1854,7 @@ void handleAffectsBIPT(QNode* query) {
 }
 
 void handleContains(QNode* query) {
+	//cout << "init CONTAINS table size = " << table.size() << endl;
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
 
@@ -1875,14 +1888,47 @@ void handleContains(QNode* query) {
 			}
 		}
 	}
+	//cout << "CONTAINS table size = " << table.size() << endl;
 }
 
 void handleContainsT(QNode* query) {
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
+
+	if(leftType == QSYN) {
+		int aIdx = mapper[synIdxLeft];
+		int leftEntType = syn->getSyn(synIdxLeft).second;
+		if(rightType == QINT){
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(ast->containsT((QNodeType)leftEntType,(*it)[aIdx],QSTMT,query->getRightChild()->getIntVal()))) deleteRow(it--);
+			}
+		}
+		else if(rightType == QSYN){
+			int rightEntType = syn->getSyn(synIdxRight).second;
+			int aIdx2 = mapper[synIdxRight];
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(ast->containsT((QNodeType)leftEntType,(*it)[aIdx],(QNodeType)rightEntType,(*it)[aIdx2]))) deleteRow(it--);
+			}
+		}
+	}
+	else if(leftType == QINT){
+		if(rightType == QINT){
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(ast->containsT(QSTMT,query->getLeftChild()->getIntVal(),QSTMT,query->getRightChild()->getIntVal()))) deleteRow(it--);
+			}
+		}
+		else if(rightType ==QSYN){
+			int aIdx2 = mapper[synIdxRight];
+			int rightEntType = syn->getSyn(synIdxRight).second;
+			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
+				if(!(ast->containsT(QSTMT,query->getLeftChild()->getIntVal(),(QNodeType)rightEntType,(*it)[aIdx2]))) deleteRow(it--);
+			}
+		}
+	}
 }
 
 void handleSibling(QNode* query) {
+	//cout << "init SIBLING table size = " << table.size() << endl;
 	initVars(query->getLeftChild(),query->getRightChild());
 	if(!valid) { clearTable(); return; }
 
@@ -1916,6 +1962,8 @@ void handleSibling(QNode* query) {
 			}
 		}
 	}
+	printTable();
+	//cout << "SIBLING table size = " << table.size() << endl;
 }
 
 vector<string> QueryEvaluator::evaluate() {
