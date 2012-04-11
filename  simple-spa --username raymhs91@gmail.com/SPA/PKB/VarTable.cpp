@@ -71,3 +71,15 @@ std::vector<int> VarTable::getAllVar() {
 	}
 	return result;
 }
+
+std::vector<TNode*> VarTable::getAllVarNodes() {
+	vector<TNode*> result;
+	for(int i = 0; i < getSize(); i++) {
+		vector<TNode*> nodes;
+		DFS(AST::getAST()->getRoot(), i, nodes);
+		for(unsigned j = 0; j < nodes.size(); j++) {
+			result.push_back(nodes[j]);
+		}
+	}
+	return result;
+}

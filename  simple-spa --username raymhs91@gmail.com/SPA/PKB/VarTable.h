@@ -73,6 +73,13 @@ public:
 	std::vector<int> getAllVar();
 
 	/**
+	 * Gets all variable nodes in the program
+	 *
+	 * @return Vector of variable nodes in the program
+	 */
+	std::vector<TNode*> getAllVarNodes();
+
+	/**
 	 * Clears the variable table
 	 */
 	void clearTable();
