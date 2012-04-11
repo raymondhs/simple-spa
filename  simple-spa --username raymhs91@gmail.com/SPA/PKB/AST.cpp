@@ -60,23 +60,9 @@ vector<TNode*> getNode(QNodeType type, int value) {
 		case QVAR:
 			result = VarTable::getVarTable()->getVarNode(value); break;
 		case QPLUS:
-			tmp = AST::getAST()->getAllPlus();
-			for(unsigned i = 0; i < tmp.size(); i++) {
-				result.push_back((TNode *)(tmp[i]));
-			}
-			break;
 		case QMINUS:
-			tmp = AST::getAST()->getAllMinus();
-			for(unsigned i = 0; i < tmp.size(); i++) {
-				result.push_back((TNode *)(tmp[i]));
-			}
-			break;
 		case QTIMES:
-			tmp = AST::getAST()->getAllTimes();
-			for(unsigned i = 0; i < tmp.size(); i++) {
-				result.push_back((TNode *)(tmp[i]));
-			}
-			break;
+			result.push_back((TNode *)value); break;
 	}
 	return result;
 }
