@@ -43,6 +43,11 @@ bool AffectsBIPTable::branchIn(STMT_NO from, PROC_IDX to){
 	for(int i=this->affectsTable.size()-1; i<from; i++){
 		this->affectsTable.push_back(set<int>());
 	}
+	vector<GNode*> temp = CFG::getCFG()->getLast(to);
+	set<GNode*> last;
+	for(unsigned i=0;i<temp.size();i++){
+		last.insert(temp[i]);
+	}
 	int var = *(ModifiesTable::getModifiesTable()->getVarModifiedByStmt(from).begin());
 	//BFS
 	queue<GNode*> q;
@@ -75,8 +80,9 @@ bool AffectsBIPTable::branchIn(STMT_NO from, PROC_IDX to){
 		GNode* u = q.front(); q.pop();
 		vector<GNode*> next = u->getNext();
 		vector<GNode*>::iterator it;
-		if(next.size()==0)
+		if(last.find(u)!=last.end()){
 			canReturn=true;
+		}
 		for (it = next.begin(); it < next.end(); it++) {
 			GNode* v = *it;
 			idx = v->getAttrib();
