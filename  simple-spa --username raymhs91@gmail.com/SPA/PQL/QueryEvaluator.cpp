@@ -37,13 +37,9 @@ static ConstantTable *ct;
 static ProcTable *pt;
 static CallsTable *callst;
 static list< vector<int> > table, resultTable;
-static map< int, vector<TNode*> > addressOfVar, addressOfConst;
 static map< int, int > mapper, mapperResult;
 static AffectsTable *a;
 static AffectsBIPTable *ab;
-
-static void addVarAddresses();
-static void addConstAddresses();
 
 static void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, list< vector<int> >& result);
 static vector<int> allEntitiesWithType(int type);
@@ -85,6 +81,8 @@ static void handleContains(QNode* query);
 static void handleContainsT(QNode* query);
 static void handleSibling(QNode* query);
 
+
+
 static int leftType, rightType;
 static int synIdxLeft, synIdxRight;
 
@@ -117,28 +115,6 @@ void printTable() {
 	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////
-
-void addVarAddresses() {
-	vector<TNode*> nodes = var->getAllVarNodes();
-	for(unsigned i = 0; i < nodes.size(); i++) {
-		int varIdx = nodes[i]->getAttrib();
-		if(addressOfVar.count(varIdx) == 0) {
-			addressOfVar[varIdx] = vector<TNode*>();
-		}
-		addressOfVar[varIdx].push_back(nodes[i]);
-	}
-}
-
-void addConstAddresses() {
-	vector<TNode*> nodes = ct->getAllConstantNodes();
-	for(unsigned i = 0; i < nodes.size(); i++) {
-		int val = nodes[i]->getAttrib();
-		if(addressOfConst.count(val) == 0) {
-			addressOfConst[val] = vector<TNode*>();
-		}
-		addressOfConst[val].push_back(nodes[i]);
-	}
-}
 
 void initVars(QNode* leftArg, QNode* rightArg) {
 	valid = true;
@@ -250,15 +226,11 @@ vector<int> allEntitiesWithType(int type) {
 	case QWHILE:
 		result = st->getAllWhile(); break;
 	case QVAR:
-		result = var->getAllVar();
-		addVarAddresses();
-		break;
+		result = var->getAllVar(); break;
 	case QPROC:
 		result = pt->getAllProc(); break;
 	case QCONST:
-		result = ct->getAllConstant();
-		addConstAddresses();
-		break;
+		result = ct->getAllConstant(); break;
 	case QPROGLINE:
 		result = st->getAllProgline(); break;
 	case QIF:
@@ -318,7 +290,6 @@ void clearTable() {
 	booleanAnswer = false;
 	for(ui i=table.size(); i>1 ; i--)
 		table.pop_back();
-	addressOfVar.clear(); addressOfConst.clear();
 }
 
 bool isEmptyResult() {
@@ -2014,8 +1985,6 @@ vector<string> QueryEvaluator::evaluate() {
 
 	initTable();
 	initResultTable();
-	
-	addressOfVar.clear(); addressOfConst.clear();
 
 	resultString.clear();
 	
