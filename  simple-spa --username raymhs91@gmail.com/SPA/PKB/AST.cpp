@@ -97,7 +97,7 @@ bool AST::containsT(QNodeType t1, int v1, QNodeType t2, int v2) {
 	for (i=0;(unsigned)i<n1.size();i++){
 		for (j=0;(unsigned)j<n2.size();j++){
 			TNode *root = n1[i], *target = n2[j];
-			if(DFS_contains(root, target)) {
+			if(DFS_contains(root->getFirstChild(), target)) {
 				return true;
 			}
 		}
