@@ -47,7 +47,7 @@ void DFS(TNode *root, int val, vector<TNode *> &result) {
 	DFS(root->getFirstChild(), val, result);
 	DFS(root->getRightSibling(), val, result);
 }
-#include <iostream>
+
 vector<TNode*> VarTable::getVarNode(int v){
 	vector<TNode*> result;
 	DFS(AST::getAST()->getRoot(), v, result);

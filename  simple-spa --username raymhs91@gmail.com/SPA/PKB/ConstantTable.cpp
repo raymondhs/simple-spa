@@ -6,6 +6,7 @@
 #include "StmtTable.h"
 #include "../Constants.h"
 #include "TNode.h"
+#include "AST.h"
 
 using namespace std;
 
@@ -35,13 +36,9 @@ void DFS(TNode *root, int val, vector<TNode *> &result) {
 	DFS(root->getRightSibling(), val, result);
 }
 
-vector<TNode*> ConstantTable::getConstNodes(int v){
+vector<TNode*> ConstantTable::getConstNodes(int v) {
 	vector<TNode*> result;
-	vector<int> assigns = StmtTable::getStmtTable()->getAllAssign();
-	for(int i = 0; (unsigned)i < assigns.size(); i++) {
-		TNode *assign = StmtTable::getStmtTable()->getStmtNode(assigns[i]);
-		DFS(assign, v, result);
-	}
+	DFS(AST::getAST()->getRoot(), v, result);
 	return result;
 }
 
