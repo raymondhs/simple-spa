@@ -140,8 +140,12 @@ vector<GNode*> GNode::getNextBIPTransitive() {
 		vector<GNode*> next = u->getNext();
 		vector<GNode*>::iterator it;
 
-		if(!next.size()){
-			next = u->getNextBIP();	
+		if(next!=u->getNextBIP()){
+			idx = u->getAttrib();
+			type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
+			if(type!=CALL){
+				next = u->getNextBIP();
+			}
 		}
 		for (it = next.begin(); it < next.end(); it++) {
 			GNode* v = *it;
@@ -229,6 +233,7 @@ vector<GNode*> GNode::getPrevBIPTransitive() {
 		for (it = prev.begin(); it < prev.end(); it++) {
 			GNode* v = *it;
 			int idx = v->getAttrib();
+			//cout<<idx<<endl;
 			int type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
 			if (visited[idx-1] == false) {
 				visited[idx-1] = true;
