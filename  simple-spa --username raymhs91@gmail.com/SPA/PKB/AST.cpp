@@ -86,7 +86,7 @@ bool AST::contains(QNodeType t1, int v1, QNodeType t2, int v2) {
 
 	return false;
 }
-
+#include <iostream>
 bool AST::containsT(QNodeType t1, int v1, QNodeType t2, int v2) {
 	vector<TNode*> n1, n2;
 	
@@ -97,7 +97,9 @@ bool AST::containsT(QNodeType t1, int v1, QNodeType t2, int v2) {
 	for (i=0;(unsigned)i<n1.size();i++){
 		for (j=0;(unsigned)j<n2.size();j++){
 			TNode *root = n1[i], *target = n2[j];
-			if(DFS_contains(root, target)) return true;
+			if(DFS_contains(root, target)) {
+				return true;
+			}
 		}
 	}
 	return false;
@@ -107,7 +109,7 @@ bool DFS_contains(TNode *root, TNode *target) {
 	if(root == NULL) return false;
 	if(root == target) return true;
 	return DFS_contains(root->getFirstChild(), target)
-		|| DFS_contains(root->getLeftSibling(), target);
+		|| DFS_contains(root->getRightSibling(), target);
 }
 
 bool AST::sibling(QNodeType t1, int v1, QNodeType t2, int v2) {
