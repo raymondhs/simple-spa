@@ -628,6 +628,47 @@ QNode* relRef() {
 		rel = new QNode(t);
 		rel->setLeftChild(arg1node);
 		rel->setRightChild(arg2node);
+	} else if(text == "Sibling") {
+		arg1 = allNode;
+		arg2 = allNode;
+		relName = text;
+		next_token = getToken();
+		match(TLPARENT);
+
+		temp = text;
+		tok = next_token;
+		arg1node = nodeRef();
+		if(tok != TUNDERSCORE && tok == TINTEGER){
+			arg1 = QSTMT;
+		}
+		else if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg1 = getSynType(temp);
+			if (arg1==QPROGLINE) arg1=QSTMT;
+		}
+		
+		match(TCOMMA);
+
+		temp = text;
+		tok = next_token;
+		arg2node = nodeRef();
+		if(tok != TUNDERSCORE && tok == TINTEGER){
+			arg2 = QSTMT;
+		} else if(tok != TUNDERSCORE && tok != TINTEGER) {
+			arg2 = getSynType(temp);
+			if (arg2==QPROGLINE) arg2=QSTMT;
+		}
+		
+		match(TRPARENT);
+
+		if(RelTable::getRelTable()->validate(relName, arg1, arg2)) {
+		} else {
+			PQLParser::cleanUp();
+			throw ParseException("Error: Violation in declaration of " + relName + " relationship.");
+		}
+
+		rel = new QNode(QSIBLING);
+		rel->setLeftChild(arg1node);
+		rel->setRightChild(arg2node);
 	} else {
 		PQLParser::cleanUp();
 		throw ParseException("Syntax error: Invalid query.");
