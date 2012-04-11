@@ -1993,8 +1993,8 @@ void handleSibling(QNode* query) {
 			}
 		}
 	}
-	printTable();
-	//cout << "SIBLING table size = " << table.size() << endl;
+	//printTable();
+	
 }
 
 vector<string> QueryEvaluator::evaluate() {
