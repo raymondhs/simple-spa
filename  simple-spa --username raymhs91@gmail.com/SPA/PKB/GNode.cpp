@@ -53,7 +53,7 @@ void GNode::setPrevious(GNode *node) {
 
 void GNode::setNextBIP(GNode *node) {
 	this->nextBIP.push_back(node);
-	if(node!=NULL) node->setPrevious(this);
+	if(node!=NULL) node->setPreviousBIP(this);
 }
 
 void GNode::setPreviousBIP(GNode *node) {
