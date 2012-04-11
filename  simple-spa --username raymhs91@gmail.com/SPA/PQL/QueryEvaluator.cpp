@@ -216,6 +216,7 @@ void cartesianProduct(list< vector<int> >& table1, list< vector<int> >& table2, 
 
 vector<int> allEntitiesWithType(int type) {
 	vector<int> result;
+	vector<TNode*> temp;
 	switch(type) {
 	case QSTMT:
 		result = st->getAllStmt(); break;
@@ -226,7 +227,10 @@ vector<int> allEntitiesWithType(int type) {
 	case QWHILE:
 		result = st->getAllWhile(); break;
 	case QVAR:
-		result = var->getAllVar(); break;
+		temp = var->getAllVarNodes(); 
+		for(unsigned i=0;i<temp.size();i++)
+			result.push_back((int)temp[i]);
+		break;
 	case QPROC:
 		result = pt->getAllProc(); break;
 	case QCONST:
@@ -332,7 +336,7 @@ void evaluateWithNode(QNode* with){
 		if(typeRight==QSTRING){
 			int aIdx = mapper[synIdx1];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				string name=VarTable::getVarTable()->getVarName((*it)[aIdx]);
+				string name=VarTable::getVarTable()->getVarName(((TNode*)(*it)[aIdx])->getAttrib());
 				if(name!=rightArg->getStrVal()) deleteRow(it--);
 			}
 		} else if(typeRight==QVAR){
@@ -343,14 +347,14 @@ void evaluateWithNode(QNode* with){
 		} else if(typeRight==QPROC){
 			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				string name1=VarTable::getVarTable()->getVarName((*it)[aIdx1]);
+				string name1=VarTable::getVarTable()->getVarName(((TNode*)(*it)[aIdx1])->getAttrib());
 				string name2=ProcTable::getProcTable()->getProcName((*it)[aIdx2]);				
 				if(name1!=name2) deleteRow(it--);
 			}
 		} else if(typeRight==QCALL) {
 			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				string name1=VarTable::getVarTable()->getVarName((*it)[aIdx1]);
+				string name1=VarTable::getVarTable()->getVarName(((TNode*)(*it)[aIdx1])->getAttrib());
 				int proc2 = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx2]);
 				string name2=ProcTable::getProcTable()->getProcName(proc2);
 				if(name1!=name2) deleteRow(it--);
@@ -369,7 +373,7 @@ void evaluateWithNode(QNode* with){
 			int aIdx1 = mapper[synIdx1], aIdx2 = mapper[synIdx2];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 				string name1=ProcTable::getProcTable()->getProcName((*it)[aIdx1]);
-				string name2=VarTable::getVarTable()->getVarName((*it)[aIdx2]);
+				string name2=VarTable::getVarTable()->getVarName(((TNode*)(*it)[aIdx2])->getAttrib());
 				if(name1!=name2) deleteRow(it--);
 			}
 		} else if(typeRight==QPROC){
@@ -399,7 +403,7 @@ void evaluateWithNode(QNode* with){
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
 				int proc = CallsTable::getCallsTable()->getProcCalledByStmt((*it)[aIdx1]);
 				string name1=ProcTable::getProcTable()->getProcName(proc);
-				string name2=VarTable::getVarTable()->getVarName((*it)[aIdx2]);
+				string name2=VarTable::getVarTable()->getVarName(((TNode*)(*it)[aIdx2])->getAttrib());
 				if(name1!=name2) deleteRow(it--);
 			}
 		} else if(typeRight==QPROC){
@@ -883,7 +887,9 @@ void formatResult() {
 			if((selType == QCALL)&&(tuple[j]->getLeftChild()->getStrVal()=="procName")){
 				ans.push_back(callst->getProcCalledByStmt((*it)[aSelIdx]));
 			}
-			else {
+			else if(selType == QVAR){
+				ans.push_back(((TNode*)(*it)[aSelIdx])->getAttrib());
+			}else{
 				ans.push_back((*it)[aSelIdx]);
 			}
 		}
@@ -1168,7 +1174,7 @@ void handleModifies(QNode* query) {
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				if(!(m->isModifiesStmt(constLeft,(*it)[aIdx]))) deleteRow(it--);
+				if(!(m->isModifiesStmt(constLeft,((TNode*)(*it)[aIdx])->getAttrib()))) deleteRow(it--);
 			}
 		}
 	} else if(leftType == QANY) {
@@ -1179,7 +1185,7 @@ void handleModifies(QNode* query) {
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				if(m->getStmtModifiesVar((*it)[aIdx]).size() == 0) deleteRow(it--);
+				if(m->getStmtModifiesVar(((TNode*)(*it)[aIdx])->getAttrib()).size() == 0) deleteRow(it--);
 			}
 		}
 	} else if(leftType == QSYN) {
@@ -1199,7 +1205,7 @@ void handleModifies(QNode* query) {
 			} else if(rightType == QSYN) {
 				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					if(!(m->isModifiesStmt((*it)[aIdx1],(*it)[aIdx2]))) deleteRow(it--);
+					if(!(m->isModifiesStmt((*it)[aIdx1],((TNode*)(*it)[aIdx2])->getAttrib()))) deleteRow(it--);
 				}
 			}
 		} else {
@@ -1216,7 +1222,7 @@ void handleModifies(QNode* query) {
 			} else if(rightType == QSYN) {
 				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					if(!(m->isModifiesProc((*it)[aIdx1],(*it)[aIdx2]))) deleteRow(it--);
+					if(!(m->isModifiesProc((*it)[aIdx1],((TNode*)(*it)[aIdx2])->getAttrib()))) deleteRow(it--);
 				}
 			}
 		}
@@ -1228,7 +1234,7 @@ void handleModifies(QNode* query) {
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				if(!(m->isModifiesProc(procIdx,(*it)[aIdx]))) deleteRow(it--);
+				if(!(m->isModifiesProc(procIdx,((TNode*)(*it)[aIdx])->getAttrib()))) deleteRow(it--);
 			}
 		}
 	}
@@ -1245,7 +1251,7 @@ void handleUses(QNode* query) {
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				if(!(u->isUsesStmt(constLeft,(*it)[aIdx]))) deleteRow(it--);
+				if(!(u->isUsesStmt(constLeft,((TNode*)(*it)[aIdx])->getAttrib()))) deleteRow(it--);
 			}
 		}
 	} else if(leftType == QANY) {
@@ -1260,7 +1266,7 @@ void handleUses(QNode* query) {
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				if(u->getStmtUsesVar((*it)[aIdx]).size() == 0) deleteRow(it--);
+				if(u->getStmtUsesVar(((TNode*)(*it)[aIdx])->getAttrib()).size() == 0) deleteRow(it--);
 			}
 		}
 	} else if(leftType == QSYN) {
@@ -1280,7 +1286,7 @@ void handleUses(QNode* query) {
 			} else if(rightType == QSYN) {
 				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					if(!(u->isUsesStmt((*it)[aIdx1],(*it)[aIdx2]))) deleteRow(it--);
+					if(!(u->isUsesStmt((*it)[aIdx1],((TNode*)(*it)[aIdx2])->getAttrib()))) deleteRow(it--);
 				}
 			}
 		} else {
@@ -1297,7 +1303,7 @@ void handleUses(QNode* query) {
 			} else if(rightType == QSYN) {
 				int aIdx1 = mapper[synIdxLeft], aIdx2 = mapper[synIdxRight];
 				for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-					if(!(u->isUsesProc((*it)[aIdx1],(*it)[aIdx2]))) deleteRow(it--);
+					if(!(u->isUsesProc((*it)[aIdx1],((TNode*)(*it)[aIdx2])->getAttrib()))) deleteRow(it--);
 				}
 			}
 		}
@@ -1309,7 +1315,7 @@ void handleUses(QNode* query) {
 		} else if(rightType == QSYN) {
 			int aIdx = mapper[synIdxRight];
 			for(list<vector<int> >::iterator it = ++table.begin(); it != table.end(); it++) {
-				if(!(u->isUsesProc(procIdx,(*it)[aIdx]))) deleteRow(it--);
+				if(!(u->isUsesProc(procIdx,((TNode*)(*it)[aIdx])->getAttrib()))) deleteRow(it--);
 			}
 		}
 	}
