@@ -81,6 +81,7 @@ public:
 	void testAffectsT();
 	void testContains();
 	void testContainsT();
+	void testSibling();
 };
 #endif
 
