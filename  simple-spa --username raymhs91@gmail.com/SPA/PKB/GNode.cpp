@@ -90,6 +90,10 @@ vector<GNode*> GNode::branchIn(PROC_IDX proc){
 }
 
 vector<GNode*> GNode::getNextTransitive() {
+	if(next.size()==0)
+		return next;
+	if(nextTcache.size()!=0)
+		return nextTcache;
 	vector<GNode*> nextT;
 
 	// BFS		
@@ -114,11 +118,15 @@ vector<GNode*> GNode::getNextTransitive() {
 			}
 		}
 	}
-
+	nextTcache = nextT;
 	return nextT;
 }
 
 vector<GNode*> GNode::getNextBIPTransitive() {
+	if(nextBIP.size()==0)
+		return nextBIP;
+	if(nextBIPTcache.size()!=0)
+		return nextBIPTcache;
 	set<GNode*> nextBIPT;
 	queue<GNode*> q;
 	q.push(this);
@@ -165,7 +173,8 @@ vector<GNode*> GNode::getNextBIPTransitive() {
 			}
 		}
 	}
-	return vector<GNode*>(nextBIPT.begin(),nextBIPT.end());
+	nextBIPTcache = vector<GNode*>(nextBIPT.begin(),nextBIPT.end());
+	return nextBIPTcache;
 }
 
 vector<GNode*> GNode::getPrev() {

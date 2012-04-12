@@ -11,8 +11,10 @@ class GNode
 private:
 	int attrib;
 	std::vector<GNode*> next;
+	std::vector<GNode*> nextTcache;
 	std::vector<GNode*> previous;
 	std::vector<GNode*> nextBIP;
+	std::vector<GNode*> nextBIPTcache;
 	std::vector<GNode*> previousBIP;
 	void init();
 	std::vector<GNode*> branchIn(PROC_IDX proc);
