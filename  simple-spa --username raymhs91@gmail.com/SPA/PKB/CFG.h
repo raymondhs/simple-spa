@@ -24,6 +24,7 @@ public:
 	GNode* getCfgRoot(PROC_IDX proc);
 	void addLast(std::vector< GNode* > last);
 	std::vector< GNode* > getLast(PROC_IDX proc);
+	std::vector< GNode* > getLastBIP(PROC_IDX proc);
 	void addNode();
 	GNode* getNode(STMT_NO stmt);
 	void clearTable();

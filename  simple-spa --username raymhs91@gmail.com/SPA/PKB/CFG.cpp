@@ -2,6 +2,9 @@
  * @author: Peter
  */
 #include"CFG.h"
+#include"StmtTable.h"
+#include"CallsTable.h"
+#include"TNode.h"
 #include <string>
 using namespace std;
 
@@ -21,6 +24,21 @@ void CFG::addLast(vector<GNode*> last){
 
 vector<GNode*> CFG::getLast(PROC_IDX proc){
 	return lastElements[proc];
+}
+
+vector<GNode*> CFG::getLastBIP(PROC_IDX proc){
+	set<GNode*> lastBip;
+	for(unsigned i=0; i<lastElements[proc].size();i++){
+		GNode* u = lastElements[proc][i];
+		int type = (StmtTable::getStmtTable()->getStmtNode(u->getAttrib()))->getType();
+		if(type == CALL){
+			vector<GNode*> called = getLastBIP(CallsTable::getCallsTable()->getProcCalledByStmt(u->getAttrib()));
+			for(unsigned j=0;j<called.size();j++)
+				lastBip.insert(called[j]);
+		} else
+			lastBip.insert(u);
+	}
+	return vector<GNode*>(lastBip.begin(),lastBip.end());
 }
 
 void CFG::addNode(){

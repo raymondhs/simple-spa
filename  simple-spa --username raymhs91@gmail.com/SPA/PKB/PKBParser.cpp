@@ -386,10 +386,13 @@ void checkCalls(){
 		}
 		CallsTable::getCallsTable()->insertStmt(callerStmt[i],procIdx);
 		CallsTable::getCallsTable()->insertProc(callerProc[i],procIdx);
-		//update the next BIP
+	}
+	//update the next BIP
+	for(unsigned i=0 ; i<callerStmt.size(); i++){
+		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
 		GNode* caller = CFG::getCFG()->getNode(callerStmt[i]);
 		caller->setNextBIP(CFG::getCFG()->getCfgRoot(procIdx));
-		vector<GNode*> last = CFG::getCFG()->getLast(procIdx);
+		vector<GNode*> last = CFG::getCFG()->getLastBIP(procIdx);
 		if(caller->getNext().size()!=0)
 			for(unsigned j=0;j<last.size();j++){
 				last[j]->setNextBIP(caller->getNext()[0]);
