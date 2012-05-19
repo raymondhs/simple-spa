@@ -130,6 +130,13 @@ void AffectsBIPTable::fillTable(STMT_NO stmt){
 			int type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
 			if(type!=CALL){
 				next = u->getNextBIP();
+			} else {
+				while(type==CALL){
+					u = CFG::getCFG()->getLast(CallsTable::getCallsTable()->getProcCalledByStmt(idx))[0];
+					idx = u->getAttrib();
+					type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
+				}
+				next = u->getNextBIP();
 			}
 		}
 		for (it = next.begin(); it < next.end(); it++) {
