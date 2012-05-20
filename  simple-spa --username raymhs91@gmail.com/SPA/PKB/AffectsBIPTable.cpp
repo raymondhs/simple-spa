@@ -5,6 +5,7 @@
 #include "AffectsBIPTable.h"
 #include "StmtTable.h"
 #include "CallsTable.h"
+#include "ProcTable.h"
 #include "ModifiesTable.h"
 #include "UsesTable.h"
 #include "CFG.h"
@@ -131,12 +132,12 @@ void AffectsBIPTable::fillTable(STMT_NO stmt){
 			if(type!=CALL){
 				next = u->getNextBIP();
 			} else {
-				while(type==CALL){
-					u = CFG::getCFG()->getLast(CallsTable::getCallsTable()->getProcCalledByStmt(idx))[0];
-					idx = u->getAttrib();
-					type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
+				if(next.empty()){
+					int i=0;
+					while((CFG::getCFG()->getCfgRoot(i)->getAttrib()<=idx)&&i<ProcTable::getProcTable()->getSize())
+						i++;
+					next = CFG::getCFG()->getBranch(i-1);
 				}
-				next = u->getNextBIP();
 			}
 		}
 		for (it = next.begin(); it < next.end(); it++) {

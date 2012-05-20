@@ -22,6 +22,13 @@ void CFG::addLast(vector<GNode*> last){
 	this->lastElements.push_back(last);
 }
 
+void CFG::addBranch( GNode* branch, PROC_IDX proc){
+	while(branchOut.size()<=proc){
+		branchOut.push_back( set<GNode*>() );
+	}
+	branchOut[proc].insert(branch);
+}
+
 vector<GNode*> CFG::getLast(PROC_IDX proc){
 	return lastElements[proc];
 }
@@ -39,6 +46,13 @@ vector<GNode*> CFG::getLastBIP(PROC_IDX proc){
 			lastBip.insert(u);
 	}
 	return vector<GNode*>(lastBip.begin(),lastBip.end());
+}
+
+vector<GNode*> CFG::getBranch(PROC_IDX proc){
+	while(branchOut.size()<=proc){
+		branchOut.push_back( set<GNode*>() );
+	}
+	return vector<GNode*>(branchOut[proc].begin(),branchOut[proc].end());
 }
 
 void CFG::addNode(){
@@ -61,4 +75,5 @@ void CFG::clearTable(){
 	gNodeTable.clear();
 	cfgRoots.clear();
 	lastElements.clear();
+	branchOut.clear();
 }

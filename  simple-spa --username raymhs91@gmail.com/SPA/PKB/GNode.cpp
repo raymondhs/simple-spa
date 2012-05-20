@@ -3,6 +3,7 @@
 #include "CFG.h"
 #include "../PKB/StmtTable.h"
 #include "../PKB/CallsTable.h"
+#include "../PKB/ProcTable.h"
 #include "../PKB/TNode.h"
 #include <iostream>
 
@@ -154,12 +155,12 @@ vector<GNode*> GNode::getNextBIPTransitive() {
 			if(type!=CALL){
 				next = u->getNextBIP();
 			} else {
-				while(type==CALL){
-					u = CFG::getCFG()->getLast(CallsTable::getCallsTable()->getProcCalledByStmt(idx))[0];
-					idx = u->getAttrib();
-					type = StmtTable::getStmtTable()->getStmtNode(idx)->getType();
+				if(next.empty()){
+					int i=0;
+					while((CFG::getCFG()->getCfgRoot(i)->getAttrib()<=idx)&&i<ProcTable::getProcTable()->getSize())
+						i++;
+					next = CFG::getCFG()->getBranch(i-1);
 				}
-				next = u->getNextBIP();
 			}
 		}
 		for (it = next.begin(); it < next.end(); it++) {

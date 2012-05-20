@@ -392,11 +392,24 @@ void checkCalls(){
 		PROC_IDX procIdx = ProcTable::getProcTable()->getProcIndex(calledProc[i]);  
 		GNode* caller = CFG::getCFG()->getNode(callerStmt[i]);
 		caller->setNextBIP(CFG::getCFG()->getCfgRoot(procIdx));
-		vector<GNode*> last = CFG::getCFG()->getLastBIP(procIdx);
-		if(caller->getNext().size()!=0)
+		vector<GNode*> lastBip = CFG::getCFG()->getLastBIP(procIdx);
+		vector<GNode*> last = CFG::getCFG()->getLast(procIdx);
+		if(caller->getNext().size()!=0){
+			CFG::getCFG()->addBranch(caller->getNext()[0],procIdx);
 			for(unsigned j=0;j<last.size();j++){
-				last[j]->setNextBIP(caller->getNext()[0]);
+				int type = StmtTable::getStmtTable()->getStmtNode(last[j]->getAttrib())->getType();
+				if(type == CALL){
+					PROC_IDX procIdxIn = CallsTable::getCallsTable()->getProcCalledByStmt(last[j]->getAttrib());
+					vector<GNode*> lastIn = CFG::getCFG()->getLast(procIdxIn);
+					CFG::getCFG()->addBranch(caller->getNext()[0],procIdxIn);
+					for(unsigned k = 0; k<lastIn.size();k++)
+						last.push_back(lastIn[k]);
+				}
 			}
+			for(unsigned j=0;j<lastBip.size();j++){
+				lastBip[j]->setNextBIP(caller->getNext()[0]);
+			}
+		}
 	}
 	// update Modifies and Uses for procedure
 	for(int i = 0; i<ProcTable::getProcTable()->getSize();i++)

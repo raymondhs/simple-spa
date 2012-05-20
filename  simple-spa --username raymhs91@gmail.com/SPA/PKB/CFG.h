@@ -14,6 +14,7 @@ class CFG{
 private:
 	std::vector< GNode* > cfgRoots; 
 	std::vector< std::vector< GNode* > > lastElements;
+	std::vector< std::set< GNode* > > branchOut;
 	std::vector< GNode*> gNodeTable;
 	CFG();
 	CFG(const CFG &);
@@ -23,8 +24,10 @@ public:
 	void addRoot( GNode* root);
 	GNode* getCfgRoot(PROC_IDX proc);
 	void addLast(std::vector< GNode* > last);
+	void addBranch(GNode* branch, PROC_IDX proc);
 	std::vector< GNode* > getLast(PROC_IDX proc);
 	std::vector< GNode* > getLastBIP(PROC_IDX proc);
+	std::vector< GNode* > getBranch(PROC_IDX proc);
 	void addNode();
 	GNode* getNode(STMT_NO stmt);
 	void clearTable();
